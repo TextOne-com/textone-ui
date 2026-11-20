@@ -2,6 +2,7 @@
 import {
   TxAlert,
   TxBadge,
+  TxBrandLockup,
   TxButton,
   TxDocumentPaper,
   TxIconButton,
@@ -21,6 +22,7 @@ const roles = [
   "canvas",
   "surface",
   "surface-sunken",
+  "hover",
   "ink",
   "ink-strong",
   "ink-secondary",
@@ -31,6 +33,8 @@ const roles = [
   "accent",
   "accent-hover",
   "accent-tint",
+  "on-accent",
+  "eyebrow",
   "paper",
   "paper-border",
 ].flatMap((name) => tokens.filter((t) => t.name === name));
@@ -40,38 +44,52 @@ const spacing = group("space-");
 
 <Docs>
   <header class="pb-8">
-    <p class="eyebrow m-0 text-[12px] font-bold tracking-[2px] text-brand-300 uppercase">Sistema de diseño</p>
+    <p class="tx-eyebrow m-0">Sistema de diseño · Manual de marca v2.1</p>
     <h1 class="m-0 mt-1 font-display text-[40px] leading-tight font-semibold text-brand-700">Text One UI</h1>
     <p class="mt-2 max-w-[70ch] text-[15px] text-ink-secondary">
-      Una sola estética para todos los frentes de Text One: el sitio público (Astro) y las
-      herramientas internas (Vue). Los tokens son CSS puro; los componentes son Vue 3 sobre
-      Reka UI, accesibles por defecto, con estilos propios que no dependen del Tailwind de quien
-      los use.
+      Una sola estética para todos los frentes de Textone, la del manual de marca: el sitio
+      público (Astro) y las herramientas internas (Vue) con los mismos morados, la misma crema,
+      Fraunces y Plus Jakarta Sans. Sin grises: los neutros salen de la propia rampa morada. Los
+      tokens son CSS puro; los componentes son Vue 3 sobre Reka UI, accesibles por defecto.
     </p>
   </header>
 
-  <Section id="color" title="Color" intro="El morado institucional es el único acento. El color, fuera de eso, significa estado — y un estado siempre lleva una palabra.">
+  <Section id="marca" title="Marca" intro="El lockup del manual (diapositivas 7–8): ícono, TEXTONE en Jakarta ExtraBold, una regla fina y .com. TxBrandLockup lo dibuja igual que el encabezado del sitio, sobre blanco, crema o morado.">
+    <Demo label="TxBrandLockup — tamaños y fondos" code={`<TxBrandLockup :size="18" />\n<TxBrandLockup :as="RouterLink" to="/" :size="15">Inventario y cartera</TxBrandLockup>`}>
+      <div class="flex w-full flex-wrap items-end gap-8">
+        <TxBrandLockup size={22} />
+        <TxBrandLockup size={15}><span class="border-l border-rule-strong pl-3 text-[13px] font-semibold text-ink-secondary">Inventario y cartera</span></TxBrandLockup>
+        <div class="rounded-sm bg-cream-100 px-5 py-4"><TxBrandLockup size={16} /></div>
+        <div class="rounded-sm bg-brand-700 px-5 py-4 text-white [&_.tx-lockup__name]:text-white [&_.tx-lockup__dotcom]:border-brand-100 [&_.tx-lockup__dotcom]:text-brand-100"><TxBrandLockup size={16} /></div>
+        <TxBrandLockup size={16} iconOnly />
+      </div>
+    </Demo>
+  </Section>
+
+  <Section id="color" title="Color" intro="El morado institucional es el único acento; la crema, el papel. Los neutros salen de la rampa morada, no de un gris. Fuera de eso el color significa estado — y un estado siempre lleva una palabra.">
     <h3 class="tx-title tx-title--3">Marca</h3>
     <Swatches tokens={group("brand-")} />
     <h3 class="tx-title tx-title--3">Crema — papel institucional</h3>
     <Swatches tokens={group("cream-")} />
-    <h3 class="tx-title tx-title--3">Neutros</h3>
-    <Swatches tokens={group("gray-")} />
     <h3 class="tx-title tx-title--3">Semánticos (-700 sobre -50, AA medido)</h3>
     <Swatches tokens={semantic} />
     <h3 class="tx-title tx-title--3">Roles — lo que leen los componentes</h3>
     <Swatches tokens={roles} />
   </Section>
 
-  <Section id="tipografia" title="Tipografía" intro="Fraunces para titulares del sitio público; Plus Jakarta Sans para títulos en ambos; IBM Plex Sans para el cuerpo de las herramientas, donde manda la lectura de cifras.">
-    <Demo label="--font-display · Fraunces">
-      <p class="m-0 font-display text-[32px] font-semibold text-brand-700">Textos que enseñan a pensar</p>
+  <Section id="tipografia" title="Tipografía" intro="Manual, diapositiva 13: Fraunces 600 para títulos y momentos de marca; Plus Jakarta Sans para cuerpo y UI. Jakarta tiene cifras tabulares, así que las columnas de pesos se alinean.">
+    <Demo label="H1 · Fraunces 600 (.tx-title--1)">
+      <h1 class="tx-title tx-title--1">Textos escolares que hacen crecer</h1>
     </Demo>
-    <Demo label="--font-title · Plus Jakarta Sans">
-      <p class="m-0 font-title text-[20px] font-bold text-ink-strong">Panel de control</p>
+    <Demo label="H2 · Jakarta 700 (.tx-title--2) · Body · Jakarta 400 · Caption · Jakarta 700 (.tx-eyebrow)">
+      <div class="flex flex-col gap-2">
+        <h2 class="tx-title tx-title--2">Nuestras series</h2>
+        <p class="m-0 text-[14px] text-ink">Soluciones educativas para instituciones, docentes y familias.</p>
+        <p class="tx-eyebrow m-0">Matemáticas · 1° grado</p>
+      </div>
     </Demo>
-    <Demo label="--font-ui · IBM Plex Sans, cifras tabulares (.tx-figures)">
-      <p class="m-0 font-ui text-[14px]">Saldo de cartera <span class="tx-figures font-semibold">$ 12.450.300</span> · corte al <span class="tx-figures">30/06/2025</span></p>
+    <Demo label="Cifras tabulares (.tx-figures)">
+      <p class="m-0 text-[14px]">Saldo de cartera <span class="tx-figures font-semibold">$ 12.450.300</span> · corte al <span class="tx-figures">30/06/2025</span></p>
     </Demo>
   </Section>
 

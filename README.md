@@ -29,7 +29,7 @@ of components, one look.
 
 ## Components
 
-`TxButton` · `TxIconButton` · `TxBadge` · `TxAlert` · `TxField` · `TxTextInput` · `TxTextarea` ·
+`TxBrandLockup` · `TxButton` · `TxIconButton` · `TxBadge` · `TxAlert` · `TxField` · `TxTextInput` · `TxTextarea` ·
 `TxSelect` · `TxCombobox` (with `picker` mode) · `TxDateField` · `TxCheckbox` ·
 `TxSegmentedControl` · `TxTabs` · `TxDialog` · `TxTable` (plain / framed / paper) ·
 `TxPageHeader` · `TxDocumentPaper` · `TxAppShell`, plus `parseDisplayDate`, `formatDisplayDate`

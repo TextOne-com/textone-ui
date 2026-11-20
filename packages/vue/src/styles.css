@@ -6,8 +6,9 @@
  *   @import "@textone-com/tokens/tokens.css";   (or tailwind.css, which includes it)
  *   @import "@textone-com/vue/styles.css";
  *
- * Metrics follow the staff UI's D-68 direction: 4px radius, 30px controls, 13px control text,
- * hairlines instead of shadows except on floating layers.
+ * The look is the brand manual's (v2.1) and the public site's: Fraunces titles, Plus Jakarta Sans
+ * for everything else, purple ink on white and cream, pill buttons and chips, rounded fields,
+ * hairlines instead of shadows except on what floats.
  */
 
 /* ── Base helpers ───────────────────────────────────────────────────────────── */
@@ -34,9 +35,14 @@
   color: var(--ink-strong);
   margin: 0;
 }
+/* H1 · Fraunces 600 (manual, slide 13): the page's title, in the principal purple. */
 .tx-title--1 {
-  font-size: 20px;
-  line-height: 1.3;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--accent);
 }
 .tx-title--2 {
   font-size: 16px;
@@ -49,6 +55,16 @@
 
 .tx-dimmed {
   color: var(--ink-secondary);
+}
+
+/* Caption · Jakarta, upper case, tracked (manual, slide 13; the site's .eyebrow). */
+.tx-eyebrow {
+  font-family: var(--font-title);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--eyebrow);
 }
 
 /* ── Field ──────────────────────────────────────────────────────────────────── */
@@ -65,7 +81,7 @@
 
 .tx-field__label {
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--ink);
   line-height: 1.45;
 }
@@ -122,8 +138,8 @@
   color: var(--ink);
   background: var(--surface);
   border: 1px solid var(--control-border);
-  border-radius: var(--radius-sm);
-  padding: 0 10px;
+  border-radius: var(--radius-control);
+  padding: 0 12px;
   outline: none;
   transition: border-color var(--duration-fast);
   text-align: left;
@@ -168,7 +184,7 @@
 
 .tx-textarea {
   height: auto;
-  padding: 6px 10px;
+  padding: 8px 12px;
   line-height: 1.45;
   resize: vertical;
 }
@@ -258,14 +274,14 @@
 }
 .tx-select__clear:hover,
 .tx-date__trigger:hover {
-  background: var(--gray-50);
+  background: var(--hover);
   color: var(--ink);
 }
 
 .tx-popover {
   z-index: 300;
   background: var(--surface);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-control);
   box-shadow: var(--shadow-overlay);
   font-size: 13px;
   color: var(--ink);
@@ -287,15 +303,15 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-2);
-  padding: 6px 10px;
-  border-radius: var(--radius-xs);
+  padding: 7px 10px;
+  border-radius: 6px;
   cursor: pointer;
   outline: none;
   user-select: none;
   line-height: 1.35;
 }
 .tx-listbox__item[data-highlighted] {
-  background: var(--gray-50);
+  background: var(--hover);
 }
 .tx-listbox__item[data-state="checked"] {
   color: var(--accent);
@@ -326,7 +342,8 @@
   margin-bottom: var(--space-2);
 }
 .tx-calendar__heading {
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--accent);
 }
 /* "marzo de 2025" → "Marzo de 2025": only the month's initial, never "De". */
 .tx-calendar__heading::first-letter {
@@ -337,14 +354,14 @@
   height: 28px;
   border: 0;
   background: transparent;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   font-size: 18px;
   line-height: 1;
   color: var(--ink);
   cursor: pointer;
 }
 .tx-calendar__nav:hover {
-  background: var(--gray-50);
+  background: var(--hover);
 }
 .tx-calendar__nav[data-disabled] {
   color: var(--ink-placeholder);
@@ -367,13 +384,13 @@
   justify-content: center;
   width: 32px;
   height: 30px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   cursor: pointer;
   font-variant-numeric: tabular-nums;
   outline: none;
 }
 .tx-calendar__day:hover {
-  background: var(--gray-50);
+  background: var(--hover);
 }
 .tx-calendar__day[data-outside-view] {
   color: var(--ink-placeholder);
@@ -384,11 +401,11 @@
 }
 .tx-calendar__day[data-selected] {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 .tx-calendar__day[data-disabled],
 .tx-calendar__day[data-unavailable] {
-  color: var(--gray-300);
+  color: var(--brand-200);
   cursor: not-allowed;
   background: transparent;
 }
@@ -407,7 +424,7 @@
   font-weight: 600;
   white-space: nowrap;
   border: 1px solid transparent;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   cursor: pointer;
   text-decoration: none;
   user-select: none;
@@ -427,12 +444,12 @@
 }
 .tx-button--sm {
   height: var(--control-h-sm);
-  padding: 0 14px;
+  padding: 0 16px;
   font-size: 13px;
 }
 .tx-button--md {
   height: var(--control-h-md);
-  padding: 0 18px;
+  padding: 0 22px;
   font-size: 14px;
 }
 .tx-button--full {
@@ -441,18 +458,19 @@
 
 .tx-button--filled {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 .tx-button--filled:hover {
   background: var(--accent-hover);
 }
+/* The site's secondary button: purple text, a quarter-strength purple outline. */
 .tx-button--default {
   background: var(--surface);
-  color: var(--ink);
-  border-color: var(--control-border);
+  color: var(--accent);
+  border-color: var(--accent-outline);
 }
 .tx-button--default:hover {
-  background: var(--gray-25);
+  background: var(--accent-tint);
 }
 .tx-button--subtle {
   background: transparent;
@@ -473,12 +491,12 @@
   color: #fff;
 }
 .tx-button--danger:hover {
-  background: #8a2018;
+  background: #933c3c;
 }
 
 .tx-button[data-disabled],
 .tx-button:disabled {
-  background: var(--gray-50);
+  background: var(--hover);
   border-color: transparent;
   color: var(--ink-placeholder);
   cursor: not-allowed;
@@ -508,7 +526,7 @@
   align-items: center;
   justify-content: center;
   border: 1px solid transparent;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   background: transparent;
   color: var(--ink-secondary);
   cursor: pointer;
@@ -531,7 +549,7 @@
   height: 34px;
 }
 .tx-icon-button--subtle:hover {
-  background: var(--gray-50);
+  background: var(--hover);
   color: var(--ink);
 }
 .tx-icon-button--default {
@@ -554,22 +572,22 @@
 
 /* ── Badge ─────────────────────────────────────────────────────────────────── */
 
+/* The site's chip: a pill, bold, the tone's -700 on its -50. */
 .tx-badge {
   display: inline-flex;
   align-items: center;
-  height: 20px;
-  padding: 0 6px;
-  border-radius: var(--radius-xs);
+  height: 22px;
+  padding: 0 10px;
+  border-radius: var(--radius-pill);
   border: 1px solid transparent;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 700;
   line-height: 1;
   white-space: nowrap;
 }
 .tx-badge--neutral {
   color: var(--ink-secondary);
-  background: var(--surface);
-  border-color: var(--control-border);
+  background: var(--cream-100);
 }
 .tx-badge--brand {
   color: var(--accent);
@@ -597,7 +615,7 @@
 .tx-alert {
   border: 1px solid;
   border-left-width: 3px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-control);
   padding: var(--space-2) var(--space-3);
   font-size: 13px;
 }
@@ -659,19 +677,19 @@
   padding: 3px;
   gap: 2px;
   background: var(--surface-sunken);
-  border: 1px solid var(--rule-strong);
-  border-radius: var(--radius-sm);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-pill);
 }
 .tx-segmented__item {
   position: relative;
   display: inline-flex;
   align-items: center;
   padding: 0 12px;
-  height: 24px;
+  height: 26px;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--ink-secondary);
-  border-radius: var(--radius-xs);
+  border-radius: var(--radius-pill);
   cursor: pointer;
   white-space: nowrap;
 }
@@ -685,7 +703,7 @@
 }
 .tx-segmented__item[data-active] {
   background: var(--surface);
-  color: var(--ink-strong);
+  color: var(--accent);
   box-shadow: 0 0 0 1px var(--rule-strong);
 }
 .tx-segmented__item[data-disabled] {
@@ -707,7 +725,7 @@
 .tx-tabs__tab {
   font: inherit;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--ink-secondary);
   background: transparent;
   border: 0;
@@ -717,8 +735,8 @@
   cursor: pointer;
 }
 .tx-tabs__tab:hover {
-  color: var(--ink);
-  background: var(--gray-50);
+  color: var(--accent);
+  background: var(--hover);
 }
 .tx-tabs__tab[data-state="active"] {
   color: var(--accent);
@@ -739,7 +757,7 @@
   position: fixed;
   inset: 0;
   z-index: 200;
-  background: rgba(24, 24, 29, 0.4);
+  background: rgba(44, 14, 86, 0.35);
 }
 .tx-dialog {
   position: fixed;
@@ -750,7 +768,7 @@
   max-height: 76vh;
   overflow: auto;
   background: var(--surface);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-overlay);
   padding: var(--space-4) var(--space-5);
   color: var(--ink);
@@ -767,11 +785,11 @@
   margin-bottom: var(--space-3);
 }
 .tx-dialog__title {
-  font-family: var(--font-title);
-  font-weight: 700;
-  font-size: 16px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 20px;
   margin: 0;
-  color: var(--ink-strong);
+  color: var(--accent);
 }
 .tx-dialog__description {
   color: var(--ink-secondary);
@@ -820,7 +838,7 @@
   vertical-align: middle;
 }
 :where(.tx-table) :where(th) {
-  font-weight: 500;
+  font-weight: 600;
   font-size: 12px;
   color: var(--ink-secondary);
   white-space: nowrap;
@@ -844,7 +862,7 @@
   border-bottom: 1px solid var(--rule-strong);
 }
 .tx-table--framed tbody tr:hover td {
-  background: var(--gray-25);
+  background: var(--canvas);
 }
 
 .tx-table--paper {
@@ -862,6 +880,7 @@
   font-variant-numeric: tabular-nums lining-nums;
 }
 .tx-table .tx-totals td {
+  white-space: nowrap;
   font-weight: 600;
   color: var(--ink-strong);
   border-top: 1px solid var(--rule-strong);
@@ -912,8 +931,10 @@
   border-bottom: 1px solid var(--paper-border);
 }
 .tx-paper__kind {
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--ink-secondary);
 }
 .tx-paper__subtitle {
@@ -922,10 +943,10 @@
   margin-top: 2px;
 }
 .tx-paper__number {
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
   line-height: 1.2;
-  color: var(--ink-strong);
+  color: var(--accent);
 }
 .tx-paper__facts {
   display: grid;
@@ -989,3 +1010,50 @@
     animation-duration: 2s;
   }
 }
+
+/* ── Brand lockup ──────────────────────────────────────────────────────────── */
+
+/* Manual, slides 7–8: the T icon, TEXTONE in Jakarta ExtraBold, a fine rule and ".com". */
+.tx-lockup {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: calc(var(--tx-lockup-size) * 0.32);
+  color: var(--accent);
+  text-decoration: none;
+  line-height: 1;
+}
+.tx-lockup__icon {
+  height: calc(var(--tx-lockup-size) * 2.2);
+  width: auto;
+  flex: none;
+}
+.tx-lockup__words {
+  display: flex;
+  flex-direction: column;
+}
+.tx-lockup__name {
+  font-family: var(--font-title);
+  font-size: var(--tx-lockup-size);
+  font-weight: 800;
+  letter-spacing: 0.025em;
+  color: var(--brand-700);
+}
+.tx-lockup__gap {
+  display: inline-block;
+  width: 0.1em;
+}
+.tx-lockup__dotcom {
+  align-self: flex-end;
+  margin-top: calc(var(--tx-lockup-size) * 0.2);
+  padding-top: 1px;
+  border-top: 2px solid var(--brand-300);
+  font-family: var(--font-title);
+  font-size: calc(var(--tx-lockup-size) * 0.55);
+  font-weight: 500;
+  color: var(--brand-300);
+}
+.tx-lockup__suffix {
+  margin-left: calc(var(--tx-lockup-size) * 0.5);
+  align-self: center;
+}
+

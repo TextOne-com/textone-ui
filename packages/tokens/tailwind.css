@@ -24,18 +24,6 @@
   --color-cream-100: var(--cream-100);
   --color-cream-300: var(--cream-300);
 
-  --color-gray-0: var(--gray-0);
-  --color-gray-25: var(--gray-25);
-  --color-gray-50: var(--gray-50);
-  --color-gray-100: var(--gray-100);
-  --color-gray-200: var(--gray-200);
-  --color-gray-300: var(--gray-300);
-  --color-gray-400: var(--gray-400);
-  --color-gray-500: var(--gray-500);
-  --color-gray-600: var(--gray-600);
-  --color-gray-700: var(--gray-700);
-  --color-gray-800: var(--gray-800);
-  --color-gray-900: var(--gray-900);
 
   --color-success-50: var(--success-50);
   --color-success-700: var(--success-700);
@@ -49,6 +37,7 @@
   --color-canvas: var(--canvas);
   --color-surface: var(--surface);
   --color-surface-sunken: var(--surface-sunken);
+  --color-hover: var(--hover);
   --color-ink: var(--ink);
   --color-ink-strong: var(--ink-strong);
   --color-ink-secondary: var(--ink-secondary);
@@ -59,6 +48,9 @@
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-accent-tint: var(--accent-tint);
+  --color-accent-outline: var(--accent-outline);
+  --color-on-accent: var(--on-accent);
+  --color-eyebrow: var(--eyebrow);
   --color-paper: var(--paper);
   --color-paper-border: var(--paper-border);
 }
@@ -66,7 +58,8 @@
 /*
  * Same names as the tokens, so these must not be emitted (they would reference themselves):
  * `reference` generates the utilities (font-display, rounded-sm, shadow-overlay) without
- * writing the variables, which tokens.css already defines.
+ * writing the variables, which tokens.css already defines. Only the radii whose values equal
+ * Tailwind's own are mapped: --radius-lg (12px) would silently change every `rounded-lg`.
  */
 @theme inline reference {
   --font-display: var(--font-display);

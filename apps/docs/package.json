@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@astrojs/vue": "~7.0.3",
-    "@fontsource/ibm-plex-sans": "^5.3.0",
     "@fontsource/plus-jakarta-sans": "^5.3.0",
     "@fontsource/fraunces": "^5.3.0",
     "@tailwindcss/vite": "^4.3.5",

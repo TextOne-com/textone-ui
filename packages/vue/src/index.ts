@@ -1,6 +1,7 @@
 export { default as TxAlert } from "./components/TxAlert.vue";
 export { default as TxAppShell } from "./components/TxAppShell.vue";
 export { default as TxBadge } from "./components/TxBadge.vue";
+export { default as TxBrandLockup } from "./components/TxBrandLockup.vue";
 export { default as TxButton } from "./components/TxButton.vue";
 export { default as TxCheckbox } from "./components/TxCheckbox.vue";
 export { default as TxCombobox } from "./components/TxCombobox.vue";

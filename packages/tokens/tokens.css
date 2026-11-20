@@ -1,69 +1,60 @@
 /*
  * @textone-com/tokens — the one source of the Text One look.
  *
- * Brand hex values were validated against the logo's source SVG (textone-web, public/logo.svg).
- * The neutrals and semantic tones come from the staff UI (textone_inventory D-68), where each
- * -700 on its -50 and on white was measured AA on 2026-11-02. Change a value only after measuring
- * it again. Values marked "interpolated" are not the brand's own and carry no text.
+ * Source: the brand manual (Manual de Marca Textone v2.1, 2026 — slides 11–14) and the public
+ * site, textone-web. Purple hex values were validated against the logo's source SVG. There are
+ * no greys: neutrals come from the brand's own purple ramp and cream, so a staff screen and a
+ * public page read as the same brand. Contrast below is WCAG 2.1, measured 2026-11-20; change a
+ * value only after measuring it again. "interpolated" marks a step the manual does not name.
  *
  * Plain CSS custom properties, so any stack can read them: Tailwind through tailwind.css, a Vue
  * or Astro component through var(--…), a chart through getComputedStyle.
  */
 :root {
-  /* Brand — the institutional purple (logo) */
-  --brand-50: #f4effa;
-  --brand-100: #e3d7f1;
-  --brand-200: #c8b3e4; /* interpolated */
-  --brand-300: #876ba2; /* the logo's secondary */
-  --brand-500: #5e377e; /* the logo's middle */
-  --brand-700: #431581; /* principal — the T of the logo */
-  --brand-800: #371170; /* interpolated */
-  --brand-900: #2c0e56;
+  /* Brand — the institutional purple (manual, slide 11) */
+  --brand-50: #f4effa; /* subtle backgrounds, hover */
+  --brand-100: #e3d7f1; /* soft borders, chips */
+  --brand-200: #c8b3e4; /* interpolated — strong dividers, never text */
+  --brand-300: #876ba2; /* the logo's secondary — 4.51:1 on white only; control borders */
+  --brand-500: #5e377e; /* the logo's middle — secondary text, 7.5:1 or more on every surface */
+  --brand-700: #431581; /* principal, the T of the logo — 12.63:1 on white */
+  --brand-800: #371170; /* interpolated — the principal's hover */
+  --brand-900: #2c0e56; /* maximum emphasis — body text, 13.4:1 or more on every surface */
 
-  /* Cream — the institutional paper (backgrounds, stationery, the documento surface) */
-  --cream-50: #faf7ef;
-  --cream-100: #f1ead8; /* principal — brand background */
-  --cream-300: #ddd2b4;
+  /* Cream — the institutional paper (manual, slide 12) */
+  --cream-50: #faf7ef; /* page background */
+  --cream-100: #f1ead8; /* brand background, stationery, the documento surface */
+  --cream-300: #ddd2b4; /* borders on cream */
 
-  /* Neutrals — cool greys for large surfaces, text and rules */
-  --gray-0: #ffffff;
-  --gray-25: #f7f7f8;
-  --gray-50: #f1f1f3;
-  --gray-100: #e4e4e8;
-  --gray-200: #d0d0d6;
-  --gray-300: #b0b0b8; /* interpolated */
-  --gray-400: #8a8a94;
-  --gray-500: #6b6b75;
-  --gray-600: #55555f;
-  --gray-700: #3c3c44; /* interpolated */
-  --gray-800: #2a2a31;
-  --gray-900: #18181d;
-
-  /* Semantic — -700 text on its -50 tint or on white (measured AA) */
+  /* Semantic — -700 text on its -50 tint or on white (all AA). Danger is the manual's red. */
   --success-700: #1f6b4f;
   --success-50: #e8f3ee;
   --warning-700: #8a5a00;
   --warning-50: #fbf2dc;
-  --danger-700: #a3271d;
+  --danger-700: #b04a4a; /* manual, slide 10 — 5.35:1 on white, 4.66:1 on its tint */
   --danger-50: #fbeceb;
   --info-700: #1d5a8a;
   --info-50: #e7f0f8;
 
   /* Roles — what the colours are for. Components read these, not the ladders above. */
-  --canvas: var(--gray-25);
-  --surface: var(--gray-0);
-  --surface-sunken: var(--gray-50);
-  --ink: var(--gray-800);
-  --ink-strong: var(--gray-900);
-  --ink-secondary: var(--gray-600);
-  --ink-placeholder: var(--gray-500);
-  --rule: var(--gray-100);
-  --rule-strong: var(--gray-200);
-  --control-border: var(--gray-400);
+  --canvas: var(--cream-50);
+  --surface: #ffffff;
+  --surface-sunken: var(--brand-50); /* table headers, form footers */
+  --hover: var(--brand-50);
+  --ink: var(--brand-900);
+  --ink-strong: var(--brand-900);
+  --ink-secondary: var(--brand-500);
+  --ink-placeholder: var(--brand-300); /* on white inputs only, where it is 4.51:1 */
+  --rule: var(--brand-100);
+  --rule-strong: var(--brand-200);
+  --control-border: var(--brand-300); /* 4.51:1 on white: a control's edge must reach 3:1 */
   --accent: var(--brand-700);
   --accent-hover: var(--brand-800);
   --accent-tint: var(--brand-50);
-  --paper: var(--cream-50);
+  --accent-outline: rgba(67, 21, 129, 0.25); /* the site's secondary button border */
+  --on-accent: #ffffff;
+  --eyebrow: var(--brand-300); /* uppercase captions on white; brand-500 on cream */
+  --paper: var(--cream-100);
   --paper-border: var(--cream-300);
 
   /* Spacing on a 4px grid */
@@ -75,25 +66,30 @@
   --space-6: 24px;
   --space-8: 32px;
 
+  /* Shape — the site's: square-ish cards, rounded fields, pill buttons and chips */
   --radius-xs: 2px;
-  --radius-sm: 4px;
+  --radius-sm: 4px; /* cards, panels, tables */
+  --radius-control: 8px; /* inputs, selects, menus */
+  --radius-lg: 12px; /* dialogs */
+  --radius-pill: 999px; /* buttons, chips, badges, navigation */
 
   --row-h-compact: 28px;
   --row-h-default: 36px;
   --control-h-xs: 26px;
-  --control-h-sm: 30px;
-  --control-h-md: 36px;
+  --control-h-sm: 32px;
+  --control-h-md: 40px;
 
-  --shadow-overlay: 0 4px 16px rgba(24, 24, 29, 0.12), 0 0 0 1px rgba(24, 24, 29, 0.06);
+  /* Depth — borders everywhere; one shadow, purple-tinted, for what floats */
+  --shadow-overlay: 0 6px 20px rgba(44, 14, 86, 0.14), 0 0 0 1px rgba(44, 14, 86, 0.06);
 
   /*
-   * Type. Display (Fraunces) is the public site's serif; title (Plus Jakarta Sans) is shared by
-   * both; ui (IBM Plex Sans) is the staff tool's body face, chosen for dense figures. Each app
-   * loads the faces it uses.
+   * Type (manual, slide 13). Fraunces 600 for titles and brand moments; Plus Jakarta Sans for
+   * body and UI — it has tabular figures (tnum), so columns of pesos line up. Each app loads
+   * the faces it uses: Jakarta 400–800, Fraunces 600.
    */
   --font-display: "Fraunces", Georgia, serif;
-  --font-title: "Plus Jakarta Sans", "IBM Plex Sans", system-ui, sans-serif;
-  --font-ui: "IBM Plex Sans", system-ui, sans-serif;
+  --font-title: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-ui: "Plus Jakarta Sans", system-ui, sans-serif;
 
   --duration-fast: 120ms;
 }
