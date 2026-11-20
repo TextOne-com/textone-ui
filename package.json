@@ -1,0 +1,17 @@
+{
+  "name": "textone-ui",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "docs": "corepack pnpm --filter @textone-com/docs dev",
+    "docs:build": "corepack pnpm --filter @textone-com/docs build",
+    "typecheck": "corepack pnpm --filter @textone-com/vue typecheck",
+    "test": "corepack pnpm --filter @textone-com/vue test",
+    "check": "corepack pnpm typecheck && corepack pnpm test && corepack pnpm docs:build",
+    "release:version": "node scripts/version.mjs"
+  }
+}

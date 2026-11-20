@@ -1,0 +1,37 @@
+name: Publish
+
+# A tag v<x.y.z> publishes @textone-com/tokens and @textone-com/vue at that version to GitHub
+# Packages. The tag must match the packages' version (scripts/version.mjs sets both).
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.23.x
+          registry-url: https://npm.pkg.github.com
+          scope: "@textone-com"
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - name: Tag matches the packages' version
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          for p in packages/tokens packages/vue; do
+            v=$(node -p "require('./$p/package.json').version")
+            [ "$v" = "$tag" ] || { echo "$p is $v, tag is $tag"; exit 1; }
+          done
+      - run: pnpm typecheck
+      - run: pnpm test
+      # pnpm rewrites workspace:* to the real version in the published manifest.
+      - run: pnpm --filter "./packages/*" publish --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

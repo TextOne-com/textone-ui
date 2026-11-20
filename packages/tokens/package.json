@@ -1,0 +1,26 @@
+{
+  "name": "@textone-com/tokens",
+  "version": "0.1.0",
+  "description": "Text One design tokens: CSS custom properties and a Tailwind v4 theme.",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TextOne-com/textone-ui.git",
+    "directory": "packages/tokens"
+  },
+  "homepage": "https://github.com/TextOne-com/textone-ui#readme",
+  "type": "module",
+  "files": [
+    "tokens.css",
+    "tailwind.css",
+    "README.md"
+  ],
+  "exports": {
+    "./tokens.css": "./tokens.css",
+    "./tailwind.css": "./tailwind.css"
+  },
+  "style": "./tokens.css",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
+}

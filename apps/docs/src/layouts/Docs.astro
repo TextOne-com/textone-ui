@@ -1,0 +1,53 @@
+---
+import "@fontsource/ibm-plex-sans/400.css";
+import "@fontsource/ibm-plex-sans/500.css";
+import "@fontsource/ibm-plex-sans/600.css";
+import "@fontsource/plus-jakarta-sans/700.css";
+import "@fontsource/fraunces/600.css";
+import "../styles/docs.css";
+
+const sections = [
+  ["color", "Color"],
+  ["tipografia", "Tipografía"],
+  ["espaciado", "Espaciado y forma"],
+  ["botones", "Botones"],
+  ["estados", "Estados y mensajes"],
+  ["campos", "Campos"],
+  ["seleccion", "Selección"],
+  ["navegacion", "Pestañas y diálogo"],
+  ["tablas", "Tablas"],
+  ["documento", "Documento"],
+  ["uso", "Cómo usarlo"],
+];
+---
+
+<!doctype html>
+<html lang="es-CO">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <title>Text One UI</title>
+  </head>
+  <body>
+    <div class="mx-auto grid max-w-[1200px] grid-cols-1 gap-10 px-4 py-8 md:grid-cols-[200px_minmax(0,1fr)] md:px-8">
+      <aside class="md:sticky md:top-8 md:self-start">
+        <a href="/" class="flex items-center gap-2 text-accent no-underline">
+          <img src="/logo.svg" alt="" width="24" height="24" />
+          <span class="font-title text-[17px] font-bold">Text One UI</span>
+        </a>
+        <p class="mt-1 text-xs text-ink-secondary">@textone-com/tokens · @textone-com/vue</p>
+        <nav aria-label="Secciones" class="mt-6 flex flex-col gap-0.5">
+          {
+            sections.map(([id, label]) => (
+              <a href={`#${id}`} class="rounded-sm px-2 py-1 text-[13px] text-ink no-underline hover:bg-gray-50">
+                {label}
+              </a>
+            ))
+          }
+        </nav>
+      </aside>
+      <main class="min-w-0"><slot /></main>
+    </div>
+  </body>
+</html>

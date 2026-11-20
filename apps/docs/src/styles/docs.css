@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import "@textone-com/tokens/tailwind.css";
+@import "@textone-com/vue/styles.css";
+
+@layer base {
+  body {
+    background: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+}

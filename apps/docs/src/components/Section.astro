@@ -1,0 +1,9 @@
+---
+const { id, title, intro } = Astro.props as { id: string; title: string; intro?: string };
+---
+
+<section id={id} class="scroll-mt-8 border-t border-rule-strong py-8 first:border-t-0 first:pt-0">
+  <h2 class="tx-title tx-title--2">{title}</h2>
+  {intro && <p class="mt-1 max-w-[70ch] text-[13px] text-ink-secondary">{intro}</p>}
+  <div class="mt-5 flex flex-col gap-6"><slot /></div>
+</section>

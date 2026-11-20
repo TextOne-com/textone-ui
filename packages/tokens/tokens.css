@@ -1,0 +1,99 @@
+/*
+ * @textone-com/tokens — the one source of the Text One look.
+ *
+ * Brand hex values were validated against the logo's source SVG (textone-web, public/logo.svg).
+ * The neutrals and semantic tones come from the staff UI (textone_inventory D-68), where each
+ * -700 on its -50 and on white was measured AA on 2026-11-02. Change a value only after measuring
+ * it again. Values marked "interpolated" are not the brand's own and carry no text.
+ *
+ * Plain CSS custom properties, so any stack can read them: Tailwind through tailwind.css, a Vue
+ * or Astro component through var(--…), a chart through getComputedStyle.
+ */
+:root {
+  /* Brand — the institutional purple (logo) */
+  --brand-50: #f4effa;
+  --brand-100: #e3d7f1;
+  --brand-200: #c8b3e4; /* interpolated */
+  --brand-300: #876ba2; /* the logo's secondary */
+  --brand-500: #5e377e; /* the logo's middle */
+  --brand-700: #431581; /* principal — the T of the logo */
+  --brand-800: #371170; /* interpolated */
+  --brand-900: #2c0e56;
+
+  /* Cream — the institutional paper (backgrounds, stationery, the documento surface) */
+  --cream-50: #faf7ef;
+  --cream-100: #f1ead8; /* principal — brand background */
+  --cream-300: #ddd2b4;
+
+  /* Neutrals — cool greys for large surfaces, text and rules */
+  --gray-0: #ffffff;
+  --gray-25: #f7f7f8;
+  --gray-50: #f1f1f3;
+  --gray-100: #e4e4e8;
+  --gray-200: #d0d0d6;
+  --gray-300: #b0b0b8; /* interpolated */
+  --gray-400: #8a8a94;
+  --gray-500: #6b6b75;
+  --gray-600: #55555f;
+  --gray-700: #3c3c44; /* interpolated */
+  --gray-800: #2a2a31;
+  --gray-900: #18181d;
+
+  /* Semantic — -700 text on its -50 tint or on white (measured AA) */
+  --success-700: #1f6b4f;
+  --success-50: #e8f3ee;
+  --warning-700: #8a5a00;
+  --warning-50: #fbf2dc;
+  --danger-700: #a3271d;
+  --danger-50: #fbeceb;
+  --info-700: #1d5a8a;
+  --info-50: #e7f0f8;
+
+  /* Roles — what the colours are for. Components read these, not the ladders above. */
+  --canvas: var(--gray-25);
+  --surface: var(--gray-0);
+  --surface-sunken: var(--gray-50);
+  --ink: var(--gray-800);
+  --ink-strong: var(--gray-900);
+  --ink-secondary: var(--gray-600);
+  --ink-placeholder: var(--gray-500);
+  --rule: var(--gray-100);
+  --rule-strong: var(--gray-200);
+  --control-border: var(--gray-400);
+  --accent: var(--brand-700);
+  --accent-hover: var(--brand-800);
+  --accent-tint: var(--brand-50);
+  --paper: var(--cream-50);
+  --paper-border: var(--cream-300);
+
+  /* Spacing on a 4px grid */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+
+  --row-h-compact: 28px;
+  --row-h-default: 36px;
+  --control-h-xs: 26px;
+  --control-h-sm: 30px;
+  --control-h-md: 36px;
+
+  --shadow-overlay: 0 4px 16px rgba(24, 24, 29, 0.12), 0 0 0 1px rgba(24, 24, 29, 0.06);
+
+  /*
+   * Type. Display (Fraunces) is the public site's serif; title (Plus Jakarta Sans) is shared by
+   * both; ui (IBM Plex Sans) is the staff tool's body face, chosen for dense figures. Each app
+   * loads the faces it uses.
+   */
+  --font-display: "Fraunces", Georgia, serif;
+  --font-title: "Plus Jakarta Sans", "IBM Plex Sans", system-ui, sans-serif;
+  --font-ui: "IBM Plex Sans", system-ui, sans-serif;
+
+  --duration-fast: 120ms;
+}

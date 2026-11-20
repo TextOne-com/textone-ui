@@ -1,0 +1,222 @@
+---
+import {
+  TxAlert,
+  TxBadge,
+  TxButton,
+  TxDocumentPaper,
+  TxIconButton,
+  TxPageHeader,
+  TxTable,
+} from "@textone-com/vue";
+import Demo from "../components/Demo.astro";
+import FieldsDemo from "../components/FieldsDemo.vue";
+import NavDemo from "../components/NavDemo.vue";
+import Section from "../components/Section.astro";
+import SelectionDemo from "../components/SelectionDemo.vue";
+import Swatches from "../components/Swatches.astro";
+import Docs from "../layouts/Docs.astro";
+import { group, tokens } from "../tokens";
+
+const roles = [
+  "canvas",
+  "surface",
+  "surface-sunken",
+  "ink",
+  "ink-strong",
+  "ink-secondary",
+  "ink-placeholder",
+  "rule",
+  "rule-strong",
+  "control-border",
+  "accent",
+  "accent-hover",
+  "accent-tint",
+  "paper",
+  "paper-border",
+].flatMap((name) => tokens.filter((t) => t.name === name));
+const semantic = ["success", "warning", "danger", "info"].flatMap((p) => group(`${p}-`));
+const spacing = group("space-");
+---
+
+<Docs>
+  <header class="pb-8">
+    <p class="eyebrow m-0 text-[12px] font-bold tracking-[2px] text-brand-300 uppercase">Sistema de diseño</p>
+    <h1 class="m-0 mt-1 font-display text-[40px] leading-tight font-semibold text-brand-700">Text One UI</h1>
+    <p class="mt-2 max-w-[70ch] text-[15px] text-ink-secondary">
+      Una sola estética para todos los frentes de Text One: el sitio público (Astro) y las
+      herramientas internas (Vue). Los tokens son CSS puro; los componentes son Vue 3 sobre
+      Reka UI, accesibles por defecto, con estilos propios que no dependen del Tailwind de quien
+      los use.
+    </p>
+  </header>
+
+  <Section id="color" title="Color" intro="El morado institucional es el único acento. El color, fuera de eso, significa estado — y un estado siempre lleva una palabra.">
+    <h3 class="tx-title tx-title--3">Marca</h3>
+    <Swatches tokens={group("brand-")} />
+    <h3 class="tx-title tx-title--3">Crema — papel institucional</h3>
+    <Swatches tokens={group("cream-")} />
+    <h3 class="tx-title tx-title--3">Neutros</h3>
+    <Swatches tokens={group("gray-")} />
+    <h3 class="tx-title tx-title--3">Semánticos (-700 sobre -50, AA medido)</h3>
+    <Swatches tokens={semantic} />
+    <h3 class="tx-title tx-title--3">Roles — lo que leen los componentes</h3>
+    <Swatches tokens={roles} />
+  </Section>
+
+  <Section id="tipografia" title="Tipografía" intro="Fraunces para titulares del sitio público; Plus Jakarta Sans para títulos en ambos; IBM Plex Sans para el cuerpo de las herramientas, donde manda la lectura de cifras.">
+    <Demo label="--font-display · Fraunces">
+      <p class="m-0 font-display text-[32px] font-semibold text-brand-700">Textos que enseñan a pensar</p>
+    </Demo>
+    <Demo label="--font-title · Plus Jakarta Sans">
+      <p class="m-0 font-title text-[20px] font-bold text-ink-strong">Panel de control</p>
+    </Demo>
+    <Demo label="--font-ui · IBM Plex Sans, cifras tabulares (.tx-figures)">
+      <p class="m-0 font-ui text-[14px]">Saldo de cartera <span class="tx-figures font-semibold">$ 12.450.300</span> · corte al <span class="tx-figures">30/06/2025</span></p>
+    </Demo>
+  </Section>
+
+  <Section id="espaciado" title="Espaciado y forma" intro="Rejilla de 4 px, radio de 4 px, bordes finos en vez de sombras; la sombra queda para lo que flota.">
+    <Demo label="--space-*">
+      <div class="flex flex-wrap items-end gap-4">
+        {
+          spacing.map((t) => (
+            <div class="flex flex-col items-center gap-1">
+              <div class="bg-brand-100" style={`width: var(--${t.name}); height: var(--${t.name})`} />
+              <span class="text-[11px] text-ink-secondary">{t.name} · {t.value}</span>
+            </div>
+          ))
+        }
+      </div>
+    </Demo>
+  </Section>
+
+  <Section id="botones" title="Botones" intro="TxButton es un botón o — con as — un enlace con forma de botón. Deshabilitado como enlace no tiene href.">
+    <Demo label="Variantes" code={`<TxButton>Registrar remisión</TxButton>\n<TxButton variant="default">Ver la cuenta</TxButton>\n<TxButton :as="RouterLink" to="/devoluciones/nueva">Registrar devolución</TxButton>`}>
+      <TxButton>Registrar remisión</TxButton>
+      <TxButton variant="default">Ver la cuenta</TxButton>
+      <TxButton variant="light">Registrar otro</TxButton>
+      <TxButton variant="subtle">Quitar filtro</TxButton>
+      <TxButton variant="danger">Rechazar</TxButton>
+      <TxButton disabled>Deshabilitado</TxButton>
+      <TxButton loading>Registrando</TxButton>
+    </Demo>
+    <Demo label="Tamaños e ícono">
+      <TxButton size="xs">xs</TxButton>
+      <TxButton size="sm">sm</TxButton>
+      <TxButton size="md">md</TxButton>
+      <TxIconButton label="Quitar línea">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" /></svg>
+      </TxIconButton>
+    </Demo>
+  </Section>
+
+  <Section id="estados" title="Estados y mensajes">
+    <Demo label="TxBadge — un estado en una palabra">
+      <TxBadge>Retirado</TxBadge>
+      <TxBadge tone="brand">Novedad</TxBadge>
+      <TxBadge tone="info">Pendiente</TxBadge>
+      <TxBadge tone="success">Aprobada</TxBadge>
+      <TxBadge tone="warning">Suspendida</TxBadge>
+      <TxBadge tone="danger">Cerrada</TxBadge>
+    </Demo>
+    <Demo label="TxAlert — rechazo (role=alert) y confirmación (role=status)">
+      <div class="flex w-full flex-col gap-3">
+        <TxAlert title="El documento no se registró:">
+          <ul><li>La fecha está fuera de la temporada.</li><li>El SKU no tiene precio para esta cuenta.</li></ul>
+        </TxAlert>
+        <TxAlert tone="success">Recibo de caja registrado.</TxAlert>
+      </div>
+    </Demo>
+  </Section>
+
+  <Section id="campos" title="Campos" intro="Etiqueta arriba, descripción, el control, el error al final; descripción y error quedan enlazados al control para lectores de pantalla. Las fechas se escriben día primero y se guardan en ISO.">
+    <Demo label="Interactivo (isla Vue en Astro)">
+      <FieldsDemo client:load />
+    </Demo>
+  </Section>
+
+  <Section id="seleccion" title="Selección" intro="TxSelect para listas cortas; TxCombobox para listas largas, buscando por cada palabra sin tildes. En modo picker cada elección se emite y el campo se vacía.">
+    <Demo label="Interactivo (isla Vue en Astro)">
+      <SelectionDemo client:load />
+    </Demo>
+  </Section>
+
+  <Section id="navegacion" title="Pestañas y diálogo">
+    <Demo label="Interactivo (isla Vue en Astro)">
+      <NavDemo client:load />
+    </Demo>
+  </Section>
+
+  <Section id="tablas" title="Tablas" intro="Cifras a la derecha con números tabulares; los totales por peso y una regla, nunca una banda.">
+    <Demo label='TxTable variant="framed"'>
+      <div class="w-full">
+        <TxTable variant="framed">
+          <thead><tr><th>Cuenta</th><th>Código EC</th><th class="tx-numeric">Despachado</th><th class="tx-numeric">Saldo</th></tr></thead>
+          <tbody>
+            <tr><td>Distribuidora del Norte</td><td>EC 09-24</td><td class="tx-numeric">$ 18.204.000</td><td class="tx-numeric">$ 6.120.500</td></tr>
+            <tr><td>Librería Central</td><td>EC 13-00</td><td class="tx-numeric">$ 9.871.250</td><td class="tx-numeric">$ 2.004.000</td></tr>
+            <tr><td>Colegio San José</td><td>EC 22-03</td><td class="tx-numeric">$ 4.300.000</td><td class="tx-numeric">$ 0</td></tr>
+            <tr class="tx-totals"><td>Total</td><td></td><td class="tx-numeric">$ 32.375.250</td><td class="tx-numeric">$ 8.124.500</td></tr>
+          </tbody>
+        </TxTable>
+      </div>
+    </Demo>
+  </Section>
+
+  <Section id="documento" title="Documento" intro="La superficie del documento es el único lugar donde aparece la crema: un documento registrado, como el negocio lo imprimiría.">
+    <Demo label="TxPageHeader + TxDocumentPaper">
+      <div class="w-full">
+        <TxPageHeader title="Remisión P.R. 1755" context="Librería Central · EC 13-00" />
+        <TxDocumentPaper
+          kind="Remisión"
+          number="P.R. 1755"
+          facts={[
+            { label: "Empresa", value: "Text One.com" },
+            { label: "Fecha", value: "30/06/2025" },
+            { label: "Cuenta", value: "Librería Central" },
+          ]}
+        >
+          <TxTable variant="paper">
+            <thead><tr><th>Código</th><th>Título</th><th class="tx-numeric">Cantidad</th><th class="tx-numeric">Precio</th><th class="tx-numeric">Valor</th></tr></thead>
+            <tbody>
+              <tr><td>TO-PRI-001</td><td>Lenguaje Mágico 1</td><td class="tx-numeric">12</td><td class="tx-numeric">$ 52.500,00</td><td class="tx-numeric">$ 630.000</td></tr>
+              <tr><td>TO-PRI-002</td><td>Lenguaje Mágico 2</td><td class="tx-numeric">1</td><td class="tx-numeric">$ 52.500,00</td><td class="tx-numeric">$ 52.500</td></tr>
+              <tr class="tx-totals"><td colspan="2">Total</td><td class="tx-numeric">13</td><td></td><td class="tx-numeric">$ 682.500</td></tr>
+            </tbody>
+          </TxTable>
+        </TxDocumentPaper>
+      </div>
+    </Demo>
+  </Section>
+
+  <Section id="uso" title="Cómo usarlo">
+    <Demo label="Una app Vue (Vite + Tailwind)" code={`// package.json
+"@textone-com/tokens": "link:../textone-ui/packages/tokens",
+"@textone-com/vue": "link:../textone-ui/packages/vue"
+
+/* styles.css */
+@import "tailwindcss";
+@import "@textone-com/tokens/tailwind.css";
+@import "@textone-com/vue/styles.css";
+
+// vite.config.ts — one Vue for app and design system
+resolve: { dedupe: ["vue", "reka-ui", "@internationalized/date"] }
+
+<script setup lang="ts">
+import { TxButton, TxTextInput } from "@textone-com/vue";
+</script>`} />
+    <Demo label="Un sitio Astro (solo tokens, o también componentes con @astrojs/vue)" code={`/* global.css */
+@import "tailwindcss";
+@import "@textone-com/tokens/tailwind.css";   /* bg-brand-700, text-cream-100, font-display… */
+
+// astro.config.mjs
+import vue from "@astrojs/vue";
+integrations: [vue()]
+
+---
+import { TxButton } from "@textone-com/vue";
+---
+<TxButton>Estático, sin JS</TxButton>
+<MiFormulario client:load />  <!-- isla interactiva -->`} />
+  </Section>
+</Docs>

@@ -1,0 +1,19 @@
+---
+import type { Token } from "../tokens";
+const { tokens } = Astro.props as { tokens: Token[] };
+---
+
+<ul class="m-0 grid list-none grid-cols-2 gap-3 p-0 sm:grid-cols-4 lg:grid-cols-6">
+  {
+    tokens.map((t) => (
+      <li class="overflow-hidden rounded-sm border border-rule-strong bg-surface">
+        <div class="h-14" style={`background: var(--${t.name})`} />
+        <div class="px-2 py-1.5">
+          <div class="text-xs font-medium text-ink">--{t.name}</div>
+          <div class="text-[11px] text-ink-secondary">{t.value}</div>
+          {t.note && <div class="text-[11px] text-ink-placeholder">{t.note}</div>}
+        </div>
+      </li>
+    ))
+  }
+</ul>
