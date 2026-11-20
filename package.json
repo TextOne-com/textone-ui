@@ -11,7 +11,9 @@
     "docs:build": "corepack pnpm --filter @textone-com/docs build",
     "typecheck": "corepack pnpm --filter @textone-com/vue typecheck",
     "test": "corepack pnpm --filter @textone-com/vue test",
-    "check": "corepack pnpm typecheck && corepack pnpm test && corepack pnpm docs:build",
-    "release:version": "node scripts/version.mjs"
+    "check": "corepack pnpm typecheck && corepack pnpm test && corepack pnpm docs:build && corepack pnpm stories:build",
+    "release:version": "node scripts/version.mjs",
+    "stories": "corepack pnpm --filter @textone-com/histoire dev",
+    "stories:build": "corepack pnpm --filter @textone-com/histoire build"
   }
 }

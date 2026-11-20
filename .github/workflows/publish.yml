@@ -31,7 +31,18 @@ jobs:
           done
       - run: pnpm typecheck
       - run: pnpm test
+      # A version is published once. Re-pushing a tag (or re-running this job) must not fail on it.
+      - name: Skip versions already on the registry
+        id: published
+        run: |
+          v="${GITHUB_REF_NAME#v}"
+          if npm view "@textone-com/vue@$v" version >/dev/null 2>&1; then
+            echo "already=true" >> "$GITHUB_OUTPUT"; echo "$v is already published"
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       # pnpm rewrites workspace:* to the real version in the published manifest.
-      - run: pnpm --filter "./packages/*" publish --no-git-checks
+      - if: steps.published.outputs.already != 'true'
+        run: pnpm --filter "./packages/*" publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

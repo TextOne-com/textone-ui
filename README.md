@@ -8,7 +8,8 @@ of components, one look.
 |---|---|---|
 | [`@textone-com/tokens`](packages/tokens) | The brand as CSS custom properties (`tokens.css`) and as a Tailwind v4 theme (`tailwind.css`) | `textone-web`, the staff UI, this repo's docs |
 | [`@textone-com/vue`](packages/vue) | Vue 3 components on [Reka UI](https://reka-ui.com), styled from the tokens with plain `tx-` CSS | the staff UI; any Astro page through `@astrojs/vue` |
-| [`apps/docs`](apps/docs) | The living reference: every token and component, rendered by Astro with Vue islands | people building screens |
+| [`apps/histoire`](apps/histoire) | **The component workshop** — every component's variants, live controls and its documentation, published at **[textone-com.github.io/textone-ui](https://textone-com.github.io/textone-ui/)** | people building screens |
+| [`apps/docs`](apps/docs) | A one-page brand reference rendered by Astro with Vue islands — proof the components work in Astro | the public site's authors |
 
 ## Why it is shaped this way
 
@@ -83,7 +84,8 @@ Node ≥ 22, pnpm through corepack.
 
 ```bash
 corepack pnpm install
-corepack pnpm docs        # http://localhost:4330 — the reference, live
+corepack pnpm stories     # http://localhost:4340 — Histoire, the component workshop
+corepack pnpm docs        # http://localhost:4330 — the Astro brand page
 corepack pnpm typecheck   # vue-tsc over the components
 corepack pnpm test        # vitest: dates, fields, buttons, radios
 ```
@@ -104,8 +106,18 @@ git tag v0.2.0 && git push --follow-tags  # .github/workflows/publish.yml publis
 The workflow refuses a tag that does not match the packages' version, and runs the type check and
 the tests before publishing. A published version cannot be replaced: fix forward with a new one.
 
+## Histoire
+
+Each component has a story in `apps/histoire/stories/<Component>.story.vue`: a **Playground**
+variant with controls for its props, variants for its states, and a `<docs lang="md">` block —
+when to use it, its props, slots, events and accessibility — shown in the **Docs** tab. A new
+component is not done until its story is.
+
+Histoire 1.0 (beta) needs Vite 7, so `apps/histoire` pins its own Vite while the rest of the
+workspace runs Vite 8. Every push to `main` rebuilds and deploys it to GitHub Pages
+(`.github/workflows/pages.yml`). Stories use made-up names and figures only: the site is public.
+
 ## Next
 
-- Storybook (or Histoire) for per-state stories, prop controls and the a11y addon.
 - Visual regression of `apps/docs` (Playwright screenshots) so a token change is reviewed as an
   image, not only as a diff.
