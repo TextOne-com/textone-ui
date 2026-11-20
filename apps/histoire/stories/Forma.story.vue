@@ -10,7 +10,7 @@ const radii = [
 </script>
 
 <template>
-  <Story title="Espaciado y forma" group="fundamentos" :layout="{ type: 'single', iframe: false }">
+  <Story title="Spacing & shape" group="fundamentos" :layout="{ type: 'single', iframe: false }">
     <div class="story-col" style="max-width: 760px">
       <h2 class="tx-title tx-title--3">Espaciado — rejilla de 4 px</h2>
       <div style="display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap">

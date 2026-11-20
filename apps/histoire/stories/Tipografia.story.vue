@@ -1,5 +1,5 @@
 <template>
-  <Story title="Tipografía" group="fundamentos" :layout="{ type: 'single', iframe: false }">
+  <Story title="Typography" group="fundamentos" :layout="{ type: 'single', iframe: false }">
     <div class="story-col" style="max-width: 720px">
       <div>
         <p class="tx-eyebrow">H1 · Fraunces 600 · .tx-title--1</p>

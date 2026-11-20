@@ -1,5 +1,5 @@
 <template>
-  <Story title="Introducción" group="top" docs-only />
+  <Story title="Introduction" group="top" docs-only />
 </template>
 
 <docs lang="md">

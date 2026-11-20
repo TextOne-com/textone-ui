@@ -50,13 +50,13 @@ export default defineConfig({
   tree: {
     groups: [
       { id: "top", title: "" },
-      { id: "fundamentos", title: "Fundamentos" },
-      { id: "acciones", title: "Acciones" },
-      { id: "estados", title: "Estados y mensajes" },
-      { id: "campos", title: "Campos" },
-      { id: "seleccion", title: "Selección" },
-      { id: "estructura", title: "Estructura" },
-      { id: "documento", title: "Datos y documento" },
+      { id: "fundamentos", title: "Foundations" },
+      { id: "acciones", title: "Actions" },
+      { id: "estados", title: "Feedback" },
+      { id: "campos", title: "Inputs" },
+      { id: "seleccion", title: "Selection" },
+      { id: "estructura", title: "Layout" },
+      { id: "documento", title: "Data display" },
     ],
   },
   backgroundPresets: [
