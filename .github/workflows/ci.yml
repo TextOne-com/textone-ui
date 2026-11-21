@@ -19,3 +19,23 @@ jobs:
       - run: pnpm test
       - run: pnpm docs:build
       - run: pnpm stories:build
+
+  # Every story variant, light and dark, against the references in
+  # apps/histoire/visual/__screenshots__ (made by the same image: `pnpm --filter
+  # @textone-com/histoire visual:update`). On a difference the report is kept as an artifact.
+  visual:
+    runs-on: ubuntu-24.04
+    container: mcr.microsoft.com/playwright:v1.64.1-noble
+    steps:
+      - uses: actions/checkout@v4
+      - run: corepack enable
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm stories:build
+      - run: pnpm --filter @textone-com/histoire visual:ci
+        env:
+          CI: "true"
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-report
+          path: apps/histoire/visual/report

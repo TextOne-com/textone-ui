@@ -3,9 +3,10 @@ import { TxSelect } from "@textone-com/vue";
 import { reactive } from "vue";
 
 const users = [
-  { value: "3", label: "Auxiliar local" },
-  { value: "4", label: "Aprobador local · Aprobador" },
-  { value: "5", label: "Usuario inactivo", disabled: true },
+  { value: "3", label: "Auxiliar local", description: "Registra remisiones y recibos", group: "Cartera" },
+  { value: "4", label: "Aprobador local", description: "Aprueba notas crédito y ajustes", group: "Cartera" },
+  { value: "6", label: "Bodega", description: "Conteos y entradas de inventario", group: "Inventario" },
+  { value: "5", label: "Usuario inactivo", disabled: true, group: "Inventario" },
 ];
 const state = reactive({
   value: null as string | null,
@@ -64,12 +65,14 @@ Una opción de una **lista corta** (hasta ~15). Para listas largas o que se busc
 | Prop | Tipo | Por defecto | |
 |---|---|---|---|
 | `modelValue` | `string \| null` | `null` | `null` muestra el placeholder |
-| `options` | `{ value: string; label: string; disabled?: boolean }[]` | — | `value` no puede ser `""` |
+| `options` | `{ value, label, description?, group?, disabled? }[]` | — | `value` no puede ser `""`. Con `group`, se listan bajo su título; con `description`, en una segunda línea |
 | `label`, `description`, `error`, `placeholder`, `disabled`, `id` | | | |
 | `clearable` | `boolean` | `false` | Botón × que deja el valor en `null` |
 | `clearLabel` | `string` | `"Quitar"` | Nombre accesible del × |
 | `inline` | `boolean` | `false` | Etiqueta al lado (barras de herramientas) |
 | `size`, `width` | | `sm` | |
+
+Para más de una docena de opciones usa **TxCombobox** (busca); para varias a la vez, **TxMultiSelect**.
 
 ## Accesibilidad
 

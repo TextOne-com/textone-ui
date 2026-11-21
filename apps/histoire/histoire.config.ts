@@ -44,7 +44,7 @@ export default defineConfig({
       },
     },
     defaultColorScheme: "light",
-    hideColorSchemeSwitch: true,
+    hideColorSchemeSwitch: false,
     storeColorScheme: false,
   },
   tree: {

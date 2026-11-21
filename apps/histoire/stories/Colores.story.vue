@@ -5,7 +5,7 @@ type Token = { name: string; value: string; note?: string };
 
 // Read from the package itself, so this page can never show a value the tokens do not have.
 const tokens: Token[] = [
-  ...tokensCss.matchAll(/--([a-z0-9-]+):\s*([^;]+);(?:[ \t]*\/\*[ \t]*(.*?)[ \t]*\*\/)?/g),
+  ...tokensCss.split("@media")[0].matchAll(/--([a-z0-9-]+):\s*([^;]+);(?:[ \t]*\/\*[ \t]*(.*?)[ \t]*\*\/)?/g),
 ].map(([, name = "", value = "", note]) => ({ name, value: value.trim(), note }));
 
 const group = (prefix: string) => tokens.filter((t) => t.name.startsWith(prefix));
