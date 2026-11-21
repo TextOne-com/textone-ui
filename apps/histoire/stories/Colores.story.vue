@@ -43,7 +43,7 @@ const sections = [
 </script>
 
 <template>
-  <Story title="Colors" group="fundamentos" :layout="{ type: 'single', iframe: false }">
+  <Story title="Colors" group="fundamentos" :layout="{ type: 'single', iframe: true }">
     <div class="story-col" style="max-width: none">
       <section v-for="s in sections" :key="s.title">
         <h2 class="tx-title tx-title--3" style="margin-bottom: 12px">{{ s.title }}</h2>
