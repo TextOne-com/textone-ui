@@ -56,6 +56,30 @@
   --eyebrow: var(--brand-300); /* uppercase captions on white; brand-500 on cream */
   --paper: var(--cream-100);
   --paper-border: var(--cream-300);
+  --on-danger: #ffffff; /* text on a danger fill: buttons, counts */
+  --inverse: var(--brand-900); /* toasts: the one dark thing on a light page */
+  --on-inverse: #ffffff;
+  --on-inverse-secondary: var(--brand-200);
+  --scrim: rgba(44, 14, 86, 0.35); /* behind dialogs and sheets */
+  --shadow-float: 0 12px 32px rgba(44, 14, 86, 0.28);
+
+  /* Life in the staff app (D-75): light and depth from the same ramp, no new hues. */
+  --app-canvas:
+    radial-gradient(900px 420px at 12% -8%, rgba(135, 107, 162, 0.16), transparent 60%),
+    radial-gradient(700px 380px at 100% 0%, rgba(241, 234, 216, 0.9), transparent 70%),
+    var(--cream-50); /* a lilac glow from the top-left over warm cream */
+  --app-header: rgba(255, 255, 255, 0.72); /* translucent, over a blur */
+  --shadow-card: 0 1px 2px rgba(44, 14, 86, 0.06), 0 8px 24px -12px rgba(44, 14, 86, 0.18);
+  --shadow-card-lg: 0 1px 2px rgba(44, 14, 86, 0.06), 0 12px 32px -16px rgba(44, 14, 86, 0.22);
+  --shadow-control: 0 1px 2px rgba(44, 14, 86, 0.06), 0 4px 12px -6px rgba(44, 14, 86, 0.15);
+  --radius-card: 12px;
+  /* The page's one brand moment: the lead figure on the purple of the logo, both themes. */
+  --feature: linear-gradient(135deg, #431581 0%, #5e377e 55%, #876ba2 120%);
+  --on-feature: #ffffff;
+  --on-feature-secondary: #e3d7f1;
+  --table-head: var(--cream-100); /* tables' header row: paper, so the purple is the data's */
+  --table-head-rule: var(--cream-300);
+  --focus-band: var(--brand-50); /* the column a table exists for (the saldo) */
 
   /* Spacing on a 4px grid */
   --space-1: 4px;
@@ -92,4 +116,97 @@
   --font-ui: "Plus Jakarta Sans", system-ui, sans-serif;
 
   --duration-fast: 120ms;
+}
+
+/*
+ * Dark. The ladders flip — 50 becomes the darkest tint, 900 the lightest ink — so every role
+ * and every component that reads them follows without its own dark rules. The accent turns to
+ * a light lilac with dark text on it: white on a mid purple would not reach 4.5:1. Follows the
+ * system unless the app sets data-theme="light" or "dark" on <html>.
+ * Measured 2026-11-21: ink on surface 14.9:1, secondary 8.1:1, accent on surface 8.6:1,
+ * on-accent on accent 9.7:1, danger-700 on surface 6.4:1.
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --brand-50: #251b35;
+    --brand-100: #33264a;
+    --brand-200: #4a3a6b;
+    --brand-300: #8d77ad;
+    --brand-500: #bba8d8;
+    --brand-700: #c9adf6;
+    --brand-800: #d9c4fa;
+    --brand-900: #f2ecfa;
+    --cream-50: #120e18;
+    --cream-100: #1c1626;
+    --cream-300: #3a3048;
+    --success-700: #74d4ab;
+    --success-50: #13291f;
+    --warning-700: #f0c46a;
+    --warning-50: #2c2210;
+    --danger-700: #f09090;
+    --danger-50: #321a1c;
+    --info-700: #8cc4f0;
+    --info-50: #13222f;
+    --surface: #1a1423;
+    --on-accent: #1b1029;
+    --on-danger: #1b1029;
+    --accent-outline: rgba(201, 173, 246, 0.35);
+    --inverse: #2f2442;
+    --on-inverse: #f2ecfa;
+    --on-inverse-secondary: #bba8d8;
+    --scrim: rgba(5, 2, 10, 0.6);
+    --shadow-overlay: 0 8px 28px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(201, 173, 246, 0.1);
+    --shadow-float: 0 12px 36px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(201, 173, 246, 0.12);
+    --app-canvas:
+      radial-gradient(900px 420px at 12% -8%, rgba(135, 107, 162, 0.14), transparent 60%),
+      var(--cream-50);
+    --app-header: rgba(26, 20, 35, 0.72);
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(201, 173, 246, 0.08);
+    --shadow-card-lg: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(201, 173, 246, 0.1);
+    --shadow-control: 0 0 0 1px rgba(201, 173, 246, 0.1);
+    --table-head: var(--brand-50);
+    --table-head-rule: var(--brand-200);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --brand-50: #251b35;
+  --brand-100: #33264a;
+  --brand-200: #4a3a6b;
+  --brand-300: #8d77ad;
+  --brand-500: #bba8d8;
+  --brand-700: #c9adf6;
+  --brand-800: #d9c4fa;
+  --brand-900: #f2ecfa;
+  --cream-50: #120e18;
+  --cream-100: #1c1626;
+  --cream-300: #3a3048;
+  --success-700: #74d4ab;
+  --success-50: #13291f;
+  --warning-700: #f0c46a;
+  --warning-50: #2c2210;
+  --danger-700: #f09090;
+  --danger-50: #321a1c;
+  --info-700: #8cc4f0;
+  --info-50: #13222f;
+  --surface: #1a1423;
+  --on-accent: #1b1029;
+  --on-danger: #1b1029;
+  --accent-outline: rgba(201, 173, 246, 0.35);
+  --inverse: #2f2442;
+  --on-inverse: #f2ecfa;
+  --on-inverse-secondary: #bba8d8;
+  --scrim: rgba(5, 2, 10, 0.6);
+  --shadow-overlay: 0 8px 28px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(201, 173, 246, 0.1);
+  --shadow-float: 0 12px 36px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(201, 173, 246, 0.12);
+  --app-canvas:
+    radial-gradient(900px 420px at 12% -8%, rgba(135, 107, 162, 0.14), transparent 60%),
+    var(--cream-50);
+  --app-header: rgba(26, 20, 35, 0.72);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(201, 173, 246, 0.08);
+  --shadow-card-lg: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(201, 173, 246, 0.1);
+  --shadow-control: 0 0 0 1px rgba(201, 173, 246, 0.1);
+  --table-head: var(--brand-50);
+  --table-head-rule: var(--brand-200);
 }

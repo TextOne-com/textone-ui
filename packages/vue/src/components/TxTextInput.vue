@@ -24,8 +24,13 @@ const props = withDefaults(
     id?: string;
     /** Tabular figures, for money and quantities. */
     figures?: boolean;
+    /** A × that empties the field (Escape does too). */
+    clearable?: boolean;
+    clearLabel?: string;
+    /** A limit, shown as "12 / 80" under the field once the text nears it. */
+    maxlength?: number;
   }>(),
-  { type: "text", size: "sm", align: "left" },
+  { type: "text", size: "sm", align: "left", clearLabel: "Borrar" },
 );
 
 const model = defineModel<string>({ default: "" });
@@ -52,6 +57,23 @@ const widthStyle = computed(() =>
     : { width: typeof props.width === "number" ? `${props.width}px` : props.width },
 );
 
+/** The counter appears from 80 % of the limit: before that it is noise. */
+const showCount = computed(
+  () => props.maxlength !== undefined && model.value.length >= props.maxlength * 0.8,
+);
+const canClear = computed(() => props.clearable && !!model.value && !props.disabled && !props.readonly);
+function clear() {
+  model.value = "";
+  input.value?.focus();
+}
+function onKeydown(event: KeyboardEvent) {
+  if (event.key === "Escape" && canClear.value) {
+    event.stopPropagation();
+    model.value = "";
+  }
+  emit("keydown", event);
+}
+
 defineExpose({ focus: () => input.value?.focus(), el: input });
 </script>
 
@@ -68,7 +90,7 @@ defineExpose({ focus: () => input.value?.focus(), el: input });
   >
     <div
       class="tx-input-wrap"
-      :class="[`tx-input-wrap--${size}`, { 'tx-input-wrap--left': $slots.left, 'tx-input-wrap--right': $slots.right }]"
+      :class="[`tx-input-wrap--${size}`, { 'tx-input-wrap--left': $slots.left, 'tx-input-wrap--right': $slots.right || clearable }]"
     >
       <span v-if="$slots.left" class="tx-input-wrap__section tx-input-wrap__section--left">
         <slot name="left" />
@@ -86,14 +108,31 @@ defineExpose({ focus: () => input.value?.focus(), el: input });
         :required="required"
         :aria-invalid="error ? true : undefined"
         :aria-describedby="describedBy"
+        :maxlength="maxlength"
         v-bind="control"
         @blur="emit('blur', $event)"
         @focus="emit('focus', $event)"
-        @keydown="emit('keydown', $event)"
+        @keydown="onKeydown"
       />
-      <span v-if="$slots.right" class="tx-input-wrap__section tx-input-wrap__section--right">
+      <span v-if="$slots.right || canClear" class="tx-input-wrap__section tx-input-wrap__section--right">
+        <Transition name="tx-pop">
+          <button
+            v-if="canClear"
+            type="button"
+            class="tx-date__clear"
+            :aria-label="clearLabel"
+            :title="clearLabel"
+            tabindex="-1"
+            @click="clear"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17" /></svg>
+          </button>
+        </Transition>
         <slot name="right" />
       </span>
+    </div>
+    <div v-if="showCount" class="tx-field__counter" :data-full="model.length >= (maxlength ?? 0) || undefined" aria-live="polite">
+      {{ model.length }} / {{ maxlength }}
     </div>
     <slot name="after" />
   </TxField>

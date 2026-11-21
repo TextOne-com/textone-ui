@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import {
   SelectContent,
+  SelectGroup,
+  SelectLabel,
   SelectItem,
   SelectItemIndicator,
   SelectItemText,
@@ -12,14 +14,16 @@ import {
 } from "reka-ui";
 import { computed, useId } from "vue";
 import { useSplitAttrs } from "../internal/attrs";
+import { groupOptions } from "../internal/options";
 import type { Option, Size } from "../internal/types";
 import TxField from "./TxField.vue";
 
 defineOptions({ inheritAttrs: false });
 
 /**
- * A choice from a short list. The trigger is a combobox named by the label. `clearable` adds a
- * button that empties the choice (the value becomes null).
+ * A choice from a short list (up to a dozen; past that, TxCombobox, which searches). The trigger
+ * is a combobox named by the label. Options can carry a `description` (a quieter second line)
+ * and a `group` (listed under a heading). `clearable` adds a button that empties the choice.
  */
 const props = withDefaults(
   defineProps<{
@@ -41,6 +45,7 @@ const props = withDefaults(
 );
 
 const model = defineModel<string | null>({ default: null });
+const groups = computed(() => groupOptions(props.options));
 
 const autoId = useId();
 const triggerId = computed(() => props.id ?? autoId);
@@ -85,22 +90,28 @@ const inner = computed({
           </svg>
         </SelectTrigger>
         <SelectPortal>
-          <SelectContent position="popper" :side-offset="4" class="tx-popover tx-listbox">
+          <SelectContent position="popper" :side-offset="6" :collision-padding="12" class="tx-popover tx-listbox">
             <SelectViewport class="tx-listbox__viewport">
-              <SelectItem
-                v-for="option in options"
-                :key="option.value"
-                :value="option.value"
-                :disabled="option.disabled"
-                class="tx-listbox__item"
-              >
-                <SelectItemText>{{ option.label }}</SelectItemText>
-                <SelectItemIndicator class="tx-listbox__check">
-                  <svg viewBox="0 0 16 16" aria-hidden="true">
-                    <path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.6" />
-                  </svg>
-                </SelectItemIndicator>
-              </SelectItem>
+              <SelectGroup v-for="g in groups" :key="g.label ?? '_'">
+                <SelectLabel v-if="g.label" class="tx-listbox__group">{{ g.label }}</SelectLabel>
+                <SelectItem
+                  v-for="option in g.options"
+                  :key="option.value"
+                  :value="option.value"
+                  :disabled="option.disabled"
+                  class="tx-listbox__item"
+                >
+                  <span class="tx-listbox__text">
+                    <SelectItemText>{{ option.label }}</SelectItemText>
+                    <span v-if="option.description" class="tx-listbox__description">{{ option.description }}</span>
+                  </span>
+                  <SelectItemIndicator class="tx-listbox__check">
+                    <svg viewBox="0 0 16 16" aria-hidden="true">
+                      <path d="M3 8.5l3 3 7-7" fill="none" stroke="currentColor" stroke-width="1.6" />
+                    </svg>
+                  </SelectItemIndicator>
+                </SelectItem>
+              </SelectGroup>
             </SelectViewport>
           </SelectContent>
         </SelectPortal>

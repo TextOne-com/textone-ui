@@ -73,7 +73,7 @@ watch(
 const visible = computed(() => {
   const query = search.value.trim();
   const showAll = query === "" || (!props.picker && query === labelOf(model.value));
-  const test = props.filter ?? ((o: Option, q: string) => matchesAll(q, [o.label, o.keywords]));
+  const test = props.filter ?? ((o: Option, q: string) => matchesAll(q, [o.label, o.keywords, o.description]));
   const out: Option[] = [];
   for (const option of props.options) {
     if (showAll || test(option, query)) out.push(option);
@@ -193,7 +193,12 @@ watch(open, (isOpen) => {
               :disabled="option.disabled"
               class="tx-listbox__item"
             >
-              <slot name="option" :option="option">{{ option.label }}</slot>
+              <slot name="option" :option="option">
+                <span class="tx-listbox__text">
+                  <span>{{ option.label }}</span>
+                  <span v-if="option.description" class="tx-listbox__description">{{ option.description }}</span>
+                </span>
+              </slot>
             </ComboboxItem>
           </ComboboxViewport>
         </ComboboxContent>

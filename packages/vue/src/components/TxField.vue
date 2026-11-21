@@ -19,7 +19,7 @@ defineProps<{
 
 <template>
   <component :is="as ?? 'div'" class="tx-field" :role="as === 'fieldset' ? 'radiogroup' : undefined" :aria-labelledby="as === 'fieldset' && label ? `${id}-label` : undefined">
-    <label v-if="label && as !== 'fieldset'" :for="id" class="tx-field__label">
+    <label v-if="label && as !== 'fieldset'" :id="`${id}-label`" :for="id" class="tx-field__label">
       {{ label }}<span v-if="required" class="tx-field__required" aria-hidden="true"> *</span>
     </label>
     <span v-else-if="label" :id="`${id}-label`" class="tx-field__label">{{ label }}</span>
@@ -38,8 +38,14 @@ defineProps<{
     >
       {{ description }}
     </div>
-    <div v-if="error && typeof error === 'string'" :id="`${id}-error`" class="tx-field__error">
-      {{ error }}
-    </div>
+    <Transition name="tx-error">
+      <div v-if="error && typeof error === 'string'" :id="`${id}-error`" class="tx-field__error" role="alert">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 8v4.5M12 16h.01" />
+        </svg>
+        <span>{{ error }}</span>
+      </div>
+    </Transition>
   </component>
 </template>
