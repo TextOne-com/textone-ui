@@ -14,11 +14,11 @@ const tabs = [
 
 <template>
   <Story title="TxTabs" group="estructura">
-    <Variant title="Vistas de una cuenta">
+    <Variant title="Views of an account">
       <div class="story-col" style="max-width: 720px">
         <TxTabs v-model="view" :tabs="tabs" label="Vistas de la cuenta">
           <template #default="{ active }">
-            <p style="margin: 0">Contenido de <strong>{{ active }}</strong>.</p>
+            <p style="margin: 0">Content of <strong>{{ active }}</strong>.</p>
           </template>
         </TxTabs>
       </div>
@@ -29,8 +29,8 @@ const tabs = [
 <docs lang="md">
 # TxTabs
 
-Varias **vistas de una misma cosa**, una a la vez (resumen, movimientos, matriz…). El slot es el
-panel de la pestaña activa: dibuja lo que nombra `modelValue`.
+Several **views of the same thing**, one at a time (summary, movements, matrix…). The slot is the
+active tab's panel: draw whatever `modelValue` names.
 
 ```vue
 <TxTabs v-model="vista" :tabs="tabs" label="Vistas de la cuenta">
@@ -41,12 +41,12 @@ panel de la pestaña activa: dibuja lo que nombra `modelValue`.
 </TxTabs>
 ```
 
-| Prop | Tipo | |
+| Prop | Type | |
 |---|---|---|
-| `modelValue` | `string` (requerido) | La pestaña activa |
+| `modelValue` | `string` (required) | The active tab |
 | `tabs` | `{ value; label; disabled? }[]` | |
-| `label` | `string` | Nombre accesible de la lista |
+| `label` | `string` | The list's accessible name |
 
-Guarda la pestaña en la URL (`?vista=matriz`) para que sobreviva a una recarga y se pueda
-compartir. Pestañas reales: `role="tab"`, `aria-selected`, flechas para moverse.
+Keep the tab in the URL (`?vista=matriz`) so it survives a reload and can be shared. Real tabs:
+`role="tab"`, `aria-selected`, arrow keys to move.
 </docs>

@@ -4,7 +4,7 @@ import { TxAppShell, TxBrandLockup, TxPageHeader } from "@textone-com/vue";
 
 <template>
   <Story title="TxAppShell" group="estructura" :layout="{ type: 'single', iframe: true }">
-    <Variant title="El marco de una herramienta interna">
+    <Variant title="The frame of an internal tool">
       <div style="height: 520px">
         <TxAppShell :header-height="60" :navbar-width="220" style="height: 100%">
           <template #header>
@@ -53,23 +53,22 @@ import { TxAppShell, TxBrandLockup, TxPageHeader } from "@textone-com/vue";
 <docs lang="md">
 # TxAppShell
 
-El marco de una herramienta interna: **barra superior** (lockup, contexto, usuario), **columna de
-navegación** a la izquierda y la **página**. La navegación comparte el fondo crema; una línea fina
-la separa.
+The frame of an internal tool: a **top bar** (lockup, context, user), a **navigation column** on
+the left and the **page**. The navigation shares the cream background; a thin rule separates it.
 
 ```vue
 <TxAppShell :header-height="60">
-  <template #header>…lockup y controles…</template>
+  <template #header>…lockup and controls…</template>
   <template #navbar><nav aria-label="Principal">…</nav></template>
   <RouterView />
 </TxAppShell>
 ```
 
-| Prop | Por defecto |
+| Prop | Default |
 |---|---|
 | `navbarWidth` | `232` |
 | `headerHeight` | `52` |
 
-La navegación sigue al sitio: **píldoras** en negrita, la activa sobre `--accent-tint` en morado;
-etiquetas de grupo como `.tx-eyebrow` en `--ink-secondary` (sobre crema, `brand-300` no llega a AA).
+The navigation follows the website: bold **pills**, the active one in purple on `--accent-tint`;
+group labels as `.tx-eyebrow` in `--ink-secondary` (on cream, `brand-300` does not reach AA).
 </docs>

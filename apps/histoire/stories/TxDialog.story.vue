@@ -8,7 +8,7 @@ const note = ref("");
 
 <template>
   <Story title="TxDialog" group="estructura">
-    <Variant title="Aprobar una solicitud">
+    <Variant title="Approving a request">
       <div class="story-pad">
         <TxButton @click="open = true">Aprobar…</TxButton>
         <TxDialog
@@ -31,8 +31,8 @@ const note = ref("");
 <docs lang="md">
 # TxDialog
 
-Una **decisión modal**: título, cuerpo y las acciones en `footer`. Escape y × lo cierran; el foco
-queda atrapado dentro mientras está abierto y vuelve al botón que lo abrió al cerrarse.
+A **modal decision**: title, body and the actions in `footer`. Escape and × close it; focus is
+trapped inside while it is open and returns to the button that opened it when it closes.
 
 ```vue
 <TxDialog v-model:open="open" title="Aprobar la solicitud" initial-focus="#nota">
@@ -44,14 +44,14 @@ queda atrapado dentro mientras está abierto y vuelve al botón que lo abrió al
 </TxDialog>
 ```
 
-| Prop | Tipo | Por defecto | |
+| Prop | Type | Default | |
 |---|---|---|---|
 | `open` | `boolean` (`v-model:open`) | `false` | |
-| `title` | `string` (requerido) | — | En Fraunces, morado |
-| `description` | `string` | — | Bajo el título; se anuncia con el diálogo |
-| `width` | `number` | `460` | px, nunca más ancho que la pantalla |
-| `initialFocus` | `string` | — | Selector CSS a enfocar al abrir (si no, el ×) |
+| `title` | `string` (required) | — | In Fraunces, purple |
+| `description` | `string` | — | Below the title; announced with the dialog |
+| `width` | `number` | `460` | px, never wider than the screen |
+| `initialFocus` | `string` | — | CSS selector to focus on open (otherwise the ×) |
 | `closeLabel` | `string` | `"Cerrar"` | |
 
-Úsalo para decidir, no para mostrar información que podría estar en la página.
+Use it to decide, not to show information that could live on the page.
 </docs>

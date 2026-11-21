@@ -42,7 +42,7 @@ const view = ref("pendientes");
         picker
         @select="(v) => added.push(v)"
       />
-      <p class="m-0 mt-1 text-xs text-ink-secondary">Agregados: {{ added.join(", ") || "ninguno" }}</p>
+      <p class="m-0 mt-1 text-xs text-ink-secondary">Added: {{ added.join(", ") || "none" }}</p>
     </div>
     <TxSegmentedControl
       v-model="view"

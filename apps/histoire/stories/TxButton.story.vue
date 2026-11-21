@@ -28,7 +28,7 @@ const state = reactive({
         </TxButton>
       </div>
       <template #controls>
-        <HstText v-model="state.label" title="Texto" />
+        <HstText v-model="state.label" title="Text" />
         <HstSelect v-model="state.variant" title="variant" :options="['filled', 'default', 'subtle', 'light', 'danger']" />
         <HstButtonGroup v-model="state.size" title="size" :options="['xs', 'sm', 'md']" />
         <HstCheckbox v-model="state.disabled" title="disabled" />
@@ -37,7 +37,7 @@ const state = reactive({
       </template>
     </Variant>
 
-    <Variant title="Variantes">
+    <Variant title="Variants">
       <div class="story-pad">
         <TxButton>Registrar remisión</TxButton>
         <TxButton variant="default">Ver la cuenta</TxButton>
@@ -47,7 +47,7 @@ const state = reactive({
       </div>
     </Variant>
 
-    <Variant title="Tamaños">
+    <Variant title="Sizes">
       <div class="story-pad" style="align-items: center">
         <TxButton size="xs">xs · 26px</TxButton>
         <TxButton size="sm">sm · 32px</TxButton>
@@ -55,7 +55,7 @@ const state = reactive({
       </div>
     </Variant>
 
-    <Variant title="Estados">
+    <Variant title="States">
       <div class="story-pad">
         <TxButton disabled>Deshabilitado</TxButton>
         <TxButton loading>Registrando</TxButton>
@@ -63,7 +63,7 @@ const state = reactive({
       </div>
     </Variant>
 
-    <Variant title="Con ícono">
+    <Variant title="With icon">
       <div class="story-pad">
         <TxButton variant="default">
           <template #left><IconDownload :size="16" stroke="2" aria-hidden="true" /></template>
@@ -81,8 +81,8 @@ const state = reactive({
 <docs lang="md">
 # TxButton
 
-Un botón — o, con `as`, un **enlace con forma de botón** (`RouterLink`, `a`). Píldora, como los
-botones del sitio público.
+A button — or, with `as`, a **link shaped like a button** (`RouterLink`, `a`). A pill, like the
+public website's buttons.
 
 ```vue
 <TxButton @click="save">Registrar remisión</TxButton>
@@ -90,29 +90,29 @@ botones del sitio público.
 <TxButton type="submit" :loading="mutation.isPending">Registrar</TxButton>
 ```
 
-| Prop | Tipo | Por defecto | |
+| Prop | Type | Default | |
 |---|---|---|---|
-| `variant` | `filled \| default \| subtle \| light \| danger` | `filled` | Ver abajo |
+| `variant` | `filled \| default \| subtle \| light \| danger` | `filled` | See below |
 | `size` | `xs \| sm \| md` | `sm` | 26 / 32 / 40 px |
-| `as` | `string \| Component` | `"button"` | Para navegar: `RouterLink`, `"a"` |
-| `type` | `button \| submit \| reset` | `button` | Solo cuando `as` es `button` |
+| `as` | `string \| Component` | `"button"` | To navigate: `RouterLink`, `"a"` |
+| `type` | `button \| submit \| reset` | `button` | Only when `as` is `button` |
 | `disabled` | `boolean` | `false` | |
-| `loading` | `boolean` | `false` | Muestra un spinner, `aria-busy`, y no se puede pulsar |
+| `loading` | `boolean` | `false` | Shows a spinner, sets `aria-busy`, and cannot be pressed |
 | `fullWidth` | `boolean` | `false` | |
 
-**Slots:** por defecto (texto), `left` y `right` (íconos).
+**Slots:** default (text), `left` and `right` (icons).
 
-## Qué variante
+## Which variant
 
-- **filled** — la acción principal de la pantalla. Una por pantalla.
-- **default** — acciones secundarias (contorno morado suave, como en el sitio).
-- **light** — una secundaria con más presencia ("Registrar otro").
-- **subtle** — acciones terciarias dentro de tablas o listas.
-- **danger** — irreversibles o de rechazo.
+- **filled** — the screen's main action. One per screen.
+- **default** — secondary actions (soft purple outline, as on the website).
+- **light** — a secondary action with more presence ("Registrar otro").
+- **subtle** — tertiary actions inside tables or lists.
+- **danger** — irreversible or rejecting actions.
 
-## Accesibilidad
+## Accessibility
 
-- Como enlace deshabilitado se renderiza **sin `href`** y con `aria-disabled`: no se puede seguir.
-- Un botón solo con ícono es `TxIconButton`, que exige `label`.
-- El foco se ve siempre (anillo morado de 2 px).
+- A disabled link renders **without `href`** and with `aria-disabled`: it cannot be followed.
+- An icon-only button is `TxIconButton`, which requires `label`.
+- Focus is always visible (2 px purple ring).
 </docs>

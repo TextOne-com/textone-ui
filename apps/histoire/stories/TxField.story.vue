@@ -7,7 +7,7 @@ const id = useId();
 
 <template>
   <Story title="TxField" group="campos">
-    <Variant title="Un control propio en el marco">
+    <Variant title="A custom control in the frame">
       <div class="story-col">
         <TxField :id="id" label="Color de la portada" description="Elija uno de la paleta institucional." error="Requerido">
           <input :id="id" type="color" value="#431581" :aria-describedby="`${id}-description ${id}-error`" />
@@ -20,8 +20,8 @@ const id = useId();
 <docs lang="md">
 # TxField
 
-El marco que usan todos los campos: **etiqueta → descripción → control → error**. Úsalo solo para
-envolver un control que no está en el sistema; los campos del sistema ya lo traen.
+The frame every field uses: **label → description → control → error**. Use it only to wrap a
+control that is not in the system; the system's fields already include it.
 
 ```vue
 <TxField :id="id" label="Color" description="…" :error="err">
@@ -29,13 +29,13 @@ envolver un control que no está en el sistema; los campos del sistema ya lo tra
 </TxField>
 ```
 
-| Prop | Tipo | |
+| Prop | Type | |
 |---|---|---|
-| `id` | `string` (requerido) | El `id` de tu control; la etiqueta lo apunta |
+| `id` | `string` (required) | Your control's `id`; the label points to it |
 | `label`, `description`, `error`, `required` | | |
 | `descriptionPosition` | `above \| below` | |
-| `as` | `div \| fieldset` | `fieldset` para un grupo de radios |
+| `as` | `div \| fieldset` | `fieldset` for a radio group |
 
-La descripción y el error se renderizan con `id="<id>-description"` y `id="<id>-error"`: enlázalos
-con `aria-describedby` en tu control.
+The description and the error render with `id="<id>-description"` and `id="<id>-error"`: link
+them with `aria-describedby` on your control.
 </docs>

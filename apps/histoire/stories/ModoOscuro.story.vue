@@ -7,7 +7,7 @@ const value = computed({ get: () => theme.value as string, set: (v: string) => s
 </script>
 
 <template>
-  <Story title="Modo oscuro" group="fundamentos">
+  <Story title="Dark mode" group="fundamentos">
     <Variant title="useTheme">
       <div class="story-col">
         <TxSegmentedControl
@@ -26,36 +26,35 @@ const value = computed({ get: () => theme.value as string, set: (v: string) => s
           <TxBadge tone="danger">Rechazada</TxBadge>
         </div>
         <TxTextInput label="Valor recibido" placeholder="$ 0" :width="240" />
-        <p class="story-note">También el interruptor de sol/luna de Histoire cambia todas las historias.</p>
+        <p class="story-note">The Histoire sun/moon toggle also switches every story.</p>
       </div>
     </Variant>
   </Story>
 </template>
 
 <docs lang="md">
-# Modo oscuro
+# Dark mode
 
-Los tokens **invierten las rampas**: `--brand-50` pasa a ser el tinte más oscuro y
-`--brand-900` la tinta más clara; la crema se vuelve el fondo nocturno. Así cada rol y cada
-componente que lee los tokens se adapta sin reglas propias. El acento cambia a un lila claro
-con texto oscuro encima: blanco sobre un morado medio no llega a 4.5:1.
+The tokens **invert the ramps**: `--brand-50` becomes the darkest tint and `--brand-900` the
+lightest ink; the cream becomes the night background. That way every role, and every component
+that reads the tokens, adapts without rules of its own. The accent switches to a light lilac with
+dark text on it: white on a mid purple does not reach 4.5:1.
 
-**Es opcional.** Sin indicación los tokens quedan en claro, aunque el dispositivo esté en oscuro:
-así una página que no tiene diseño oscuro (la web pública, con sus `bg-white`) nunca se invierte
-a medias. Una app lo activa poniendo `data-theme` en `<html>`: `"dark"`, `"light"` o `"system"`
-(sigue al dispositivo). `applyStoredTheme()` lo hace con la elección guardada, y por defecto
-`"system"`:
+**It is opt-in.** With no setting the tokens stay light, even if the device is in dark mode: that
+way a page with no dark design (the public site, with its `bg-white`) is never half inverted. An
+app turns it on by setting `data-theme` on `<html>`: `"dark"`, `"light"` or `"system"` (follows
+the device). `applyStoredTheme()` does it with the saved choice, defaulting to `"system"`:
 
 ```ts
 import { applyStoredTheme, useTheme } from "@textone-com/vue";
 
-applyStoredTheme(); // en main.ts, antes de montar: activa el tema (por defecto, el del sistema)
+applyStoredTheme(); // in main.ts, before mounting: applies the theme (the system's by default)
 
-const { theme, setTheme } = useTheme(); // "system" | "light" | "dark", recordado en el dispositivo
+const { theme, setTheme } = useTheme(); // "system" | "light" | "dark", remembered on the device
 ```
 
-Roles nuevos para lo que no debe invertirse a ciegas: `--inverse` / `--on-inverse` (toasts),
-`--on-danger`, `--scrim` (fondo de diálogos) y `--shadow-float`.
+New roles for what must not be inverted blindly: `--inverse` / `--on-inverse` (toasts),
+`--on-danger`, `--scrim` (dialog backdrop) and `--shadow-float`.
 
-**Regla para componentes nuevos:** nada de `#fff` ni `rgba(…)` fijos; siempre un rol.
+**Rule for new components:** no hard-coded `#fff` or `rgba(…)`; always a role.
 </docs>

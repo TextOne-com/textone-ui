@@ -4,7 +4,7 @@ import { TxAvatar } from "@textone-com/vue";
 
 <template>
   <Story title="TxAvatar" group="documento">
-    <Variant title="Tamaños y vacío">
+    <Variant title="Sizes and empty">
       <div class="story-pad" style="display: flex; gap: 16px; align-items: center">
         <TxAvatar name="Aprobador local" :size="24" />
         <TxAvatar name="Auxiliar local" :size="32" />
@@ -18,11 +18,11 @@ import { TxAvatar } from "@textone-com/vue";
 <docs lang="md">
 # TxAvatar
 
-Una persona como **sus iniciales** en un círculo morado: primera y última palabra
-("Aprobador local" → AL). Sin nombre, un contorno vacío: "nadie elegido". Es decorativo; el
-nombre va en el texto de al lado.
+A person as **their initials** in a purple circle: first and last word
+("Aprobador local" → AL). With no name, an empty outline: "nobody chosen". It is decorative; the
+name goes in the text next to it.
 
-| Prop | Tipo | Por defecto |
+| Prop | Type | Default |
 |---|---|---|
 | `name` | `string \| null` | — |
 | `size` | `number` | `32` |

@@ -13,11 +13,11 @@ const state = reactive({
     <Variant title="Playground" :init-state="() => state">
       <div class="story-pad"><TxBadge :tone="state.tone">{{ state.label }}</TxBadge></div>
       <template #controls>
-        <HstText v-model="state.label" title="Texto" />
+        <HstText v-model="state.label" title="Text" />
         <HstSelect v-model="state.tone" title="tone" :options="['neutral', 'brand', 'info', 'success', 'warning', 'danger']" />
       </template>
     </Variant>
-    <Variant title="Tonos">
+    <Variant title="Tones">
       <div class="story-pad">
         <TxBadge>Retirado</TxBadge>
         <TxBadge tone="brand">Negociado</TxBadge>
@@ -33,28 +33,28 @@ const state = reactive({
 <docs lang="md">
 # TxBadge
 
-Un estado en una palabra — el chip del sitio: píldora, negrita, el `-700` del tono sobre su `-50`
-(todos AA).
+A status in one word — the site's chip: a pill, bold, the tone's `-700` on its `-50`
+(all AA).
 
 ```vue
 <TxBadge tone="success">Aprobada</TxBadge>
 ```
 
-| Prop | Tipo | Por defecto |
+| Prop | Type | Default |
 |---|---|---|
 | `tone` | `neutral \| brand \| info \| success \| warning \| danger` | `neutral` |
 
-**Slot:** la palabra. Siempre lleva una: el color solo nunca es el mensaje.
+**Slot:** the word. Always include one: color alone is never the message.
 
-| Tono | Úsalo para |
+| Tone | Use it for |
 |---|---|
-| `neutral` | Estados que no piden nada (retirado, inactivo) |
-| `brand` | Distinciones de la marca (negociado, novedad) |
-| `info` | Pendiente, en curso |
-| `success` | Aprobado, registrado |
-| `warning` | Requiere atención, suspendido |
-| `danger` | Cerrado, rechazado, negativo |
+| `neutral` | States that ask for nothing (retired, inactive) |
+| `brand` | Brand distinctions (negotiated, new) |
+| `info` | Pending, in progress |
+| `success` | Approved, recorded |
+| `warning` | Needs attention, suspended |
+| `danger` | Closed, rejected, negative |
 
-El estado normal no lleva chip: una cuenta "Activa" se escribe en texto secundario y solo las
-excepciones resaltan.
+The normal state gets no chip: an "Activa" (active) account is written in secondary text and only
+the exceptions stand out.
 </docs>

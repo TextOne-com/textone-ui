@@ -27,6 +27,6 @@ const done = ref(true);
     <TxCheckbox v-model="done" label="Incluir retirados" description="Muestra también los títulos que ya no se venden." />
   </div>
   <p class="m-0 w-full text-xs text-ink-secondary">
-    Fecha guardada como <code>{{ date || "—" }}</code> (ISO, sin zona horaria).
+    Date stored as <code>{{ date || "—" }}</code> (ISO, no time zone).
   </p>
 </template>

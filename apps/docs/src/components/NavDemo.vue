@@ -19,7 +19,7 @@ const note = ref("");
       ]"
     >
       <template #default="{ active }">
-        <p class="m-0 text-[13px] text-ink-secondary">Vista activa: {{ active }}</p>
+        <p class="m-0 text-[13px] text-ink-secondary">Active view: {{ active }}</p>
       </template>
     </TxTabs>
   </div>

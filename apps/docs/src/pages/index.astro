@@ -44,18 +44,18 @@ const spacing = group("space-");
 
 <Docs>
   <header class="pb-8">
-    <p class="tx-eyebrow m-0">Sistema de diseño · Manual de marca v2.1</p>
+    <p class="tx-eyebrow m-0">Design system · Brand manual v2.1</p>
     <h1 class="m-0 mt-1 font-display text-[40px] leading-tight font-semibold text-brand-700">Text One UI</h1>
     <p class="mt-2 max-w-[70ch] text-[15px] text-ink-secondary">
-      Una sola estética para todos los frentes de Textone, la del manual de marca: el sitio
-      público (Astro) y las herramientas internas (Vue) con los mismos morados, la misma crema,
-      Fraunces y Plus Jakarta Sans. Sin grises: los neutros salen de la propia rampa morada. Los
-      tokens son CSS puro; los componentes son Vue 3 sobre Reka UI, accesibles por defecto.
+      One aesthetic for every Textone front, the brand manual's: the public site (Astro) and the
+      internal tools (Vue) share the same purples, the same cream, Fraunces and Plus Jakarta Sans.
+      No greys: the neutrals come from the purple ramp itself. The tokens are plain CSS; the
+      components are Vue 3 on Reka UI, accessible by default.
     </p>
   </header>
 
-  <Section id="marca" title="Marca" intro="El lockup del manual (diapositivas 7–8): ícono, TEXTONE en Jakarta ExtraBold, una regla fina y .com. TxBrandLockup lo dibuja igual que el encabezado del sitio, sobre blanco, crema o morado.">
-    <Demo label="TxBrandLockup — tamaños y fondos" code={`<TxBrandLockup :size="18" />\n<TxBrandLockup :as="RouterLink" to="/" :size="15">Inventario y cartera</TxBrandLockup>`}>
+  <Section id="marca" title="Brand" intro="The manual's lockup (slides 7–8): icon, TEXTONE in Jakarta ExtraBold, a thin rule and .com. TxBrandLockup draws it just like the site header, on white, cream or purple.">
+    <Demo label="TxBrandLockup — sizes and backgrounds" code={`<TxBrandLockup :size="18" />\n<TxBrandLockup :as="RouterLink" to="/" :size="15">Inventario y cartera</TxBrandLockup>`}>
       <div class="flex w-full flex-wrap items-end gap-8">
         <TxBrandLockup size={22} />
         <TxBrandLockup size={15}><span class="border-l border-rule-strong pl-3 text-[13px] font-semibold text-ink-secondary">Inventario y cartera</span></TxBrandLockup>
@@ -66,18 +66,18 @@ const spacing = group("space-");
     </Demo>
   </Section>
 
-  <Section id="color" title="Color" intro="El morado institucional es el único acento; la crema, el papel. Los neutros salen de la rampa morada, no de un gris. Fuera de eso el color significa estado — y un estado siempre lleva una palabra.">
-    <h3 class="tx-title tx-title--3">Marca</h3>
+  <Section id="color" title="Color" intro="The institutional purple is the only accent; the cream is the paper. The neutrals come from the purple ramp, not from a grey. Beyond that, color means state — and a state always carries a word.">
+    <h3 class="tx-title tx-title--3">Brand</h3>
     <Swatches tokens={group("brand-")} />
-    <h3 class="tx-title tx-title--3">Crema — papel institucional</h3>
+    <h3 class="tx-title tx-title--3">Cream — institutional paper</h3>
     <Swatches tokens={group("cream-")} />
-    <h3 class="tx-title tx-title--3">Semánticos (-700 sobre -50, AA medido)</h3>
+    <h3 class="tx-title tx-title--3">Semantic (-700 on -50, AA measured)</h3>
     <Swatches tokens={semantic} />
-    <h3 class="tx-title tx-title--3">Roles — lo que leen los componentes</h3>
+    <h3 class="tx-title tx-title--3">Roles — what the components read</h3>
     <Swatches tokens={roles} />
   </Section>
 
-  <Section id="tipografia" title="Tipografía" intro="Manual, diapositiva 13: Fraunces 600 para títulos y momentos de marca; Plus Jakarta Sans para cuerpo y UI. Jakarta tiene cifras tabulares, así que las columnas de pesos se alinean.">
+  <Section id="tipografia" title="Typography" intro="Manual, slide 13: Fraunces 600 for titles and brand moments; Plus Jakarta Sans for body and UI. Jakarta has tabular figures, so columns of pesos line up.">
     <Demo label="H1 · Fraunces 600 (.tx-title--1)">
       <h1 class="tx-title tx-title--1">Textos escolares que hacen crecer</h1>
     </Demo>
@@ -88,12 +88,12 @@ const spacing = group("space-");
         <p class="tx-eyebrow m-0">Matemáticas · 1° grado</p>
       </div>
     </Demo>
-    <Demo label="Cifras tabulares (.tx-figures)">
+    <Demo label="Tabular figures (.tx-figures)">
       <p class="m-0 text-[14px]">Saldo de cartera <span class="tx-figures font-semibold">$ 12.450.300</span> · corte al <span class="tx-figures">30/06/2025</span></p>
     </Demo>
   </Section>
 
-  <Section id="espaciado" title="Espaciado y forma" intro="Rejilla de 4 px, radio de 4 px, bordes finos en vez de sombras; la sombra queda para lo que flota.">
+  <Section id="espaciado" title="Spacing and shape" intro="A 4 px grid, a 4 px radius, thin borders instead of shadows; the shadow is kept for what floats.">
     <Demo label="--space-*">
       <div class="flex flex-wrap items-end gap-4">
         {
@@ -108,8 +108,8 @@ const spacing = group("space-");
     </Demo>
   </Section>
 
-  <Section id="botones" title="Botones" intro="TxButton es un botón o — con as — un enlace con forma de botón. Deshabilitado como enlace no tiene href.">
-    <Demo label="Variantes" code={`<TxButton>Registrar remisión</TxButton>\n<TxButton variant="default">Ver la cuenta</TxButton>\n<TxButton :as="RouterLink" to="/devoluciones/nueva">Registrar devolución</TxButton>`}>
+  <Section id="botones" title="Buttons" intro="TxButton is a button or — with as — a link shaped like a button. Disabled as a link, it has no href.">
+    <Demo label="Variants" code={`<TxButton>Registrar remisión</TxButton>\n<TxButton variant="default">Ver la cuenta</TxButton>\n<TxButton :as="RouterLink" to="/devoluciones/nueva">Registrar devolución</TxButton>`}>
       <TxButton>Registrar remisión</TxButton>
       <TxButton variant="default">Ver la cuenta</TxButton>
       <TxButton variant="light">Registrar otro</TxButton>
@@ -118,7 +118,7 @@ const spacing = group("space-");
       <TxButton disabled>Deshabilitado</TxButton>
       <TxButton loading>Registrando</TxButton>
     </Demo>
-    <Demo label="Tamaños e ícono">
+    <Demo label="Sizes and icon">
       <TxButton size="xs">xs</TxButton>
       <TxButton size="sm">sm</TxButton>
       <TxButton size="md">md</TxButton>
@@ -128,8 +128,8 @@ const spacing = group("space-");
     </Demo>
   </Section>
 
-  <Section id="estados" title="Estados y mensajes">
-    <Demo label="TxBadge — un estado en una palabra">
+  <Section id="estados" title="States and messages">
+    <Demo label="TxBadge — a state in one word">
       <TxBadge>Retirado</TxBadge>
       <TxBadge tone="brand">Novedad</TxBadge>
       <TxBadge tone="info">Pendiente</TxBadge>
@@ -137,7 +137,7 @@ const spacing = group("space-");
       <TxBadge tone="warning">Suspendida</TxBadge>
       <TxBadge tone="danger">Cerrada</TxBadge>
     </Demo>
-    <Demo label="TxAlert — rechazo (role=alert) y confirmación (role=status)">
+    <Demo label="TxAlert — rejection (role=alert) and confirmation (role=status)">
       <div class="flex w-full flex-col gap-3">
         <TxAlert title="El documento no se registró:">
           <ul><li>La fecha está fuera de la temporada.</li><li>El SKU no tiene precio para esta cuenta.</li></ul>
@@ -147,25 +147,25 @@ const spacing = group("space-");
     </Demo>
   </Section>
 
-  <Section id="campos" title="Campos" intro="Etiqueta arriba, descripción, el control, el error al final; descripción y error quedan enlazados al control para lectores de pantalla. Las fechas se escriben día primero y se guardan en ISO.">
-    <Demo label="Interactivo (isla Vue en Astro)">
+  <Section id="campos" title="Fields" intro="Label on top, description, the control, the error last; description and error are linked to the control for screen readers. Dates are typed day first and stored as ISO.">
+    <Demo label="Interactive (Vue island in Astro)">
       <FieldsDemo client:load />
     </Demo>
   </Section>
 
-  <Section id="seleccion" title="Selección" intro="TxSelect para listas cortas; TxCombobox para listas largas, buscando por cada palabra sin tildes. En modo picker cada elección se emite y el campo se vacía.">
-    <Demo label="Interactivo (isla Vue en Astro)">
+  <Section id="seleccion" title="Selection" intro="TxSelect for short lists; TxCombobox for long ones, matching every word with accents ignored. In picker mode each choice is emitted and the field clears.">
+    <Demo label="Interactive (Vue island in Astro)">
       <SelectionDemo client:load />
     </Demo>
   </Section>
 
-  <Section id="navegacion" title="Pestañas y diálogo">
-    <Demo label="Interactivo (isla Vue en Astro)">
+  <Section id="navegacion" title="Tabs and dialog">
+    <Demo label="Interactive (Vue island in Astro)">
       <NavDemo client:load />
     </Demo>
   </Section>
 
-  <Section id="tablas" title="Tablas" intro="Cifras a la derecha con números tabulares; los totales por peso y una regla, nunca una banda.">
+  <Section id="tablas" title="Tables" intro="Figures right-aligned with tabular numerals; totals set apart by weight and a rule, never a band.">
     <Demo label='TxTable variant="framed"'>
       <div class="w-full">
         <TxTable variant="framed">
@@ -181,7 +181,7 @@ const spacing = group("space-");
     </Demo>
   </Section>
 
-  <Section id="documento" title="Documento" intro="La superficie del documento es el único lugar donde aparece la crema: un documento registrado, como el negocio lo imprimiría.">
+  <Section id="documento" title="Document" intro="The document surface is the only place cream appears: a recorded document, as the business would print it.">
     <Demo label="TxPageHeader + TxDocumentPaper">
       <div class="w-full">
         <TxPageHeader title="Remisión P.R. 1755" context="Librería Central · EC 13-00" />
@@ -207,8 +207,8 @@ const spacing = group("space-");
     </Demo>
   </Section>
 
-  <Section id="uso" title="Cómo usarlo">
-    <Demo label="Una app Vue (Vite + Tailwind)" code={`// package.json
+  <Section id="uso" title="How to use it">
+    <Demo label="A Vue app (Vite + Tailwind)" code={`// package.json
 "@textone-com/tokens": "link:../textone-ui/packages/tokens",
 "@textone-com/vue": "link:../textone-ui/packages/vue"
 
@@ -223,7 +223,7 @@ resolve: { dedupe: ["vue", "reka-ui", "@internationalized/date"] }
 <script setup lang="ts">
 import { TxButton, TxTextInput } from "@textone-com/vue";
 </script>`} />
-    <Demo label="Un sitio Astro (solo tokens, o también componentes con @astrojs/vue)" code={`/* global.css */
+    <Demo label="An Astro site (tokens only, or components too with @astrojs/vue)" code={`/* global.css */
 @import "tailwindcss";
 @import "@textone-com/tokens/tailwind.css";   /* bg-brand-700, text-cream-100, font-display… */
 
@@ -234,7 +234,7 @@ integrations: [vue()]
 ---
 import { TxButton } from "@textone-com/vue";
 ---
-<TxButton>Estático, sin JS</TxButton>
-<MiFormulario client:load />  <!-- isla interactiva -->`} />
+<TxButton>Static, no JS</TxButton>
+<MiFormulario client:load />  <!-- interactive island -->`} />
   </Section>
 </Docs>

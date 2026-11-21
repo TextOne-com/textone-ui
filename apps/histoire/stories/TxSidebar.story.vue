@@ -65,18 +65,18 @@ const active = ref("panel");
         <div style="padding: 24px; display: flex; flex-direction: column; gap: 12px; align-items: flex-start">
           <p class="story-note">
             <template v-if="state.behavior === 'hover'">
-              Pasa el mouse por el riel: se abre sobre la página y se cierra al elegir un ítem o al
-              salir. El botón del pie lo fija abierto.
+              Hover over the rail: it opens over the page and closes when you choose an item or
+              leave. The footer button pins it open.
             </template>
-            <template v-else>Colapsa con el botón del pie o con ⌘/Ctrl+B; la página se corre.</template>
+            <template v-else>Collapse it with the footer button or with ⌘/Ctrl+B; the page shifts.</template>
           </p>
-          <TxButton variant="default" size="xs" @click="state.pending++">Nueva solicitud (+1)</TxButton>
-          <TxButton variant="subtle" size="xs" @click="state.pending = Math.max(0, state.pending - 1)">Aprobar una (−1)</TxButton>
+          <TxButton variant="default" size="xs" @click="state.pending++">New request (+1)</TxButton>
+          <TxButton variant="subtle" size="xs" @click="state.pending = Math.max(0, state.pending - 1)">Approve one (−1)</TxButton>
         </div>
       </div>
       <template #controls>
         <HstButtonGroup v-model="state.behavior" title="behavior" :options="['hover', 'toggle']" />
-        <HstNumber v-model="state.pending" title="Pendientes (badge)" :min="0" />
+        <HstNumber v-model="state.pending" title="Pending (badge)" :min="0" />
       </template>
     </Variant>
   </Story>
@@ -85,19 +85,19 @@ const active = ref("panel");
 <docs lang="md">
 # TxSidebar
 
-La navegación de una herramienta interna: grupos de destinos con **ícono y título** sobre un
-**riel de íconos** (64 px). Una píldora morada **se desliza** al ítem activo, los títulos se
-desvanecen al colapsar y un contador **late una vez** cuando cambia.
+An internal tool's navigation: groups of destinations with **icon and title** over an **icon
+rail** (64 px). A purple pill **slides** to the active item, titles fade out when collapsing and a
+counter **pulses once** when it changes.
 
-## Dos comportamientos
+## Two behaviors
 
-| `behavior` | Cómo se abre | Cómo se cierra | La página |
+| `behavior` | How it opens | How it closes | The page |
 |---|---|---|---|
-| **`hover`** (recomendado) | Mouse encima (90 ms), o foco con teclado | Al **elegir un destino**, al salir el mouse (180 ms) o con Escape | **No se mueve**: el menú se abre por encima |
-| `toggle` | Botón del pie o ⌘/Ctrl+B | Igual | Se corre para hacerle lugar |
+| **`hover`** (recommended) | Mouse over (90 ms), or keyboard focus | On **choosing a destination**, when the mouse leaves (180 ms) or with Escape | **Does not move**: the menu opens on top of it |
+| `toggle` | Footer button or ⌘/Ctrl+B | Same | Shifts to make room |
 
-En `hover`, el botón del pie **fija** el menú abierto (y se recuerda); fijado, se comporta como
-abierto en `toggle`. En pantallas táctiles (sin hover) `hover` se comporta como `toggle`.
+In `hover`, the footer button **pins** the menu open (and it is remembered); pinned, it behaves
+like an open `toggle`. On touch screens (no hover) `hover` behaves like `toggle`.
 
 ```vue
 <TxSidebar behavior="hover">
@@ -117,44 +117,43 @@ abierto en `toggle`. En pantallas táctiles (sin hover) `hover` se comporta como
 </TxSidebar>
 ```
 
-Dentro de `TxAppShell`, usa `navbar-width="auto"` para que la columna siga el ancho del menú.
+Inside `TxAppShell`, use `navbar-width="auto"` so the column follows the menu's width.
 
 ## TxSidebar
 
-| Prop | Tipo | Por defecto | |
+| Prop | Type | Default | |
 |---|---|---|---|
-| `behavior` | `hover \| toggle` | `toggle` | Ver arriba |
-| `collapsed` | `boolean` (`v-model:collapsed`) | — | Solo `toggle`. Si no se enlaza, el menú decide: lo que eligió la persona, o el riel en pantallas angostas |
+| `behavior` | `hover \| toggle` | `toggle` | See above |
+| `collapsed` | `boolean` (`v-model:collapsed`) | — | `toggle` only. If not bound, the menu decides: what the person chose, or the rail on narrow screens |
 | `width` / `collapsedWidth` | `number` | `232` / `64` | px |
-| `storageKey` | `string` | `"tx-sidebar-collapsed"` | Dónde se recuerda la elección: colapsado (`toggle`) o fijado (`hover`, con sufijo `-pinned`). `""` para no recordar |
-| `autoCollapseBelow` | `number` | `1200` | Solo `toggle`: por debajo de este ancho, riel (`0` lo desactiva) |
-| `shortcut` | `boolean` | `true` | Solo `toggle`: ⌘/Ctrl+B — nunca mientras se escribe en un campo |
-| `pinLabel` / `unpinLabel` | `string` | `"Fijar menú abierto"` / `"Soltar menú"` | Solo `hover` |
-| `label` | `string` | `"Principal"` | Nombre accesible del `<nav>` |
+| `storageKey` | `string` | `"tx-sidebar-collapsed"` | Where the choice is remembered: collapsed (`toggle`) or pinned (`hover`, with a `-pinned` suffix). `""` to not remember |
+| `autoCollapseBelow` | `number` | `1200` | `toggle` only: below this width, rail (`0` disables it) |
+| `shortcut` | `boolean` | `true` | `toggle` only: ⌘/Ctrl+B — never while typing in a field |
+| `pinLabel` / `unpinLabel` | `string` | `"Fijar menú abierto"` / `"Soltar menú"` | `hover` only |
+| `label` | `string` | `"Principal"` | The `<nav>`'s accessible name |
 | `collapseLabel` / `expandLabel` | `string` | `"Colapsar menú"` / `"Expandir menú"` | |
 
-**Slots:** por defecto (grupos), `footer` (solo visible expandido).
+**Slots:** default (groups), `footer` (visible only when expanded).
 
 ## TxSidebarGroup
 
-`label` — el título del grupo. Colapsado se vuelve una línea fina en el mismo espacio, así nada
-salta de lugar.
+`label` — the group's title. Collapsed, it becomes a thin line in the same space, so nothing
+jumps.
 
 ## TxSidebarItem
 
-| Prop | Tipo | |
+| Prop | Type | |
 |---|---|---|
-| `label` | `string` (requerido) | Título; colapsado sigue siendo el nombre accesible (y en `toggle`, el tooltip) |
-| `active` | `boolean` | Pone `aria-current="page"` y mueve la píldora aquí. Elegir un ítem cierra el menú en `hover` |
-| `as` | `string \| Component` | `RouterLink`, `"a"`, `"button"`; sus atributos (`to`, `href`) pasan al enlace |
-| `badge` | `number \| string` | Contador; `0` o vacío no se muestra |
-| `badgeLabel` | `string` | Lo que oye un lector de pantalla: "2 pendientes" |
+| `label` | `string` (required) | Title; collapsed, it is still the accessible name (and in `toggle`, the tooltip) |
+| `active` | `boolean` | Sets `aria-current="page"` and moves the pill here. Choosing an item closes the menu in `hover` |
+| `as` | `string \| Component` | `RouterLink`, `"a"`, `"button"`; its attributes (`to`, `href`) pass through to the link |
+| `badge` | `number \| string` | Counter; `0` or empty is not shown |
+| `badgeLabel` | `string` | What a screen reader hears: "2 pendientes" |
 
-**Slot:** `icon` — un ícono de Tabler con `stroke="2"` (manual, diapositiva 14).
+**Slot:** `icon` — a Tabler icon with `stroke="2"` (brand manual, slide 14).
 
-## Movimiento
+## Motion
 
-Ancho 220 ms, títulos 160 ms, píldora 260 ms, todos con la misma curva suave; el ícono se
-desplaza 2 px al pasar el mouse. Con *reducir movimiento* activado en el sistema, todo cambia sin
-animación.
+Width 220 ms, titles 160 ms, pill 260 ms, all on the same soft curve; the icon shifts 2 px on
+hover. With *reduce motion* enabled in the OS, everything changes without animation.
 </docs>

@@ -20,10 +20,10 @@ const state = reactive({ size: 18, iconOnly: false, product: "Inventario y carte
       <template #controls>
         <HstSlider v-model="state.size" title="size (px)" :min="11" :max="40" />
         <HstCheckbox v-model="state.iconOnly" title="iconOnly" />
-        <HstText v-model="state.product" title="Slot (nombre del producto)" />
+        <HstText v-model="state.product" title="Slot (product name)" />
       </template>
     </Variant>
-    <Variant title="Sobre crema y morado">
+    <Variant title="On cream and purple">
       <div class="story-pad">
         <div style="background: var(--cream-100); padding: 20px 24px; border-radius: var(--radius-sm)">
           <TxBrandLockup :size="18" />
@@ -49,31 +49,31 @@ const state = reactive({ size: 18, iconOnly: false, product: "Inventario y carte
 <docs lang="md">
 # TxBrandLockup
 
-El lockup oficial (manual, diapositivas 7–8): el ícono T, **TEXTONE** en Plus Jakarta Sans
-ExtraBold, una regla fina y **.com** — el mismo que dibuja el encabezado del sitio. El ícono es el
-SVG del logo con `currentColor`, así funciona sobre blanco, crema o morado sin recuadros.
+The official lockup (brand manual, slides 7–8): the T icon, **TEXTONE** in Plus Jakarta Sans
+ExtraBold, a thin rule and **.com** — the same one the website header draws. The icon is the logo
+SVG with `currentColor`, so it works on white, cream or purple without boxes.
 
 ```vue
 <TxBrandLockup :size="18" />
 
-<!-- En la barra de una app: enlace al inicio y el nombre del producto -->
+<!-- In an app's bar: a link to home and the product name -->
 <TxBrandLockup :as="RouterLink" to="/" :size="15">
   <span class="product">Inventario y cartera</span>
 </TxBrandLockup>
 ```
 
-| Prop | Tipo | Por defecto | |
+| Prop | Type | Default | |
 |---|---|---|---|
-| `size` | `number` | `18` | Tamaño de la palabra en px; el ícono escala con ella |
-| `iconOnly` | `boolean` | `false` | Solo el ícono (avatares, espacios cuadrados) |
+| `size` | `number` | `18` | Size of the word in px; the icon scales with it |
+| `iconOnly` | `boolean` | `false` | Icon only (avatars, square spaces) |
 | `as` | `string \| Component` | `"span"` | `"a"`, `RouterLink`… |
-| `label` | `string` | `"Textone.com"` | Nombre accesible; el dibujo se oculta a lectores |
+| `label` | `string` | `"Textone.com"` | Accessible name; the drawing is hidden from screen readers |
 
-**Slot por defecto:** lo que va después del lockup.
+**Default slot:** whatever goes after the lockup.
 
-## Reglas del manual
+## Brand manual rules
 
-- Mínimo: el lockup no baja de **120 px de ancho**; el ícono solo, de **24 px**.
-- Área de respiro alrededor = la altura de la T.
-- No deformar, no rotar, no recolorear fuera de la paleta, no usar sobre fondos de bajo contraste.
+- Minimum: the lockup never goes below **120 px wide**; the icon alone, below **24 px**.
+- Clear space around it = the height of the T.
+- Do not distort, rotate, recolor outside the palette, or use on low-contrast backgrounds.
 </docs>

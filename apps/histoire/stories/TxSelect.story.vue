@@ -34,7 +34,7 @@ const state = reactive({
           :error="state.error || undefined"
           :width="280"
         />
-        <p class="story-note">Valor: <code>{{ JSON.stringify(state.value) }}</code></p>
+        <p class="story-note">Value: <code>{{ JSON.stringify(state.value) }}</code></p>
       </div>
       <template #controls>
         <HstText v-model="state.label" title="label" />
@@ -51,7 +51,7 @@ const state = reactive({
 <docs lang="md">
 # TxSelect
 
-Una opción de una **lista corta** (hasta ~15). Para listas largas o que se buscan escribiendo, usa
+One option from a **short list** (up to ~15). For long lists or ones searched by typing, use
 `TxCombobox`.
 
 ```vue
@@ -62,20 +62,20 @@ Una opción de una **lista corta** (hasta ~15). Para listas largas o que se busc
 />
 ```
 
-| Prop | Tipo | Por defecto | |
+| Prop | Type | Default | |
 |---|---|---|---|
-| `modelValue` | `string \| null` | `null` | `null` muestra el placeholder |
-| `options` | `{ value, label, description?, group?, disabled? }[]` | — | `value` no puede ser `""`. Con `group`, se listan bajo su título; con `description`, en una segunda línea |
+| `modelValue` | `string \| null` | `null` | `null` shows the placeholder |
+| `options` | `{ value, label, description?, group?, disabled? }[]` | — | `value` cannot be `""`. With `group`, they are listed under their heading; with `description`, on a second line |
 | `label`, `description`, `error`, `placeholder`, `disabled`, `id` | | | |
-| `clearable` | `boolean` | `false` | Botón × que deja el valor en `null` |
-| `clearLabel` | `string` | `"Quitar"` | Nombre accesible del × |
-| `inline` | `boolean` | `false` | Etiqueta al lado (barras de herramientas) |
+| `clearable` | `boolean` | `false` | An × button that sets the value to `null` |
+| `clearLabel` | `string` | `"Quitar"` | The ×'s accessible name |
+| `inline` | `boolean` | `false` | Label alongside (toolbars) |
 | `size`, `width` | | `sm` | |
 
-Para más de una docena de opciones usa **TxCombobox** (busca); para varias a la vez, **TxMultiSelect**.
+For more than a dozen options use **TxCombobox** (searchable); for several at once, **TxMultiSelect**.
 
-## Accesibilidad
+## Accessibility
 
-El disparador es un `combobox` con el nombre de la etiqueta; las opciones son `option`. Flechas,
-Enter, Escape y escribir la inicial funcionan como en un `<select>` nativo.
+The trigger is a `combobox` named after the label; the options are `option`s. Arrow keys, Enter,
+Escape and typing the first letter work as in a native `<select>`.
 </docs>

@@ -20,13 +20,13 @@ const state = reactive({
         </TxIconButton>
       </div>
       <template #controls>
-        <HstText v-model="state.label" title="label (nombre accesible)" />
+        <HstText v-model="state.label" title="label (accessible name)" />
         <HstSelect v-model="state.variant" title="variant" :options="['subtle', 'default', 'filled', 'danger']" />
         <HstButtonGroup v-model="state.size" title="size" :options="['xs', 'sm', 'md']" />
         <HstCheckbox v-model="state.disabled" title="disabled" />
       </template>
     </Variant>
-    <Variant title="Variantes">
+    <Variant title="Variants">
       <div class="story-pad" style="align-items: center">
         <TxIconButton label="Quitar línea"><IconX stroke="2" /></TxIconButton>
         <TxIconButton label="Editar" variant="default"><IconPencil stroke="2" /></TxIconButton>
@@ -40,7 +40,7 @@ const state = reactive({
 <docs lang="md">
 # TxIconButton
 
-Un botón solo con ícono. **`label` es obligatorio**: es su nombre accesible y su tooltip.
+An icon-only button. **`label` is required**: it is its accessible name and its tooltip.
 
 ```vue
 <TxIconButton label="Quitar línea" @click="remove(line)">
@@ -48,14 +48,14 @@ Un botón solo con ícono. **`label` es obligatorio**: es su nombre accesible y 
 </TxIconButton>
 ```
 
-| Prop | Tipo | Por defecto |
+| Prop | Type | Default |
 |---|---|---|
-| `label` | `string` (requerido) | — |
+| `label` | `string` (required) | — |
 | `variant` | `subtle \| default \| filled \| danger` | `subtle` |
 | `size` | `xs \| sm \| md` | `sm` (28 px) |
 | `disabled` | `boolean` | `false` |
 | `type` | `button \| submit` | `button` |
 
-Íconos: **Tabler** (`@tabler/icons-vue`) con `stroke="2"` — línea simple de 2 px, esquinas
-redondeadas, sin relleno (manual, diapositiva 14).
+Icons: **Tabler** (`@tabler/icons-vue`) with `stroke="2"` — a single 2 px line, rounded corners,
+no fill (brand manual, slide 14).
 </docs>

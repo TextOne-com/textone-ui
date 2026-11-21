@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * The documento surface — the one place cream appears: a recorded document as the business
+ * The document surface — the one place cream appears: a recorded document as the business
  * would print it. `number` is how the paper reads (`I.D. 2600`); `facts` the header lines beside
  * it. A fact's value can be replaced through the `fact-<label>` slot. Set a table on it with
  * `<TxTable variant="paper">`.

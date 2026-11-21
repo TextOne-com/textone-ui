@@ -57,7 +57,7 @@ const rows = [
 <docs lang="md">
 # TxTable
 
-Una tabla de cifras. Escribe `thead` / `tbody` / `tfoot` dentro como HTML normal.
+A table of figures. Write `thead` / `tbody` / `tfoot` inside as plain HTML.
 
 ```vue
 <TxTable variant="framed" max-height="calc(100vh - 210px)" label="Cuentas">
@@ -69,19 +69,19 @@ Una tabla de cifras. Escribe `thead` / `tbody` / `tfoot` dentro como HTML normal
 </TxTable>
 ```
 
-| Prop | Tipo | Por defecto | |
+| Prop | Type | Default | |
 |---|---|---|---|
-| `variant` | `plain \| framed \| paper` | `plain` | `framed`: marco, encabezado fijo y scroll; `paper`: sobre el documento |
-| `density` | `compact \| default` | `compact` | Filas de 28 o 36 px |
-| `maxHeight` | `string` | — | Alto del área con scroll |
-| `label` | `string` | — | La convierte en región con nombre, enfocable para scroll con teclado |
+| `variant` | `plain \| framed \| paper` | `plain` | `framed`: frame, sticky header and scroll; `paper`: on the document |
+| `density` | `compact \| default` | `compact` | 28 or 36 px rows |
+| `maxHeight` | `string` | — | Height of the scrolling area |
+| `label` | `string` | — | Makes it a named region, focusable for keyboard scrolling |
 
-## Clases
+## Classes
 
-- **`tx-numeric`** en `th`/`td`: a la derecha, cifras tabulares, sin cortes.
-- **`tx-totals`** en una fila: totales por peso y una regla — nunca una banda de color. En
-  `framed`, queda fija abajo.
+- **`tx-numeric`** on `th`/`td`: right-aligned, tabular figures, no wrapping.
+- **`tx-totals`** on a row: totals by weight and a rule — never a band of color. In `framed`, it
+  sticks to the bottom.
 
-Los estilos base de las celdas no tienen especificidad (`:where`), así cualquier clase propia
-(un CSS module, una utilidad) gana sin pelear.
+The cells' base styles have no specificity (`:where`), so any class of your own (a CSS module, a
+utility) wins without a fight.
 </docs>

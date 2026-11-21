@@ -4,7 +4,7 @@ import { TxDocumentPaper, TxTable } from "@textone-com/vue";
 
 <template>
   <Story title="TxDocumentPaper" group="documento">
-    <Variant title="Una remisión registrada">
+    <Variant title="A recorded remisión">
       <div style="padding: 24px">
         <TxDocumentPaper
           kind="Remisión"
@@ -45,9 +45,9 @@ import { TxDocumentPaper, TxTable } from "@textone-com/vue";
 <docs lang="md">
 # TxDocumentPaper
 
-La superficie del **documento**: un documento registrado tal como el negocio lo imprimiría, sobre
-el papel crema institucional (`--paper`). Es el único lugar de una herramienta interna donde
-aparece la crema como superficie.
+The **document** surface: a recorded document as the business would print it, on the
+institutional cream paper (`--paper`). It is the only place in an internal tool where cream
+appears as a surface.
 
 ```vue
 <TxDocumentPaper
@@ -57,19 +57,19 @@ aparece la crema como superficie.
   :facts="[{ label: 'Fecha', value: formatDate(doc.date) }, { label: 'Cuenta' }]"
 >
   <template #fact-Cuenta><RouterLink :to="…">{{ account.name }}</RouterLink></template>
-  <TxTable variant="paper">…líneas…</TxTable>
+  <TxTable variant="paper">…lines…</TxTable>
   <template #footer>Precios congelados al registrar.</template>
 </TxDocumentPaper>
 ```
 
 | Prop / slot | | |
 |---|---|---|
-| `kind` | `string` | Etiqueta en mayúsculas (Remisión, Devolución) |
-| `number` | `string` | Cómo se lee el papel: `P.R. 2229`. También slot `number` |
-| `subtitle` | `string` | Línea bajo el número (la empresa). También slot `subtitle` |
-| `facts` | `{ label; value? }[]` | Datos del encabezado; `fact-<label>` reemplaza un valor |
-| slot por defecto | | El cuerpo: casi siempre un `TxTable variant="paper"` |
-| slot `footer` | | Notas al pie |
+| `kind` | `string` | Uppercase label (Remisión, Devolución — delivery note, return) |
+| `number` | `string` | How the paper reads: `P.R. 2229`. Also the `number` slot |
+| `subtitle` | `string` | Line below the number (the company). Also the `subtitle` slot |
+| `facts` | `{ label; value? }[]` | Header data; `fact-<label>` replaces a value |
+| default slot | | The body: almost always a `TxTable variant="paper"` |
+| `footer` slot | | Footnotes |
 
-Es un `<article>` con nombre accesible `"<kind> <number>"`.
+It is an `<article>` with the accessible name `"<kind> <number>"`.
 </docs>

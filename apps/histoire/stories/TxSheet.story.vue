@@ -11,7 +11,7 @@ const state = reactive({ open: false, side: "bottom" as "bottom" | "left" | "rig
       <div class="story-pad">
         <TxButton @click="state.open = true">Abrir hoja</TxButton>
         <TxSheet v-model:open="state.open" title="Menú" :side="state.side">
-          <p style="margin: 0">Destinos, filtros o un detalle. Escape o el fondo la cierran.</p>
+          <p style="margin: 0">Destinations, filters or a detail. Escape or the backdrop closes it.</p>
           <TxButton variant="subtle" @click="state.open = false">Cerrar</TxButton>
         </TxSheet>
       </div>
@@ -25,19 +25,19 @@ const state = reactive({ open: false, side: "bottom" as "bottom" | "left" | "rig
 <docs lang="md">
 # TxSheet
 
-Un panel que **entra desde un borde**: el menú completo en el teléfono (`bottom`, con su tirador),
-filtros o un detalle al lado de una lista (`left`, `right`). Es modal como TxDialog: el foco
-queda adentro, y Escape o el fondo la cierran.
+A panel that **slides in from an edge**: the full menu on the phone (`bottom`, with its handle),
+filters or a detail next to a list (`left`, `right`). It is modal like TxDialog: focus stays
+inside, and Escape or the backdrop closes it.
 
 ```vue
 <TxSheet v-model:open="masAbierto" title="Menú">…</TxSheet>
 ```
 
-| Prop | Tipo | Por defecto | |
+| Prop | Type | Default | |
 |---|---|---|---|
 | `open` | `boolean` (`v-model:open`) | `false` | |
-| `title` | `string` | requerido | |
+| `title` | `string` | required | |
 | `side` | `bottom \| left \| right` | `bottom` | |
 | `description` | `string` | — | |
-| `hideTitle` | `boolean` | `false` | El título queda solo para lectores de pantalla |
+| `hideTitle` | `boolean` | `false` | The title is kept for screen readers only |
 </docs>

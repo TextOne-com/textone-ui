@@ -15,7 +15,7 @@ const state = reactive({
     <Variant title="Playground" :init-state="() => state">
       <div class="story-col">
         <TxCheckbox v-model="state.checked" :label="state.label" :description="state.description || undefined" :disabled="state.disabled" />
-        <p class="story-note">Valor: <code>{{ state.checked }}</code></p>
+        <p class="story-note">Value: <code>{{ state.checked }}</code></p>
       </div>
       <template #controls>
         <HstText v-model="state.label" title="label" />
@@ -29,18 +29,18 @@ const state = reactive({
 <docs lang="md">
 # TxCheckbox
 
-Una casilla nativa con su etiqueta (clic en el texto también la marca) y una descripción opcional.
+A native checkbox with its label (clicking the text also checks it) and an optional description.
 
 ```vue
 <TxCheckbox v-model="showRetired" label="Incluir retirados" />
 ```
 
-| Prop | Tipo | |
+| Prop | Type | |
 |---|---|---|
-| `label` | `string` (requerido) | |
-| `description` | `string` | Debajo de la etiqueta |
+| `label` | `string` (required) | |
+| `description` | `string` | Below the label |
 | `disabled` | `boolean` | |
 
-Es un `<input type="checkbox">` real: teclado, formularios y lectores de pantalla funcionan sin
-nada extra. El color de la marca le llega por `accent-color`.
+It is a real `<input type="checkbox">`: keyboard, forms and screen readers work with nothing
+extra. The brand color reaches it through `accent-color`.
 </docs>

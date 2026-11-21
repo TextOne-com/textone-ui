@@ -8,7 +8,7 @@ const active = ref("panel");
 
 <template>
   <Story title="TxBottomNav" group="estructura" :layout="{ type: 'single', iframe: true }">
-    <Variant title="Teléfono">
+    <Variant title="Phone">
       <div style="max-width: 390px; margin: 24px auto; border: 1px solid var(--rule-strong); border-radius: 24px; overflow: hidden; height: 220px; display: flex; flex-direction: column; justify-content: flex-end; background: var(--canvas)">
         <TxBottomNav>
           <TxBottomNavItem as="button" label="Panel" :active="active === 'panel'" @click="active = 'panel'">
@@ -35,12 +35,12 @@ const active = ref("panel");
 <docs lang="md">
 # TxBottomNav
 
-La navegación de un **teléfono**: cuatro o cinco destinos abajo, al alcance del pulgar, por
-encima de la barra de inicio. `primary` eleva la acción diaria a un círculo morado. El resto de
-destinos va en una TxSheet abierta desde "Más".
+**Phone** navigation: four or five destinations at the bottom, within thumb reach, above the
+home bar. `primary` raises the daily action to a purple circle. The remaining destinations go in
+a TxSheet opened from "Más" (More).
 
-Dentro de **TxAppShell**, en el slot `bottombar`: aparece bajo 768 px y el menú lateral se
-oculta; la página deja espacio para la barra.
+Inside **TxAppShell**, in the `bottombar` slot: it appears below 768 px and the side menu is
+hidden; the page leaves room for the bar.
 
 ```vue
 <TxAppShell>
@@ -54,5 +54,5 @@ oculta; la página deja espacio para la barra.
 </TxAppShell>
 ```
 
-**TxBottomNavItem:** `label` (corto: ~10 letras), `active`, `as`, `primary`, `badge`, `badgeLabel`.
+**TxBottomNavItem:** `label` (short: ~10 letters), `active`, `as`, `primary`, `badge`, `badgeLabel`.
 </docs>

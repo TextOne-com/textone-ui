@@ -12,14 +12,14 @@ const group = (prefix: string) => tokens.filter((t) => t.name.startsWith(prefix)
 const named = (names: string[]) => names.flatMap((n) => tokens.filter((t) => t.name === n));
 
 const sections = [
-  { title: "Marca — morado institucional (manual, diapositiva 11)", tokens: group("brand-") },
-  { title: "Crema — papel institucional (manual, diapositiva 12)", tokens: group("cream-") },
+  { title: "Brand — institutional purple (manual, slide 11)", tokens: group("brand-") },
+  { title: "Cream — institutional paper (manual, slide 12)", tokens: group("cream-") },
   {
-    title: "Semánticos — -700 sobre su -50 o sobre blanco",
+    title: "Semantic — -700 on its -50 or on white",
     tokens: ["success", "warning", "danger", "info"].flatMap((p) => group(`${p}-`)),
   },
   {
-    title: "Roles — lo que leen los componentes",
+    title: "Roles — what the components read",
     tokens: named([
       "canvas",
       "surface",
@@ -102,34 +102,34 @@ const sections = [
 </style>
 
 <docs lang="md">
-# Colores
+# Colors
 
-**No hay grises.** Los neutros salen de la propia rampa morada y de la crema, para que una pantalla
-interna y una página pública se lean como la misma marca.
+**There are no greys.** The neutrals come from the purple ramp itself and from the cream, so an
+internal screen and a public page read as the same brand.
 
-## Usa los roles, no la rampa
+## Use the roles, not the ramp
 
-Los componentes leen **roles** (`--ink`, `--surface`, `--accent`…), no `--brand-700`. Escribe lo
-mismo en tus pantallas: si mañana el acento cambia, cambia en todos lados.
+Components read **roles** (`--ink`, `--surface`, `--accent`…), not `--brand-700`. Write your
+screens the same way: if the accent changes tomorrow, it changes everywhere.
 
-| Rol | Valor | Para qué |
+| Role | Value | For |
 |---|---|---|
-| `--canvas` | `cream-50` | Fondo de la página |
-| `--surface` | blanco | Tablas, campos, paneles |
-| `--surface-sunken` | `brand-50` | Encabezados de tabla, pie de formularios |
-| `--ink` | `brand-900` | Texto (13,4:1 o más sobre toda superficie) |
-| `--ink-secondary` | `brand-500` | Texto secundario (7,5:1 o más) |
-| `--ink-placeholder` | `brand-300` | Placeholder — **solo sobre blanco** (4,51:1) |
-| `--control-border` | `brand-300` | Borde de campos (un control necesita 3:1) |
-| `--rule` / `--rule-strong` | `brand-100` / `brand-200` | Divisores, nunca texto |
-| `--accent` | `brand-700` | Botón principal, foco, enlaces, ítem activo |
-| `--paper` | `cream-100` | La superficie del documento impreso |
+| `--canvas` | `cream-50` | Page background |
+| `--surface` | white | Tables, fields, panels |
+| `--surface-sunken` | `brand-50` | Table headers, form footers |
+| `--ink` | `brand-900` | Text (13.4:1 or more on every surface) |
+| `--ink-secondary` | `brand-500` | Secondary text (7.5:1 or more) |
+| `--ink-placeholder` | `brand-300` | Placeholder — **on white only** (4.51:1) |
+| `--control-border` | `brand-300` | Field borders (a control needs 3:1) |
+| `--rule` / `--rule-strong` | `brand-100` / `brand-200` | Dividers, never text |
+| `--accent` | `brand-700` | Primary button, focus, links, active item |
+| `--paper` | `cream-100` | The surface of the printed document |
 
-## Reglas del manual
+## Rules from the brand manual
 
-- `brand-300` no va como texto normal sobre fondos que no sean blanco puro (baja de AA).
-- Combinaciones aprobadas: morado sobre blanco, morado sobre crema, blanco sobre morado.
-- El color significa estado — y **un estado siempre lleva una palabra**.
+- `brand-300` is not used as body text on anything other than pure white (it falls below AA).
+- Approved pairings: purple on white, purple on cream, white on purple.
+- Color means state — and **a state always carries a word**.
 
-En Tailwind: `bg-canvas`, `text-ink-secondary`, `border-rule`, `bg-brand-700`, `text-cream-100`…
+In Tailwind: `bg-canvas`, `text-ink-secondary`, `border-rule`, `bg-brand-700`, `text-cream-100`…
 </docs>

@@ -11,7 +11,7 @@ const users = [
 
 <template>
   <Story title="TxPopover" group="estructura">
-    <Variant title="Menú de cuenta">
+    <Variant title="Account menu">
       <div class="story-pad" style="height: 320px; display: flex; justify-content: flex-end">
         <TxPopover align="end" label="Su cuenta" :width="280">
           <template #trigger>
@@ -36,9 +36,9 @@ const users = [
 <docs lang="md">
 # TxPopover
 
-Un panel pequeño **anclado a su botón**: el selector de contexto, el menú de cuenta. Escape o un
-clic afuera lo cierran y el foco vuelve al botón. Puede contener selects y calendarios: sus
-listas se abren por encima.
+A small panel **anchored to its button**: the context picker, the account menu. Escape or a click
+outside closes it and focus returns to the button. It can hold selects and calendars: their lists
+open above it.
 
 ```vue
 <TxPopover v-model:open="abierto" align="end" label="Su cuenta">
@@ -47,12 +47,12 @@ listas se abren por encima.
 </TxPopover>
 ```
 
-| Prop | Tipo | Por defecto | |
+| Prop | Type | Default | |
 |---|---|---|---|
 | `open` | `boolean` (`v-model:open`) | `false` | |
 | `side` / `align` | | `bottom` / `start` | |
-| `width` | `number` | `300` | px, nunca más ancho que la pantalla |
-| `label` | `string` | — | Nombre del panel para lectores de pantalla (si no, el del botón) |
+| `width` | `number` | `300` | px, never wider than the screen |
+| `label` | `string` | — | The panel's name for screen readers (otherwise the button's) |
 
-**Slots:** `trigger` (el botón, con nombre propio) y el panel, que recibe `close()`.
+**Slots:** `trigger` (the button, with its own name) and the panel, which receives `close()`.
 </docs>

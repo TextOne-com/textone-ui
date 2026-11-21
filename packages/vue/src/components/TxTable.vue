@@ -1,7 +1,7 @@
 <script setup lang="ts">
 /**
  * A table of figures. Write thead/tbody/tfoot inside it as plain HTML. `framed` sets it in the
- * ledger frame (hairline, sticky sunken header, scroll); `paper` on the documento surface.
+ * ledger frame (hairline, sticky sunken header, scroll); `paper` on the document surface.
  * Cells with class `tx-numeric` right-align with tabular figures; a row with `tx-totals` is a
  * totals row (weight and a rule, never a band).
  */

@@ -36,8 +36,8 @@ const added = ref<string[]>([]);
           :width="360"
         />
         <p class="story-note">
-          Valor: <code>{{ JSON.stringify(state.value) }}</code>. Prueba "magico 2" (sin tilde, en
-          otro orden) o "tpe".
+          Value: <code>{{ JSON.stringify(state.value) }}</code>. Try "magico 2" (no accent, in
+          another order) or "tpe".
         </p>
       </div>
       <template #controls>
@@ -48,7 +48,7 @@ const added = ref<string[]>([]);
       </template>
     </Variant>
 
-    <Variant title="Modo picker (agregar líneas)">
+    <Variant title="Picker mode (adding lines)">
       <div class="story-col">
         <TxCombobox
           label="Agregar título por código o nombre"
@@ -58,7 +58,7 @@ const added = ref<string[]>([]);
           :list-width="420"
           @select="(v) => added.push(v)"
         />
-        <p class="story-note">Agregados: {{ added.join(", ") || "ninguno" }}</p>
+        <p class="story-note">Added: {{ added.join(", ") || "none" }}</p>
       </div>
     </Variant>
   </Story>
@@ -67,13 +67,13 @@ const added = ref<string[]>([]);
 <docs lang="md">
 # TxCombobox
 
-Una opción de una **lista larga**, encontrada escribiendo — el catálogo de ~300 SKU, las cuentas.
-Busca **cada palabra, en cualquier orden y sin tildes**: "magico 2" encuentra "Lenguaje Mágico 2".
+One option from a **long list**, found by typing — the ~300-SKU catalog, the accounts.
+It matches **every word, in any order and ignoring accents**: "magico 2" finds "Lenguaje Mágico 2".
 
 ```vue
 <TxCombobox v-model="code" label="SKU" :options="skuOptions" clearable />
 
-<!-- Modo picker: cada elección se emite y el campo queda vacío para la siguiente -->
+<!-- Picker mode: each choice is emitted and the field is cleared for the next one -->
 <TxCombobox
   label="Agregar título por código o nombre"
   :options="skuOptions"
@@ -82,24 +82,24 @@ Busca **cada palabra, en cualquier orden y sin tildes**: "magico 2" encuentra "L
 />
 ```
 
-| Prop | Tipo | Por defecto | |
+| Prop | Type | Default | |
 |---|---|---|---|
 | `modelValue` | `string \| null` | `null` | |
-| `options` | `{ value; label; disabled?; keywords? }[]` | — | `keywords` también se buscan |
-| `filter` | `(option, query) => boolean` | todas las palabras | Para un criterio propio |
-| `limit` | `number` | `50` | Opciones dibujadas; escribir acota el resto |
-| `picker` | `boolean` | `false` | Emite `select` y se vacía |
+| `options` | `{ value; label; disabled?; keywords? }[]` | — | `keywords` are searched too |
+| `filter` | `(option, query) => boolean` | every word | For a custom criterion |
+| `limit` | `number` | `50` | Options rendered; typing narrows the rest |
+| `picker` | `boolean` | `false` | Emits `select` and clears itself |
 | `clearable` | `boolean` | `false` | |
-| `listWidth` | `number \| string` | ancho del campo | La lista puede ser más ancha que el campo |
+| `listWidth` | `number \| string` | the field's width | The list can be wider than the field |
 | `nothingFound` | `string` | `"Sin resultados"` | |
 | `label`, `description`, `error`, `placeholder`, `disabled`, `size`, `width`, `id` | | | |
 
-**Slot:** `option` (`{ option }`) para dibujar cada opción. **Eventos:** `update:modelValue`,
-`select`. **Expone:** `focus()`.
+**Slot:** `option` (`{ option }`) to render each option. **Events:** `update:modelValue`,
+`select`. **Exposes:** `focus()`.
 
-## Comportamiento
+## Behavior
 
-- Si se abandona una búsqueda a medias, el campo vuelve a mostrar la opción elegida.
-- Funciona con mouse y con teclado (flechas, Enter, Escape).
-- El `<input>` es el `combobox`, con el nombre de la etiqueta o de `aria-label`.
+- If a search is abandoned halfway, the field shows the chosen option again.
+- Works with mouse and keyboard (arrows, Enter, Escape).
+- The `<input>` is the `combobox`, named by the label or by `aria-label`.
 </docs>

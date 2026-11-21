@@ -4,21 +4,21 @@ import { TxSkeleton } from "@textone-com/vue";
 
 <template>
   <Story title="TxSkeleton" group="estados">
-    <Variant title="Tabla"><div class="story-pad"><TxSkeleton variant="table" :rows="6" /></div></Variant>
-    <Variant title="Tarjetas"><div class="story-pad"><TxSkeleton variant="cards" /></div></Variant>
-    <Variant title="Texto"><div class="story-pad"><TxSkeleton variant="text" :lines="4" /></div></Variant>
-    <Variant title="Bloque"><div class="story-pad"><TxSkeleton variant="block" height="160px" /></div></Variant>
+    <Variant title="Table"><div class="story-pad"><TxSkeleton variant="table" :rows="6" /></div></Variant>
+    <Variant title="Cards"><div class="story-pad"><TxSkeleton variant="cards" /></div></Variant>
+    <Variant title="Text"><div class="story-pad"><TxSkeleton variant="text" :lines="4" /></div></Variant>
+    <Variant title="Block"><div class="story-pad"><TxSkeleton variant="block" height="160px" /></div></Variant>
   </Story>
 </template>
 
 <docs lang="md">
 # TxSkeleton
 
-Un marcador **con la forma de lo que está cargando**, así la página no salta cuando llegan los
-datos. Una luz suave lo recorre (quieta con *reducir movimiento*). Los lectores de pantalla oyen
-`label` ("Cargando…"), no las piezas.
+A placeholder **shaped like what is loading**, so the page doesn't jump when the data arrives. A
+soft light sweeps across it (still under *reduce motion*). Screen readers hear `label`
+("Cargando…"), not the pieces.
 
-| Prop | Tipo | Por defecto | |
+| Prop | Type | Default | |
 |---|---|---|---|
 | `variant` | `table \| cards \| text \| block` | `table` | |
 | `rows`, `columns` | `number` | `8`, `5` | `table` |

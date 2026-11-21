@@ -2,7 +2,7 @@
 import { TxMultiSelect } from "@textone-com/vue";
 import { reactive } from "vue";
 
-// Ficticios: nada de distribuidores reales en una página pública.
+// Fictitious: no real distributors on a public page.
 const accounts = [
   { value: "1", label: "Librería El Faro", description: "EC 01-01", group: "Bogotá" },
   { value: "2", label: "Colegio Los Pinos", description: "EC 01-02", group: "Bogotá" },
@@ -36,7 +36,7 @@ const state = reactive({
           placeholder="Buscar cuenta o código EC"
           :width="340"
         />
-        <p class="story-note">Valor: <code>{{ JSON.stringify(state.value) }}</code></p>
+        <p class="story-note">Value: <code>{{ JSON.stringify(state.value) }}</code></p>
       </div>
       <template #controls>
         <HstText v-model="state.label" title="label" />
@@ -51,8 +51,8 @@ const state = reactive({
 <docs lang="md">
 # TxMultiSelect
 
-**Varias opciones** de una lista, encontradas escribiendo. Para filtros ("estas cuentas", "estos
-tipos de documento") y asignaciones.
+**Several options** from a list, found by typing. For filters ("these accounts", "these document
+types") and assignments.
 
 ```vue
 <TxMultiSelect
@@ -63,29 +63,29 @@ tipos de documento") y asignaciones.
 />
 ```
 
-## Cómo se usa
+## How it works
 
-- **Escribir filtra** por cada palabra, sin tildes, también en la descripción (el código EC).
-- La lista **queda abierta** mientras eliges; cada opción con su casilla (el visto se dibuja).
-- Arriba de la lista: **Seleccionar todos (n)**, o mientras buscas, **Seleccionar los n
-  encontrados**; y el contador `4 / 7`.
-- Lo elegido queda como **chips**, cada uno con su ×. Pasados `maxChips`, el resto se pliega en
-  **+N** (al pasar el mouse dice cuáles). <kbd>Backspace</kbd> con la búsqueda vacía quita el
-  último. El × del campo quita todos.
-- `display="count"` muestra "4 cuentas" en vez de chips: para una barra de filtros de una línea.
-- Opciones con `group` se listan bajo su título; con `description`, en una segunda línea.
+- **Typing filters** by each word, accent-insensitive, also in the description (the EC code).
+- The list **stays open** while you choose; each option has its checkbox (the check mark draws in).
+- Above the list: **Seleccionar todos (n)** (select all), or while searching, **Seleccionar los n
+  encontrados** (select the n found); and the `4 / 7` counter.
+- The chosen options show as **chips**, each with its ×. Past `maxChips`, the rest fold into
+  **+N** (hovering it says which). <kbd>Backspace</kbd> with an empty search removes the last
+  one. The field's × removes them all.
+- `display="count"` shows "4 cuentas" instead of chips: for a one-line filter bar.
+- Options with `group` are listed under their heading; with `description`, on a second line.
 
-| Prop | Tipo | Por defecto | |
+| Prop | Type | Default | |
 |---|---|---|---|
 | `modelValue` | `string[]` | `[]` | |
 | `options` | `Option[]` | | `{ value, label, description?, group?, keywords?, disabled? }` |
 | `display` | `chips \| count` | `chips` | |
 | `maxChips` | `number` | `3` | |
-| `countLabel` | `(n) => string` | `"n seleccionados"` | También lo oye el lector de pantalla |
-| `allLabel` | `string` | `"Todos"` | En `count`, cuando están todos |
-| `hideActions` | `boolean` | `false` | Sin "seleccionar todos" |
-| `filter` | `(option, query) => boolean` | por palabras | |
+| `countLabel` | `(n) => string` | `"n seleccionados"` | Screen readers hear it too |
+| `allLabel` | `string` | `"Todos"` | In `count`, when all are selected |
+| `hideActions` | `boolean` | `false` | No "select all" |
+| `filter` | `(option, query) => boolean` | by words | |
 | `label`, `description`, `error`, `placeholder`, `width`, `inline`, `disabled`, `required` | | | |
 
-**Slot:** `option` — cómo se dibuja cada opción.
+**Slot:** `option` — how each option is drawn.
 </docs>

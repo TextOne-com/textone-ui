@@ -20,7 +20,7 @@ const state = reactive({ value: "conteo", size: "sm" as "xs" | "sm" | "md", disa
             { value: 'ajuste', label: 'Ajuste' },
           ]"
         />
-        <p class="story-note">Valor: <code>{{ state.value }}</code></p>
+        <p class="story-note">Value: <code>{{ state.value }}</code></p>
       </div>
       <template #controls>
         <HstButtonGroup v-model="state.size" title="size" :options="['xs', 'sm']" />
@@ -33,8 +33,8 @@ const state = reactive({ value: "conteo", size: "sm" as "xs" | "sm" | "md", disa
 <docs lang="md">
 # TxSegmentedControl
 
-De **dos a cinco opciones excluyentes**, una al lado de la otra: Pendientes / Todas, Conteo /
-Entrada / Ajuste. Píldora, como los chips del sitio.
+**Two to five mutually exclusive options**, side by side: Pendientes / Todas, Conteo / Entrada /
+Ajuste. A pill, like the site's chips.
 
 ```vue
 <TxSegmentedControl
@@ -44,14 +44,14 @@ Entrada / Ajuste. Píldora, como los chips del sitio.
 />
 ```
 
-| Prop | Tipo | |
+| Prop | Type | |
 |---|---|---|
-| `modelValue` | `string` (requerido) | |
+| `modelValue` | `string` (required) | |
 | `options` | `{ value; label; disabled? }[]` | |
-| `label` | `string` | Nombre accesible del grupo (no se ve) |
+| `label` | `string` | The group's accessible name (not visible) |
 | `size` | `xs \| sm` | |
 | `disabled` | `boolean` | |
 
-Por dentro son **radios nativos**: flechas para moverse, un solo punto de tabulación, y se anuncia
-como `radiogroup`. Para cambiar de vista de un mismo objeto, usa `TxTabs`.
+Underneath they are **native radios**: arrow keys to move, a single tab stop, and it is announced
+as a `radiogroup`. To switch between views of the same object, use `TxTabs`.
 </docs>

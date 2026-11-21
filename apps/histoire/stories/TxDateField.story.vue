@@ -34,9 +34,9 @@ const presets = [
           today="2025-11-21"
         />
         <p class="story-note">
-          Guardado como <code>{{ JSON.stringify(state.value) }}</code>. Prueba escribir solo
-          números (<code>15032025</code>), abrir el calendario con <kbd>Alt</kbd>+<kbd>↓</kbd> y
-          pulsar el título del mes para saltar de año.
+          Stored as <code>{{ JSON.stringify(state.value) }}</code>. Try typing only digits
+          (<code>15032025</code>), opening the calendar with <kbd>Alt</kbd>+<kbd>↓</kbd> and
+          clicking the month title to jump between years.
         </p>
       </div>
       <template #controls>
@@ -55,9 +55,9 @@ const presets = [
 <docs lang="md">
 # TxDateField
 
-Una fecha **escrita día primero** o elegida en un calendario, guardada como texto ISO
-(`2025-06-30`, o `""` vacía). Nunca crea un `Date`: ninguna zona horaria mueve un documento al
-día anterior.
+A date **typed day first** or picked from a calendar, stored as ISO text
+(`2025-06-30`, or `""` when empty). It never creates a `Date`: no time zone shifts a document to
+the previous day.
 
 ```vue
 <TxDateField
@@ -71,39 +71,39 @@ día anterior.
 />
 ```
 
-## Escribir
+## Typing
 
-- **Las barras se ponen solas**: `30062025` → `30/06/2025`, cómodo en teclado numérico. Si
-  escribes tus propios separadores (`2-11-26`, `2.11.2026`), se respetan.
-- En cuanto el texto es una fecha válida y dentro del rango, se guarda; **el día de la semana
-  aparece dentro del campo** (`lun`), así se nota un `03/06` que debía ser `06/03`.
-- Al salir, Enter o Escape, un texto a medias **vuelve a la última fecha buena**: no se adivina.
+- **Slashes insert themselves**: `30062025` → `30/06/2025`, handy on a numeric keypad. If you
+  type your own separators (`2-11-26`, `2.11.2026`), they are respected.
+- As soon as the text is a valid date within range, it is saved; **the weekday appears inside
+  the field** (`lun`), so a `03/06` that should have been `06/03` stands out.
+- On blur, Enter or Escape, half-typed text **reverts to the last good date**: nothing is guessed.
 
-## Calendario
+## Calendar
 
-- <kbd>Alt</kbd>+<kbd>↓</kbd> o el botón lo abren; flechas para moverse por los días, Enter elige.
-- **El título del mes es un botón**: abre la vista de meses del año, y sus flechas cambian de
-  año. Volver dos años atrás son dos clics, no veinticuatro.
-- Hoy lleva un punto debajo. Fuera de `min`/`max` no se puede elegir.
-- Al pie: **Hoy**, los `presets` que pases y la fecha elegida dicha en palabras.
-- En pantallas táctiles los días miden 40 px.
+- <kbd>Alt</kbd>+<kbd>↓</kbd> or the button opens it; arrows move through the days, Enter picks.
+- **The month title is a button**: it opens the year's month view, whose arrows change the year.
+  Going back two years takes two clicks, not twenty-four.
+- Today has a dot underneath. Dates outside `min`/`max` cannot be picked.
+- In the footer: **Hoy** (Today), the `presets` you pass, and the chosen date spelled out in words.
+- On touch screens, days are 40 px.
 
-| Prop | Tipo | Por defecto | |
+| Prop | Type | Default | |
 |---|---|---|---|
-| `modelValue` | `string` (ISO o `""`) | `""` | |
+| `modelValue` | `string` (ISO or `""`) | `""` | |
 | `label`, `description`, `error`, `required`, `disabled`, `id` | | | |
-| `min`, `max` | `string` (ISO) | — | Fuera del rango no se acepta |
-| `clearable` | `boolean` | `false` | Botón × y texto vacío dejan `""` |
-| `presets` | `{ label, value }[]` | — | Fechas con nombre al pie del calendario |
-| `today` | `string` (ISO) | hoy del dispositivo | Pásale el hoy del negocio (zona Bogotá) |
+| `min`, `max` | `string` (ISO) | — | Out-of-range dates are not accepted |
+| `clearable` | `boolean` | `false` | The × button and empty text leave `""` |
+| `presets` | `{ label, value }[]` | — | Named dates in the calendar footer |
+| `today` | `string` (ISO) | the device's today | Pass the business's today (Bogotá time zone) |
 | `todayLabel` | `string` | `"Hoy"` | |
 | `hideWeekday` | `boolean` | `false` | |
-| `inline` | `boolean` | `false` | Etiqueta al lado (barras de herramientas) |
+| `inline` | `boolean` | `false` | Label alongside (toolbars) |
 | `width` | `number \| string` | `168` | |
 | `locale` | `string` | `es-CO` | |
 
-**Slot:** `right` (antes del botón del calendario).
+**Slot:** `right` (before the calendar button).
 
-Se exportan `parseDisplayDate`, `formatDisplayDate`, `maskDateInput`, `describeDate`,
-`isIsoDate` y `localToday`.
+Also exported: `parseDisplayDate`, `formatDisplayDate`, `maskDateInput`, `describeDate`,
+`isIsoDate` and `localToday`.
 </docs>

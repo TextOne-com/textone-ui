@@ -24,7 +24,7 @@ const state = reactive({
         <HstText v-model="state.title" title="title" />
       </template>
     </Variant>
-    <Variant title="Tonos">
+    <Variant title="Tones">
       <div class="story-col">
         <TxAlert title="El documento no se registró:">La fecha está fuera de la temporada.</TxAlert>
         <TxAlert tone="success">Recibo de caja registrado. <a href="#">Ver la cuenta</a></TxAlert>
@@ -38,8 +38,8 @@ const state = reactive({
 <docs lang="md">
 # TxAlert
 
-Un mensaje en caja: un **rechazo** (todas las razones juntas, no una por intento) o una
-**confirmación**.
+A message in a box: a **rejection** (every reason together, not one per attempt) or a
+**confirmation**.
 
 ```vue
 <TxAlert title="El documento no se registró:">
@@ -48,14 +48,14 @@ Un mensaje en caja: un **rechazo** (todas las razones juntas, no una por intento
 <TxAlert tone="success">Recibo de caja registrado.</TxAlert>
 ```
 
-| Prop | Tipo | Por defecto | |
+| Prop | Type | Default | |
 |---|---|---|---|
 | `tone` | `danger \| success \| warning \| info` | `danger` | |
-| `title` | `string` | — | También como slot `title` |
-| `role` | `alert \| status \| none` | según el tono | `danger` → `alert`; los demás → `status` |
+| `title` | `string` | — | Also as the `title` slot |
+| `role` | `alert \| status \| none` | depends on the tone | `danger` → `alert`; the rest → `status` |
 
-## Accesibilidad
+## Accessibility
 
-`role="alert"` se anuncia de inmediato; `status`, con cortesía. Úsalo para lo que acaba de pasar
-por una acción de la persona, no para avisos permanentes de la pantalla.
+`role="alert"` is announced immediately; `status`, politely. Use it for what just happened as a
+result of the person's action, not for permanent notices on the screen.
 </docs>

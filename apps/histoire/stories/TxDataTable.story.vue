@@ -2,7 +2,7 @@
 import { type DataColumn, type Filters, type SortState, TxDataTable } from "@textone-com/vue";
 import { ref } from "vue";
 
-// Ficticios: nada de distribuidores reales en una página pública.
+// Fictitious: no real distributors on a public page.
 type Row = { id: number; name: string; code: string; city: string; sold: string; balance: string };
 const rows: Row[] = [
   { id: 1, name: "Librería El Faro", code: "EC 01-01", city: "Bogotá", sold: "18250500.00", balance: "18250500.00" },
@@ -62,26 +62,26 @@ const filters = ref<Filters>({});
 <docs lang="md">
 # TxDataTable
 
-Una tabla que **cada persona acomoda a su trabajo**, y que lo recuerda.
+A table that **each person arranges for their own work**, and that remembers it.
 
-- **Ancho:** arrastrar el borde de un encabezado; con el borde enfocado, <kbd>←</kbd>
-  <kbd>→</kbd> de a 16 px; doble clic vuelve al ancho original.
-- **Fijar:** desde el menú ⋮ de la columna o desde **Columnas**. Lo fijado queda a la izquierda y
-  proyecta una sombra cuando el resto pasa por debajo. **En el teléfono lo fijado nunca ocupa más
-  del 45 %**; con `wrapNarrow` el texto pasa a dos líneas en vez de cortarse.
-- **Ocultar / mostrar** columnas y **densidad** (compacta o cómoda) en **Columnas**;
-  **Restablecer** vuelve a lo de fábrica.
-- **Ordenar:** clic en el encabezado — cifras de mayor a menor primero, palabras A→Z; un tercer
-  clic quita el orden. Los vacíos van siempre al final.
-- **Filtrar por columna** (menú ⋮): `text` (contiene, sin tildes), `options` (casillas) o `range`
-  (desde–hasta). Los filtros activos quedan como **chips** sobre la tabla, y un punto en su
-  encabezado.
-- **Exportar** la vista (filtros, orden y columnas visibles) a **CSV para Excel en español**:
-  `;`, coma decimal, tildes intactas.
-- Las filas se deslizan al filtrar u ordenar (`tx-row`).
+- **Width:** drag a header's edge; with the edge focused, <kbd>←</kbd>
+  <kbd>→</kbd> in 16 px steps; double-click restores the original width.
+- **Pin:** from the column's ⋮ menu or from **Columnas** (Columns). Pinned columns stay on the
+  left and cast a shadow when the rest scrolls underneath. **On a phone, pinned columns never take
+  more than 45 %**; with `wrapNarrow` the text wraps to two lines instead of being cut.
+- **Hide / show** columns and **density** (compact or comfortable) in **Columnas**;
+  **Restablecer** (Reset) returns to the defaults.
+- **Sort:** click the header — numbers largest first, words A→Z; a third click removes the sort.
+  Empty values always go last.
+- **Filter by column** (⋮ menu): `text` (contains, ignoring accents), `options` (checkboxes) or
+  `range` (from–to). Active filters show as **chips** above the table, and as a dot in their
+  header.
+- **Export** the view (filters, sort and visible columns) to **CSV for Spanish-locale Excel**:
+  `;`, decimal comma, accents intact.
+- Rows slide when filtering or sorting (`tx-row`).
 
-Ancho, columnas fijadas y ocultas y densidad se guardan por persona en `storageKey`. Orden y
-filtros son `v-model:sort` y `v-model:filters`: la app decide si van en la URL.
+Width, pinned and hidden columns and density are saved per person under `storageKey`. Sort and
+filters are `v-model:sort` and `v-model:filters`: the app decides whether they go in the URL.
 
 ```vue
 <TxDataTable
@@ -99,11 +99,11 @@ filtros son `v-model:sort` y `v-model:filters`: la app decide si van en la URL.
 </TxDataTable>
 ```
 
-**Columna** (`DataColumn<Row>`): `id`, `header`, `value(row)` (para ordenar, filtrar y
-exportar; el dinero, como texto decimal), `align`, `width`, `minWidth`, `pinned`, `sortable`,
-`compare(a, b)` (pásale un comparador de decimales para dinero), `filter`, `options`,
-`parse(texto)` (lo escrito en un rango → valor comparable), `format(valor)` (cómo se lee en
-chips y opciones), `hideable`, `focus` (franja lila), `wrapNarrow`, `exportValue(row)`.
+**Column** (`DataColumn<Row>`): `id`, `header`, `value(row)` (for sorting, filtering and
+exporting; money as decimal text), `align`, `width`, `minWidth`, `pinned`, `sortable`,
+`compare(a, b)` (pass a decimal comparator for money), `filter`, `options`,
+`parse(text)` (what was typed in a range → a comparable value), `format(value)` (how it reads in
+chips and options), `hideable`, `focus` (lilac stripe), `wrapNarrow`, `exportValue(row)`.
 
 **Slots:** `cell-<id>` (`{ row, value }`), `foot-<id>`, `toolbar` (`{ shown, total }`), `empty`.
 </docs>

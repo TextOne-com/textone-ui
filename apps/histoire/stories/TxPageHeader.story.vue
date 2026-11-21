@@ -27,8 +27,8 @@ const state = reactive({ title: "Panel de control", context: "2025 Calendario A 
 <docs lang="md">
 # TxPageHeader
 
-El encabezado de cada pantalla: **título** (H1, Fraunces) a la izquierda, **acciones** a la
-derecha, una línea de **contexto** debajo (temporada, corte, cuenta).
+Every screen's header: **title** (H1, Fraunces) on the left, **actions** on the right, a
+**context** line below (season, cut-off date, account).
 
 ```vue
 <TxPageHeader title="Panel de control" :context="`${season.name} · corte al ${corte}`">
@@ -40,7 +40,7 @@ derecha, una línea de **contexto** debajo (temporada, corte, cuenta).
 
 | Prop / slot | | |
 |---|---|---|
-| `title` | `string` (requerido) | Un solo H1 por pantalla |
-| `context` | `string` | O el slot `context` para algo más rico |
-| slot `actions` | | La acción principal al final (a la derecha) |
+| `title` | `string` (required) | A single H1 per screen |
+| `context` | `string` | Or the `context` slot for something richer |
+| slot `actions` | | The primary action last (on the right) |
 </docs>

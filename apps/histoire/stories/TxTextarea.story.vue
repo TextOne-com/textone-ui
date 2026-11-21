@@ -43,18 +43,18 @@ const state = reactive({
 <docs lang="md">
 # TxTextarea
 
-Texto de varias líneas, con el mismo marco que `TxTextInput`.
+Multi-line text, with the same frame as `TxTextInput`.
 
 ```vue
 <TxTextarea v-model="notes" label="Observaciones" :rows="2" autosize />
 ```
 
-| Prop | Tipo | Por defecto | |
+| Prop | Type | Default | |
 |---|---|---|---|
-| `label`, `description`, `error`, `placeholder`, `required`, `disabled`, `width`, `id` | | | Como en `TxTextInput` |
-| `rows` | `number` | `3` | Alto inicial |
-| `autosize` | `boolean` | `false` | Crece con el texto, de `rows` hasta `maxRows` |
+| `label`, `description`, `error`, `placeholder`, `required`, `disabled`, `width`, `id` | | | As in `TxTextInput` |
+| `rows` | `number` | `3` | Initial height |
+| `autosize` | `boolean` | `false` | Grows with the text, from `rows` up to `maxRows` |
 | `maxRows` | `number` | `8` | |
 
-**Expone:** `focus()`. Los atributos sueltos (`name`, `aria-*`) van al `<textarea>`.
+**Exposes:** `focus()`. Fallthrough attributes (`name`, `aria-*`) go to the `<textarea>`.
 </docs>

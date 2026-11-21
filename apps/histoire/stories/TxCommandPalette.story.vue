@@ -5,7 +5,7 @@ import { ref } from "vue";
 
 const open = ref(false);
 const chosen = ref("");
-// Ficticios: nada de distribuidores reales en una página pública.
+// Fictitious: no real distributors on a public page.
 const items: CommandItem[] = [
   { id: "p", label: "Panel de control", group: "Ir a", icon: IconLayoutDashboard, hint: "G P" },
   { id: "c", label: "Cuentas", group: "Ir a", icon: IconUsers, hint: "G C" },
@@ -22,8 +22,8 @@ const items: CommandItem[] = [
   <Story title="TxCommandPalette" group="seleccion" :layout="{ type: 'single', iframe: true }">
     <Variant title="Playground">
       <div class="story-pad" style="min-height: 420px">
-        <TxButton @click="open = true">Abrir (⌘K / Ctrl K)</TxButton>
-        <p class="story-note">Elegido: <code>{{ chosen || "—" }}</code></p>
+        <TxButton @click="open = true">Open (⌘K / Ctrl K)</TxButton>
+        <p class="story-note">Chosen: <code>{{ chosen || "—" }}</code></p>
         <TxCommandPalette v-model:open="open" :items="items" recent-key="" @select="(i) => (chosen = i.label)" />
       </div>
     </Variant>
@@ -33,26 +33,26 @@ const items: CommandItem[] = [
 <docs lang="md">
 # TxCommandPalette
 
-**Ir a cualquier parte escribiendo.** <kbd>⌘</kbd>/<kbd>Ctrl</kbd>+<kbd>K</kbd> la abre desde
-cualquier pantalla. Filtra tus `items` por cada palabra, sin tildes (también la descripción y
-`keywords`); para resultados del servidor, escucha `search` y pásalos con `loading`.
+**Go anywhere by typing.** <kbd>⌘</kbd>/<kbd>Ctrl</kbd>+<kbd>K</kbd> opens it from any screen. It
+filters your `items` by every word, ignoring accents (the description and `keywords` too); for
+server results, listen to `search` and pass them in with `loading`.
 
-- <kbd>↑</kbd> <kbd>↓</kbd> se mueven, <kbd>Enter</kbd> elige (`select`), <kbd>Esc</kbd> cierra.
-- Sin texto, los **recientes** van primero (se recuerdan en el dispositivo).
-- Agrupada por `group`; al escribir, a lo sumo `perGroup` por grupo.
-- `hint` muestra un atajo a la derecha ("G P").
+- <kbd>↑</kbd> <kbd>↓</kbd> move, <kbd>Enter</kbd> chooses (`select`), <kbd>Esc</kbd> closes.
+- With no text, **recent** items come first (remembered on the device).
+- Grouped by `group`; while typing, at most `perGroup` per group.
+- `hint` shows a shortcut on the right ("G P").
 
 ```vue
 <TxCommandPalette v-model:open="abierta" v-model:query="q" :items="items" :loading="buscando" @select="ir" />
 ```
 
-| Prop | Tipo | Por defecto |
+| Prop | Type | Default |
 |---|---|---|
 | `items` | `CommandItem[]` (`{ id, label, group, description?, icon?, keywords?, hint? }`) | |
 | `open`, `query` | `v-model` | |
 | `loading` | `boolean` | `false` |
-| `placeholder`, `title`, `nothingFound`, `recentLabel` | `string` | en español |
+| `placeholder`, `title`, `nothingFound`, `recentLabel` | `string` | in Spanish |
 | `shortcut` | `boolean` | `true` |
-| `recentKey` | `string` | `"tx-command-recent"`; `""` sin recientes |
+| `recentKey` | `string` | `"tx-command-recent"`; `""` for no recents |
 | `perGroup` | `number` | `6` |
 </docs>
