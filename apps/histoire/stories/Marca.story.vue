@@ -90,7 +90,7 @@ const misuse = [
 </script>
 
 <template>
-  <Story title="Brand" group="fundamentos" :layout="{ type: 'single', iframe: false }">
+  <Story title="Brand" group="fundamentos" :layout="{ type: 'single', iframe: true }">
     <div class="brand">
       <!-- 1. Who we are -->
       <section class="hero">
@@ -384,11 +384,12 @@ section > .tx-title {
 .trio,
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 12px;
 }
+.trio,
 .cards.three {
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
 }
 .trio article,
 .cards article {

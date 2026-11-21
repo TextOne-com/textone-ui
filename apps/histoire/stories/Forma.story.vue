@@ -10,7 +10,7 @@ const radii = [
 </script>
 
 <template>
-  <Story title="Spacing & shape" group="fundamentos" :layout="{ type: 'single', iframe: false }">
+  <Story title="Spacing & shape" group="fundamentos" :layout="{ type: 'single', iframe: true }">
     <div class="story-col" style="max-width: 760px">
       <h2 class="tx-title tx-title--3">Spacing — 4 px grid</h2>
       <div style="display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap">
