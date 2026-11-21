@@ -28,7 +28,8 @@ jobs:
     container: mcr.microsoft.com/playwright:v1.64.1-noble
     steps:
       - uses: actions/checkout@v4
-      - run: corepack enable
+      # The Playwright image's Node has no corepack: install the pnpm the repo pins.
+      - run: npm install -g pnpm@10.28.0
       - run: pnpm install --frozen-lockfile
       - run: pnpm stories:build
       - run: pnpm --filter @textone-com/histoire visual:ci
