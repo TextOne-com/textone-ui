@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, within } from "@testing-library/vue";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/vue";
 import { h, ref } from "vue";
 import TxDataTable from "../src/components/TxDataTable.vue";
 import {
@@ -6,8 +6,12 @@ import {
   defaultLayout,
   filterRows,
   orderColumns,
+  readViews,
+  snapshotView,
   sortRows,
   toCsv,
+  upsertView,
+  viewMatches,
 } from "../src/utils/dataTable";
 
 type Row = { id: number; name: string; amount: string; status: string; goal: string | null };
@@ -116,4 +120,97 @@ test("grouped rows sit under their heading, in the order the groups first appear
     .slice(1)
     .map((tr) => tr.querySelector("td")?.textContent?.replace(/\s+/g, " ").trim());
   expect(texts).toEqual(["Activas 2", "Librería El Faro", "Papelería Central", "Cerradas 1", "Colegio Los Pinos"]);
+});
+
+test("a view captures active filters, order and columns, and matches only that state", () => {
+  const layout = { ...defaultLayout(columns), hidden: ["goal"] };
+  const filters = { amount: { kind: "range" as const, min: "300" }, name: { kind: "text" as const, text: " " } };
+  const view = snapshotView("Saldo alto", filters, { id: "amount", desc: true }, layout);
+  expect(view.filters).toEqual({ amount: { kind: "range", min: "300" } });
+  expect(viewMatches(view, filters, { id: "amount", desc: true }, layout)).toBe(true);
+  expect(viewMatches(view, filters, null, layout)).toBe(false);
+  expect(viewMatches(view, {}, { id: "amount", desc: true }, layout)).toBe(false);
+  expect(viewMatches(view, filters, { id: "amount", desc: true }, defaultLayout(columns))).toBe(false);
+});
+
+test("stored views survive a removed column and junk; a name saves over its namesake", () => {
+  const ids = new Set(["name", "amount"]);
+  const raw = JSON.stringify([
+    { name: "A", filters: { gone: { kind: "text", text: "x" } }, sort: { id: "gone", desc: true }, hidden: ["gone"], pinned: ["name"] },
+    { name: "" },
+    42,
+  ]);
+  expect(readViews(raw, ids)).toEqual([{ name: "A", filters: {}, sort: null, hidden: [], pinned: ["name"] }]);
+  expect(readViews("not json", ids)).toEqual([]);
+  const a = { name: "Saldo", filters: {}, sort: null, hidden: [], pinned: [] };
+  const b = { ...a, name: "saldo", sort: { id: "amount", desc: true } };
+  expect(upsertView([a], b)).toEqual([b]);
+});
+
+test("saving a view and applying it brings back its filters and order", async () => {
+  localStorage.clear();
+  const sort = ref<{ id: string; desc: boolean } | null>(null);
+  const filters = ref({});
+  render({
+    setup: () => () =>
+      h(TxDataTable as never, {
+        rows,
+        columns,
+        rowKey: (r: Row) => r.id,
+        viewsKey: "test",
+        sort: sort.value,
+        filters: filters.value,
+        "onUpdate:sort": (v: typeof sort.value) => {
+          sort.value = v;
+        },
+        "onUpdate:filters": (v: object) => {
+          filters.value = v;
+        },
+      }),
+  });
+  sort.value = { id: "amount", desc: true };
+  filters.value = { status: { kind: "options", values: ["ACTIVE"] } };
+  await fireEvent.click(screen.getByRole("button", { name: "Vistas" }));
+  await fireEvent.update(await screen.findByLabelText("Nombre de la vista"), "Activas");
+  await fireEvent.click(screen.getByRole("button", { name: "Guardar" }));
+  expect(JSON.parse(localStorage.getItem("tx-table-views:test") ?? "[]")).toHaveLength(1);
+  // The table now shows that view: its name is on the trigger, and listed in the panel.
+  await waitFor(() => expect(screen.getAllByRole("button", { name: "Activas" })).toHaveLength(2));
+  expect(screen.queryByRole("button", { name: "Vistas" })).toBeNull();
+
+  sort.value = null;
+  filters.value = {};
+  await fireEvent.click(within(screen.getByRole("dialog", { name: "Vistas" })).getByRole("button", { name: "Activas" }));
+  expect(sort.value).toEqual({ id: "amount", desc: true });
+  expect(filters.value).toEqual({ status: { kind: "options", values: ["ACTIVE"] } });
+});
+
+test("on a narrow frame, a card slot turns rows into cards with a Filtros panel", async () => {
+  const width = Object.getOwnPropertyDescriptor(HTMLElement.prototype, "clientWidth");
+  Object.defineProperty(HTMLElement.prototype, "clientWidth", { configurable: true, get: () => 390 });
+  try {
+    render(TxDataTable as never, {
+      props: { rows, columns, rowKey: (r: Row) => r.id, label: "Cuentas" } as never,
+      slots: { card: '<template #card="{ row }"><strong>{{ row.name }}</strong></template>' },
+      global: { stubs: { "transition-group": false } },
+    });
+    const list = await screen.findByRole("list", { name: "Cuentas" });
+    expect(within(list).getAllByRole("listitem")).toHaveLength(3);
+    expect(screen.queryByRole("table")).toBeNull();
+    expect(screen.queryByRole("button", { name: "Columnas" })).toBeNull();
+    expect(screen.getByRole("button", { name: "Filtros" })).toBeInTheDocument();
+  } finally {
+    if (width) Object.defineProperty(HTMLElement.prototype, "clientWidth", width);
+  }
+});
+
+test("without a card slot, a narrow frame keeps the table", () => {
+  const width = Object.getOwnPropertyDescriptor(HTMLElement.prototype, "clientWidth");
+  Object.defineProperty(HTMLElement.prototype, "clientWidth", { configurable: true, get: () => 390 });
+  try {
+    render(TxDataTable as never, { props: { rows, columns, rowKey: (r: Row) => r.id, label: "Cuentas" } as never });
+    expect(screen.getByRole("table")).toBeInTheDocument();
+  } finally {
+    if (width) Object.defineProperty(HTMLElement.prototype, "clientWidth", width);
+  }
 });

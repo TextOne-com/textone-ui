@@ -1,6 +1,6 @@
 {
   "name": "@textone-com/vue",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Text One design system: Vue 3 components on Reka UI, styled from @textone-com/tokens.",
   "license": "UNLICENSED",
   "repository": {

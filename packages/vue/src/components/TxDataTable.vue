@@ -1,5 +1,6 @@
 <script setup lang="ts" generic="Row">
-import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
+import { computed, onBeforeUnmount, onMounted, ref, useSlots, watch } from "vue";
+import DataTableFilter from "../internal/DataTableFilter.vue";
 import {
   type CellValue,
   type DataColumn,
@@ -9,14 +10,21 @@ import {
   filterRows,
   isActive,
   orderColumns,
+  readViews,
+  type SavedView,
   type SortState,
+  snapshotView,
   sortRows,
   type TableLayout,
   toCsv,
+  upsertView,
+  viewMatches,
 } from "../utils/dataTable";
 import TxButton from "./TxButton.vue";
+import TxIconButton from "./TxIconButton.vue";
 import TxPopover from "./TxPopover.vue";
 import TxSegmentedControl from "./TxSegmentedControl.vue";
+import TxSelect from "./TxSelect.vue";
 import TxTextInput from "./TxTextInput.vue";
 
 /**
@@ -33,8 +41,16 @@ import TxTextInput from "./TxTextInput.vue";
  * in `rows`; sorting and filtering happen inside each group, and the export adds the group as its
  * first column (`groupHeader`).
  *
+ * With a `card` slot, a frame narrower than 640 px shows one card per row instead of the table:
+ * a list people scan on a phone. Headers are gone there, so "Filtros" holds the order and every
+ * column's filter; "Columnas" is left out (the card decides what it shows).
+ *
+ * With `viewsKey`, "Vistas" saves the current filters, order and columns under a name and brings
+ * them back ("Cuentas con saldo > $10 M"). Views live in this browser, under that key — give it
+ * the person's id to keep each person's apart.
+ *
  * Slots: `cell-<id>` ({ row, value }), `foot-<id>` (the totals row), `toolbar`
- * ({ shown, total }), `group` ({ group, count }), `empty`.
+ * ({ shown, total }), `group` ({ group, count }), `card` ({ row }), `empty`.
  */
 const props = withDefaults(
   defineProps<{
@@ -52,9 +68,12 @@ const props = withDefaults(
     groupBy?: (row: Row) => { id: string | number; label: string; detail?: string };
     /** The group's column header in the export. */
     groupHeader?: string;
+    /** localStorage key for saved views; "" (the default) shows no "Vistas". */
+    viewsKey?: string;
   }>(),
-  { storageKey: "", emptyText: "Ninguna fila coincide.", animate: true },
+  { storageKey: "", emptyText: "Ninguna fila coincide.", animate: true, viewsKey: "" },
 );
+const slots = useSlots();
 const sort = defineModel<SortState>("sort", { default: null });
 const filters = defineModel<Filters>("filters", { default: () => ({}) });
 
@@ -130,10 +149,13 @@ const items = computed<Item[]>(() => {
   return out;
 });
 
+const root = ref<HTMLElement>();
 const wrap = ref<HTMLElement>();
 const wrapWidth = ref(0);
 const scrolled = ref(false);
 const narrow = computed(() => wrapWidth.value > 0 && wrapWidth.value < 640);
+/** One card per row: on a narrow frame, when the page says how a row reads as a card. */
+const cards = computed(() => narrow.value && Boolean(slots.card));
 
 /** Pinned columns that really stick: on a phone, only as many as fit in 45 % of the width. */
 const stuck = computed(() => {
@@ -239,14 +261,32 @@ function optionsOf(c: DataColumn<Row>) {
   }
   return [...seen].map(([value, label]) => ({ value, label })).sort((a, b) => a.label.localeCompare(b.label, "es"));
 }
-function toggleOption(c: DataColumn<Row>, value: string) {
-  const f = filterOf(c);
-  if (f.kind !== "options") return;
-  setFilter(c, {
-    kind: "options",
-    values: f.values.includes(value) ? f.values.filter((v) => v !== value) : [...f.values, value],
-  });
-}
+
+/** As cards, the order is chosen from a list: each sortable column, either way. */
+const sortOptions = computed(() =>
+  props.columns
+    .filter((c) => c.sortable !== false)
+    .flatMap((c) =>
+      c.align === "right"
+        ? [
+            { value: `${c.id}:desc`, label: `${c.header}: mayor a menor` },
+            { value: `${c.id}:asc`, label: `${c.header}: menor a mayor` },
+          ]
+        : [
+            { value: `${c.id}:asc`, label: `${c.header}: A → Z` },
+            { value: `${c.id}:desc`, label: `${c.header}: Z → A` },
+          ],
+    ),
+);
+const sortChoice = computed({
+  get: () => (sort.value ? `${sort.value.id}:${sort.value.desc ? "desc" : "asc"}` : null),
+  set: (v: string | null) => {
+    if (!v) return setSort("", null);
+    const [id, dir] = v.split(":");
+    setSort(id as string, dir === "desc");
+  },
+});
+const filterable = computed(() => props.columns.filter((c) => c.filter));
 function chipText(c: DataColumn<Row>, f: FilterValue): string {
   const fmt = (t: string) => {
     if (!c.format) return t;
@@ -264,6 +304,51 @@ function chipText(c: DataColumn<Row>, f: FilterValue): string {
 const activeFilters = computed(() =>
   props.columns.filter((c) => isActive(filters.value[c.id])).map((c) => ({ c, f: filters.value[c.id] as FilterValue })),
 );
+
+// ── Saved views ──────────────────────────────────────────────────────────
+const viewsStorage = computed(() => (props.viewsKey ? `tx-table-views:${props.viewsKey}` : ""));
+function loadViews(): SavedView[] {
+  if (!viewsStorage.value) return [];
+  try {
+    return readViews(localStorage.getItem(viewsStorage.value), new Set(props.columns.map((c) => c.id)));
+  } catch {
+    return [];
+  }
+}
+const views = ref<SavedView[]>(loadViews());
+watch(viewsStorage, () => {
+  views.value = loadViews();
+});
+function storeViews(next: SavedView[]) {
+  views.value = next;
+  if (!viewsStorage.value) return;
+  try {
+    localStorage.setItem(viewsStorage.value, JSON.stringify(next));
+  } catch {
+    // Storage blocked: the views last for this page.
+  }
+}
+const viewName = ref("");
+const viewsOpen = ref(false);
+const currentView = computed(() =>
+  views.value.find((v) => viewMatches(v, filters.value, sort.value, layout.value)),
+);
+function saveView() {
+  const name = viewName.value.trim();
+  if (!name) return;
+  storeViews(upsertView(views.value, snapshotView(name, filters.value, sort.value, layout.value)));
+  viewName.value = "";
+}
+function applyView(view: SavedView) {
+  filters.value = JSON.parse(JSON.stringify(view.filters)) as Filters;
+  sort.value = view.sort ? { ...view.sort } : null;
+  layout.value.hidden = [...view.hidden];
+  layout.value.pinned = [...view.pinned];
+  viewsOpen.value = false;
+}
+function deleteView(view: SavedView) {
+  storeViews(views.value.filter((v) => v !== view));
+}
 
 // ── Export ───────────────────────────────────────────────────────────────
 function exportCsv() {
@@ -290,20 +375,21 @@ let frame = 0;
 function onScroll() {
   scrolled.value = (wrap.value?.scrollLeft ?? 0) > 0;
 }
+// The whole component is measured, not the table's frame: as cards, there is no table.
 onMounted(() => {
-  if (!wrap.value) return;
-  wrapWidth.value = wrap.value.clientWidth;
+  if (!root.value) return;
+  wrapWidth.value = root.value.clientWidth;
   if (typeof ResizeObserver === "function") {
     // Measured on the next frame and only when it changed: the width decides the layout, and
     // setting it inside the observer's own callback would loop.
     observer = new ResizeObserver(() => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
-        const next = wrap.value?.clientWidth ?? 0;
+        const next = root.value?.clientWidth ?? 0;
         if (Math.abs(next - wrapWidth.value) > 1) wrapWidth.value = next;
       });
     });
-    observer.observe(wrap.value);
+    observer.observe(root.value);
   }
 });
 onBeforeUnmount(() => {
@@ -325,13 +411,68 @@ const valueOf = (c: DataColumn<Row>, row: Row): CellValue => c.value(row);
 </script>
 
 <template>
-  <div class="tx-dt" :data-density="layout.density">
+  <div ref="root" class="tx-dt" :data-density="layout.density" :data-cards="cards || undefined">
     <div class="tx-dt__toolbar">
       <div class="tx-dt__toolbar-start">
         <slot name="toolbar" :shown="shownRows.length" :total="rows.length" />
       </div>
       <div class="tx-dt__toolbar-end">
-        <TxPopover align="end" :width="300" label="Columnas">
+        <TxPopover v-if="viewsKey" v-model:open="viewsOpen" align="end" :width="300" label="Vistas">
+          <template #trigger>
+            <button type="button" class="tx-dt__tool" :data-active="currentView ? true : undefined">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.5l2.3 4.7 5.2.8-3.8 3.6.9 5.1-4.6-2.4-4.6 2.4.9-5.1L4.5 10l5.2-.8z" /></svg>
+              <span class="tx-dt__tool-text">{{ currentView ? currentView.name : "Vistas" }}</span>
+            </button>
+          </template>
+          <div class="tx-dt__menu">
+            <p class="tx-dt__menu-title">Vistas guardadas</p>
+            <p v-if="!views.length" class="tx-dt__menu-note">
+              Guarde los filtros, el orden y las columnas de ahora con un nombre, para volver a ellos.
+            </p>
+            <ul v-else class="tx-dt__views">
+              <li v-for="v in views" :key="v.name" :data-current="v === currentView || undefined">
+                <button type="button" class="tx-dt__item" :aria-current="v === currentView || undefined" @click="applyView(v)">
+                  {{ v.name }}
+                </button>
+                <TxIconButton :label="`Borrar la vista ${v.name}`" size="xs" @click="deleteView(v)">
+                  <svg class="tx-dt__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17" /></svg>
+                </TxIconButton>
+              </li>
+            </ul>
+            <form class="tx-dt__save-view" @submit.prevent="saveView">
+              <TxTextInput v-model="viewName" aria-label="Nombre de la vista" placeholder="Nombre de la vista" size="xs" />
+              <TxButton type="submit" size="xs" :disabled="!viewName.trim()">Guardar</TxButton>
+            </form>
+          </div>
+        </TxPopover>
+        <TxPopover v-if="cards && (sortOptions.length || filterable.length)" align="end" :width="320" label="Ordenar y filtrar">
+          <template #trigger>
+            <button
+              type="button"
+              class="tx-dt__tool"
+              :aria-label="activeFilters.length ? `Filtros, ${activeFilters.length} ${activeFilters.length === 1 ? 'activo' : 'activos'}` : undefined"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4" /></svg>
+              Filtros<span v-if="activeFilters.length" class="tx-dt__count" aria-hidden="true">{{ activeFilters.length }}</span>
+            </button>
+          </template>
+          <div class="tx-dt__menu">
+            <TxSelect
+              v-if="sortOptions.length"
+              v-model="sortChoice"
+              :options="sortOptions"
+              label="Ordenar por"
+              placeholder="Sin orden"
+              size="xs"
+              clearable
+            />
+            <div v-for="c in filterable" :key="c.id" class="tx-dt__card-filter">
+              <p class="tx-dt__menu-title">{{ c.header }}</p>
+              <DataTableFilter :column="c" :value="filterOf(c)" :options="c.filter === 'options' ? optionsOf(c) : []" @change="(v) => setFilter(c, v)" />
+            </div>
+          </div>
+        </TxPopover>
+        <TxPopover v-if="!cards" align="end" :width="300" label="Columnas">
           <template #trigger>
             <button type="button" class="tx-dt__tool">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v14H4zM10 5v14M15 5v14" /></svg>
@@ -385,7 +526,34 @@ const valueOf = (c: DataColumn<Row>, row: Row): CellValue => c.value(row);
       <button key="clear" type="button" class="tx-dt__clear-all" @click="clearFilters">Quitar filtros</button>
     </TransitionGroup>
 
+    <template v-if="cards">
+      <TransitionGroup v-if="shownRows.length" tag="ul" name="tx-row" :css="animate" appear class="tx-dt__cards" :aria-label="label">
+        <li
+          v-for="item in items"
+          :key="item.key"
+          :class="item.kind === 'group' ? 'tx-dt__card-group' : 'tx-dt__card'"
+          :style="item.kind === 'row' ? { '--tx-i': Math.min(item.i, 12) } : undefined"
+        >
+          <template v-if="item.kind === 'group'">
+            <slot name="group" :group="item.group" :count="item.count">
+              {{ item.group.label }}
+              <span class="tx-dt__group-detail">
+                {{ [item.group.detail, item.count].filter((x) => x !== undefined && x !== "").join(" · ") }}
+              </span>
+            </slot>
+          </template>
+          <slot v-else name="card" :row="item.row" />
+        </li>
+      </TransitionGroup>
+      <div v-else class="tx-dt__empty tx-dt__empty--cards">
+        <slot name="empty" :clear="clearFilters">
+          {{ emptyText }}
+          <TxButton v-if="activeFilters.length" variant="subtle" size="xs" @click="clearFilters">Quitar filtros</TxButton>
+        </slot>
+      </div>
+    </template>
     <div
+      v-else
       ref="wrap"
       class="tx-table-wrap tx-table-wrap--framed tx-dt__wrap"
       :style="maxHeight ? { maxHeight } : undefined"
@@ -443,45 +611,7 @@ const valueOf = (c: DataColumn<Row>, row: Row): CellValue => c.value(row);
                     </template>
                     <template v-if="c.filter">
                       <p class="tx-dt__menu-title">Filtrar</p>
-                      <TxTextInput
-                        v-if="c.filter === 'text'"
-                        :model-value="(filterOf(c) as { text: string }).text ?? ''"
-                        :aria-label="`Filtrar ${c.header}`"
-                        placeholder="Contiene…"
-                        size="xs"
-                        clearable
-                        @update:model-value="(t: string) => setFilter(c, { kind: 'text', text: t })"
-                      />
-                      <div v-else-if="c.filter === 'options'" class="tx-dt__options">
-                        <label v-for="o in optionsOf(c)" :key="o.value" class="tx-dt__check">
-                          <input
-                            type="checkbox"
-                            :checked="(filterOf(c) as { values: string[] }).values.includes(o.value)"
-                            @change="toggleOption(c, o.value)"
-                          />
-                          <span>{{ o.label }}</span>
-                        </label>
-                      </div>
-                      <div v-else class="tx-dt__range">
-                        <TxTextInput
-                          :model-value="(filterOf(c) as { min?: string }).min ?? ''"
-                          :aria-label="`${c.header} desde`"
-                          placeholder="Desde"
-                          size="xs"
-                          inputmode="decimal"
-                          figures
-                          @update:model-value="(t: string) => setFilter(c, { ...(filterOf(c) as object), kind: 'range', min: t })"
-                        />
-                        <TxTextInput
-                          :model-value="(filterOf(c) as { max?: string }).max ?? ''"
-                          :aria-label="`${c.header} hasta`"
-                          placeholder="Hasta"
-                          size="xs"
-                          inputmode="decimal"
-                          figures
-                          @update:model-value="(t: string) => setFilter(c, { ...(filterOf(c) as object), kind: 'range', max: t })"
-                        />
-                      </div>
+                      <DataTableFilter :column="c" :value="filterOf(c)" :options="c.filter === 'options' ? optionsOf(c) : []" @change="(v) => setFilter(c, v)" />
                     </template>
                     <hr class="tx-dt__rule" />
                     <button type="button" class="tx-dt__item" @click="togglePin(c.id)">

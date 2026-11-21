@@ -51,6 +51,7 @@ export {
   type Filters,
   type FilterValue,
   filterRows,
+  type SavedView,
   type SortState,
   sortRows,
   type TableLayout,

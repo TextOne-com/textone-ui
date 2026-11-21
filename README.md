@@ -15,7 +15,7 @@
 
 <p align="center">
   <a href="https://github.com/TextOne-com/textone-ui/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/TextOne-com/textone-ui/actions/workflows/ci.yml/badge.svg" /></a>
-  <img alt="version" src="https://img.shields.io/badge/version-0.3.1-5e377e" />
+  <img alt="version" src="https://img.shields.io/badge/version-0.4.0-5e377e" />
   <img alt="Vue 3" src="https://img.shields.io/badge/Vue-3.5-42b883" />
   <img alt="Reka UI" src="https://img.shields.io/badge/Reka%20UI-2.11-2c0e56" />
   <img alt="tests" src="https://img.shields.io/badge/tests-78%20passing-1f6b4f" />
@@ -65,7 +65,7 @@ rebuilt on every push to `main`.
 | 🖌️ | **Foundations and actions** | `TxBrandLockup` · `TxButton` · `TxIconButton` · `TxBadge` · `TxAlert` · `TxAvatar` |
 | ✍️ | **Inputs** | `TxField` · `TxTextInput` (clearable, counter) · `TxTextarea` · `TxSelect` (groups, descriptions) · `TxCombobox` · `TxMultiSelect` · `TxDateField` (mask, weekday, month/year view, named dates) · `TxDateRangeField` (named periods) · `TxCheckbox` · `TxSegmentedControl` |
 | 🧭 | **Structure** | `TxAppShell` (with a phone bottom bar) · `TxSidebar` · `TxBottomNav` · `TxPageHeader` · `TxTabs` · `TxDialog` · `TxSheet` · `TxPopover` · `TxCommandPalette` (⌘K) |
-| 📊 | **Data and feedback** | `TxTable` · `TxDataTable` (resize, pin, hide, density, column filters, CSV for Excel, groups — remembered per person) · `TxDocumentPaper` · `TxSkeleton` · `TxToaster` + `toast()` |
+| 📊 | **Data and feedback** | `TxTable` · `TxDataTable` (resize, pin, hide, density, column filters, CSV for Excel, groups — remembered per person; cards on a phone; saved views) · `TxDocumentPaper` · `TxSkeleton` · `TxToaster` + `toast()` |
 | 🛠️ | **Utilities** | `parseDisplayDate` · `formatDisplayDate` · `maskDateInput` · `describeDate` · `rangePresets` · `matchesAll` · `useTheme` · `sortRows` · `filterRows` · `toCsv` |
 
 🎬 **Motion:** `tx-row` (rows that glide on filter and sort), plus `tx-fade`, `tx-pop`,
@@ -95,8 +95,8 @@ echo "//npm.pkg.github.com/:_authToken=$(gh auth token)" >> ~/.npmrc
 
 ```jsonc
 // package.json
-"@textone-com/tokens": "^0.3.1",
-"@textone-com/vue": "^0.3.1"
+"@textone-com/tokens": "^0.4.0",
+"@textone-com/vue": "^0.4.0"
 ```
 
 **3. 🎨 Import the styles**
@@ -175,6 +175,7 @@ the tests before publishing. A published version cannot be replaced: fix forward
 | 🎨 0.2.0 | 2026-11-20 | One design with the public site, from the brand manual: Fraunces + Plus Jakarta Sans, purple and cream, no greys |
 | 🚀 0.3.0 | 2026-11-21 | The staff app's kit: sidebar and phone navigation, sheets and popovers, typed dates and periods, multi-select, data tables people shape, skeletons, toasts, command palette, dark theme, depth tokens; 78 tests and visual regression in CI |
 | 🩹 0.3.1 | 2026-11-21 | The dark theme is opt-in: 0.3.0 followed the device everywhere and turned the light-only public site half dark |
+| ✨ 0.4.0 | 2026-11-21 | `TxDataTable`: a `card` slot shows one card per row below 640 px, with a "Filtros" panel for order and filters; saved views ("Vistas") under `viewsKey`; 83 tests |
 
 ## 🔭 Next
 

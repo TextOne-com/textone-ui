@@ -1,6 +1,6 @@
 {
   "name": "@textone-com/tokens",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Text One design tokens: CSS custom properties and a Tailwind v4 theme.",
   "license": "UNLICENSED",
   "repository": {
