@@ -21,7 +21,7 @@ export default defineConfig({
   },
   theme: {
     title: "Text One UI",
-    favicon: "logo.svg",
+    favicon: "favicon.svg",
     logo: {
       square: "./public/logo.svg",
       light: "./public/logo-horizontal.svg",

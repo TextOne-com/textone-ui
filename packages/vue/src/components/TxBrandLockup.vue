@@ -2,7 +2,7 @@
 import { type Component, computed } from "vue";
 
 /**
- * The Textone lockup (manual, slides 7–8): the T icon, TEXTONE in Plus Jakarta Sans ExtraBold,
+ * The Text One lockup (manual, slides 7–8): the T icon, TEXT ONE in Plus Jakarta Sans ExtraBold,
  * a fine rule and ".com" — the same lockup the public site draws in its header. The icon is the
  * logo's own SVG (public/logo.svg), filled with currentColor so it can sit on white, cream or
  * purple without a box. `size` is the wordmark's font size; the manual's minimum is 120px wide
@@ -17,7 +17,7 @@ const props = withDefaults(
     /** Accessible name; the drawing itself is hidden from assistive technology. */
     label?: string;
   }>(),
-  { size: 18, as: "span", label: "Textone.com" },
+  { size: 18, as: "span", label: "Text One.com" },
 );
 const style = computed(() => ({ "--tx-lockup-size": `${props.size}px` }));
 </script>
@@ -41,7 +41,7 @@ const style = computed(() => ({ "--tx-lockup-size": `${props.size}px` }));
       </g>
     </svg>
     <span v-if="!iconOnly" class="tx-lockup__words" aria-hidden="true">
-      <span class="tx-lockup__name">TEXT<span class="tx-lockup__gap" />ONE</span>
+      <span class="tx-lockup__name">TEXT ONE</span>
       <span class="tx-lockup__dotcom">.com</span>
     </span>
     <span v-if="$slots.default" class="tx-lockup__suffix"><slot /></span>
