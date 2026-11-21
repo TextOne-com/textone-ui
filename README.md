@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="apps/histoire/public/logo-sticker.svg" alt="Text One" width="120" />
+  <img src="apps/histoire/public/logo-horizontal.svg" alt="Text One" width="340" />
 </p>
 
 <h1 align="center">Text One UI</h1>
