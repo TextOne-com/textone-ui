@@ -130,7 +130,7 @@ corepack pnpm install
 corepack pnpm stories     # 📚 http://localhost:4340 — Histoire, the component workshop
 corepack pnpm docs        # 🪧 http://localhost:4330 — the Astro brand page
 corepack pnpm typecheck   # 🔍 vue-tsc over the components
-corepack pnpm test        # 🧪 78 behaviour tests (fields, dates, tables, sidebar, overlays)
+corepack pnpm test        # 🧪 83 behaviour tests (fields, dates, tables, sidebar, overlays)
 corepack pnpm --filter @textone-com/histoire visual         # 📸 visual regression (Docker)
 corepack pnpm --filter @textone-com/histoire visual:update  # ✅ accept an intended change
 ```
