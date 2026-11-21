@@ -5,7 +5,7 @@
 <docs lang="md">
 # Text One UI
 
-Textone's design system: **one aesthetic** for the public site (`textone-web`, Astro) and the
+Text One's design system: **one aesthetic** for the public site (`textone-web`, Astro) and the
 internal tools (inventory and receivables, Vue). It comes from the **Brand Manual v2.1**:
 institutional purple, cream, Fraunces and Plus Jakarta Sans — and no greys.
 

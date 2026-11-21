@@ -1775,7 +1775,7 @@
 
 /* ── Brand lockup ──────────────────────────────────────────────────────────── */
 
-/* Manual, slides 7–8: the T icon, TEXTONE in Jakarta ExtraBold, a fine rule and ".com". */
+/* Manual, slides 7–8: the T icon, TEXT ONE in Jakarta ExtraBold, a fine rule and ".com". */
 .tx-lockup {
   display: inline-flex;
   align-items: flex-end;
@@ -1799,10 +1799,6 @@
   font-weight: 800;
   letter-spacing: 0.025em;
   color: var(--brand-700);
-}
-.tx-lockup__gap {
-  display: inline-block;
-  width: 0.1em;
 }
 .tx-lockup__dotcom {
   align-self: flex-end;
@@ -3386,6 +3382,164 @@
   color: var(--ink-secondary);
   white-space: normal;
 }
+.tx-dt__empty--cards {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: 1px dashed var(--rule-strong);
+  border-radius: var(--radius-card);
+  font-size: 13px;
+}
+
+/* The tools' extras: the saved view's name, a count of active filters. */
+.tx-dt__tool[data-active] {
+  background: var(--accent-tint);
+  border-color: var(--brand-200);
+  color: var(--accent);
+}
+.tx-dt__tool-text {
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tx-dt__count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  font-size: 11px;
+  color: var(--on-accent);
+}
+.tx-dt__menu-note {
+  margin: 0 0 4px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--ink-secondary);
+}
+.tx-dt__views {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tx-dt__views li {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border-radius: var(--radius-control);
+}
+.tx-dt__views .tx-dt__item {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tx-dt__views li[data-current] .tx-dt__item {
+  background: var(--accent-tint);
+  color: var(--accent);
+  font-weight: 700;
+}
+.tx-dt__icon {
+  width: 13px;
+  height: 13px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+.tx-dt__save-view {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px;
+  margin-top: 6px;
+  padding-top: 8px;
+  border-top: 1px solid var(--rule);
+}
+.tx-dt__card-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/*
+ * Cards: one per row, on a phone. The page fills each card; these helpers keep them alike —
+ * .tx-dt-card__top (what the row is, and its figure), .tx-dt-card__meta (a quieter line),
+ * .tx-dt-card__actions (buttons, at the end).
+ */
+.tx-dt__cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tx-dt__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  border: 1px solid color-mix(in srgb, var(--accent) 12%, transparent);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  box-shadow: var(--shadow-control);
+  font-size: 14px;
+  color: var(--ink);
+}
+/* A card one link covers (a ::after stretched over it) answers to the pointer as a whole. */
+.tx-dt__card:has(a:hover) {
+  border-color: var(--brand-200);
+}
+.tx-dt__card-group {
+  margin-top: var(--space-2);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--eyebrow);
+}
+.tx-dt-card__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-width: 0;
+}
+.tx-dt-card__top > :first-child {
+  min-width: 0;
+  font-weight: 700;
+  color: var(--ink-strong);
+}
+.tx-dt-card__top > :last-child:not(:first-child) {
+  flex: none;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-weight: 700;
+}
+.tx-dt-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  font-size: 12px;
+  color: var(--ink-secondary);
+}
+.tx-dt-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  margin-top: 2px;
+}
+
 /* A phone: the search takes the toolbar's first line, the tools the second. */
 @media (max-width: 639px) {
   .tx-dt__toolbar-start > .tx-field:first-child {

@@ -49,7 +49,7 @@ const state = reactive({ size: 18, iconOnly: false, product: "Inventario y carte
 <docs lang="md">
 # TxBrandLockup
 
-The official lockup (brand manual, slides 7–8): the T icon, **TEXTONE** in Plus Jakarta Sans
+The official lockup (brand manual, slides 7–8): the T icon, **TEXT ONE** in Plus Jakarta Sans
 ExtraBold, a thin rule and **.com** — the same one the website header draws. The icon is the logo
 SVG with `currentColor`, so it works on white, cream or purple without boxes.
 
@@ -67,7 +67,7 @@ SVG with `currentColor`, so it works on white, cream or purple without boxes.
 | `size` | `number` | `18` | Size of the word in px; the icon scales with it |
 | `iconOnly` | `boolean` | `false` | Icon only (avatars, square spaces) |
 | `as` | `string \| Component` | `"span"` | `"a"`, `RouterLink`… |
-| `label` | `string` | `"Textone.com"` | Accessible name; the drawing is hidden from screen readers |
+| `label` | `string` | `"Text One.com"` | Accessible name; the drawing is hidden from screen readers |
 
 **Default slot:** whatever goes after the lockup.
 

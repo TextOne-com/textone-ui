@@ -30,6 +30,8 @@ const columns: DataColumn<Row>[] = [
 ];
 const sort = ref<SortState>({ id: "balance", desc: true });
 const filters = ref<Filters>({});
+const sort2 = ref<SortState>({ id: "balance", desc: true });
+const filters2 = ref<Filters>({});
 </script>
 
 <template>
@@ -53,6 +55,32 @@ const filters = ref<Filters>({});
           <template #cell-balance="{ value }">{{ pesos.format(Number(value)) }}</template>
           <template #foot-name>Total</template>
           <template #foot-balance>{{ pesos.format(68487050) }}</template>
+        </TxDataTable>
+      </div>
+    </Variant>
+    <Variant title="Cards and saved views (phone)">
+      <div class="story-pad" style="max-width: 390px">
+        <TxDataTable
+          v-model:sort="sort2"
+          v-model:filters="filters2"
+          :rows="rows"
+          :columns="columns"
+          :row-key="(r) => r.id"
+          storage-key=""
+          views-key="histoire-cuentas"
+          export-name="cuentas"
+          label="Cuentas"
+        >
+          <template #card="{ row }">
+            <div class="tx-dt-card__top">
+              <span>{{ row.name }}</span>
+              <span>{{ pesos.format(Number(row.balance)) }}</span>
+            </div>
+            <div class="tx-dt-card__meta">
+              <span>{{ row.code }}</span>
+              <span>{{ row.city }}</span>
+            </div>
+          </template>
         </TxDataTable>
       </div>
     </Variant>
@@ -80,6 +108,14 @@ A table that **each person arranges for their own work**, and that remembers it.
   `;`, decimal comma, accents intact.
 - Rows slide when filtering or sorting (`tx-row`).
 
+- **Cards on a phone:** with a `card` slot, a table narrower than 640 px (its own width, not the
+  window's) shows one card per row. Headers are gone, so **Filtros** holds the order (a picker)
+  and every column's filter. Helpers keep cards alike: `tx-dt-card__top` (what the row is, and
+  its figure), `tx-dt-card__meta` (a quieter line), `tx-dt-card__actions`.
+- **Saved views** (`viewsKey`): **Vistas** saves the current filters, order and hidden/pinned
+  columns under a name and brings them back; while the table still matches a view, the tool
+  shows its name. Saved in the browser under `viewsKey` — put the person's id in it.
+
 Width, pinned and hidden columns and density are saved per person under `storageKey`. Sort and
 filters are `v-model:sort` and `v-model:filters`: the app decides whether they go in the URL.
 
@@ -105,5 +141,6 @@ exporting; money as decimal text), `align`, `width`, `minWidth`, `pinned`, `sort
 `parse(text)` (what was typed in a range → a comparable value), `format(value)` (how it reads in
 chips and options), `hideable`, `focus` (lilac stripe), `wrapNarrow`, `exportValue(row)`.
 
-**Slots:** `cell-<id>` (`{ row, value }`), `foot-<id>`, `toolbar` (`{ shown, total }`), `empty`.
+**Slots:** `cell-<id>` (`{ row, value }`), `foot-<id>`, `toolbar` (`{ shown, total }`),
+`group`, `card` (`{ row }`), `empty`.
 </docs>

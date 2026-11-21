@@ -148,3 +148,68 @@ export function toCsv<Row>(rows: Row[], columns: DataColumn<Row>[]): string {
   ];
   return `﻿${lines.join("\r\n")}\r\n`;
 }
+
+/**
+ * A saved view: a named set of filters, order and columns (which are hidden, which pinned).
+ * Widths and density are not part of it — they follow the person, not the question asked.
+ */
+export type SavedView = {
+  name: string;
+  filters: Filters;
+  sort: SortState;
+  hidden: string[];
+  pinned: string[];
+};
+
+/** What a view captures of the table as it is now. Inactive filters are left out. */
+export function snapshotView(name: string, filters: Filters, sort: SortState, layout: TableLayout): SavedView {
+  const active = Object.fromEntries(Object.entries(filters).filter(([, f]) => isActive(f)));
+  return { name, filters: active, sort, hidden: [...layout.hidden].sort(), pinned: [...layout.pinned] };
+}
+
+/** True when the table shows exactly what the view describes. */
+export function viewMatches(view: SavedView, filters: Filters, sort: SortState, layout: TableLayout): boolean {
+  const now = snapshotView(view.name, filters, sort, layout);
+  const same = (a: unknown, b: unknown) => stableJson(a) === stableJson(b);
+  return (
+    same(now.filters, view.filters) &&
+    same(now.sort, view.sort) &&
+    same(now.hidden, [...view.hidden].sort()) &&
+    same(now.pinned, view.pinned)
+  );
+}
+
+/** Views as stored: anything unreadable or naming a column that is gone is dropped or trimmed. */
+export function readViews(raw: string | null, columnIds: Set<string>): SavedView[] {
+  try {
+    const parsed = JSON.parse(raw ?? "[]");
+    if (!Array.isArray(parsed)) return [];
+    return parsed
+      .filter((v): v is SavedView => typeof v?.name === "string" && v.name.trim() !== "")
+      .map((v) => ({
+        name: v.name,
+        filters: Object.fromEntries(Object.entries(v.filters ?? {}).filter(([id]) => columnIds.has(id))),
+        sort: v.sort && columnIds.has(v.sort.id) ? { id: v.sort.id, desc: Boolean(v.sort.desc) } : null,
+        hidden: (v.hidden ?? []).filter((id) => columnIds.has(id)),
+        pinned: (v.pinned ?? []).filter((id) => columnIds.has(id)),
+      }));
+  } catch {
+    return [];
+  }
+}
+
+/** Saved under a name: a view with the same name (any case) is replaced in place. */
+export function upsertView(views: SavedView[], view: SavedView): SavedView[] {
+  const key = view.name.trim().toLocaleLowerCase("es");
+  const at = views.findIndex((v) => v.name.trim().toLocaleLowerCase("es") === key);
+  if (at === -1) return [...views, view];
+  return views.map((v, i) => (i === at ? view : v));
+}
+
+function stableJson(value: unknown): string {
+  return JSON.stringify(value, (_k, v) =>
+    v && typeof v === "object" && !Array.isArray(v)
+      ? Object.fromEntries(Object.entries(v).sort(([a], [b]) => a.localeCompare(b)))
+      : v,
+  );
+}
