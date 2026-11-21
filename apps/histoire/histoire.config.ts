@@ -25,7 +25,7 @@ export default defineConfig({
     logo: {
       square: "./public/logo.svg",
       light: "./public/logo-horizontal.svg",
-      dark: "./public/logo-horizontal.svg",
+      dark: "./public/logo-horizontal-dark.svg",
     },
     logoHref: "https://github.com/TextOne-com/textone-ui",
     colors: {
