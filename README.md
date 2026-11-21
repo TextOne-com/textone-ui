@@ -2,11 +2,9 @@
   <img src="apps/histoire/public/logo-horizontal.svg" alt="Text One" width="340" />
 </p>
 
-<h1 align="center">Text One UI</h1>
-
 <p align="center">
-  The design system shared by every Text One front end — one set of tokens, one set of
-  components, one look.
+  <b>Text One UI</b> — the design system shared by every Text One front end: one set of tokens,
+  one set of components, one look.
 </p>
 
 <p align="center">
