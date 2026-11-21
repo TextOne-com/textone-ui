@@ -121,13 +121,17 @@
 /*
  * Dark. The ladders flip — 50 becomes the darkest tint, 900 the lightest ink — so every role
  * and every component that reads them follows without its own dark rules. The accent turns to
- * a light lilac with dark text on it: white on a mid purple would not reach 4.5:1. Follows the
- * system unless the app sets data-theme="light" or "dark" on <html>.
+ * a light lilac with dark text on it: white on a mid purple would not reach 4.5:1.
+ *
+ * Opt-in: light unless the page asks. data-theme="dark" forces it; data-theme="system" follows
+ * the device. A consumer that sets neither (the public site) stays light whatever the device
+ * says — its own classes (bg-white…) are not built for a dark page.
+ *
  * Measured 2026-11-21: ink on surface 14.9:1, secondary 8.1:1, accent on surface 8.6:1,
  * on-accent on accent 9.7:1, danger-700 on surface 6.4:1.
  */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
+  :root[data-theme="system"] {
     color-scheme: dark;
     --brand-50: #251b35;
     --brand-100: #33264a;

@@ -13,18 +13,19 @@ function read(): ThemeChoice {
 }
 function apply(choice: ThemeChoice) {
   if (typeof document === "undefined") return;
-  const root = document.documentElement;
-  if (choice === "system") delete root.dataset.theme;
-  else root.dataset.theme = choice;
+  // "system" is set too: the tokens are light unless the page opts in (data-theme).
+  document.documentElement.dataset.theme = choice;
 }
 
+// Read, not applied: importing the package must not change a page's theme (the public site
+// imports it for islands and has no dark design). applyStoredTheme() or setTheme() opt in.
 const current = ref<ThemeChoice>(typeof window === "undefined" ? "system" : read());
-apply(current.value);
 
 /**
- * Light, dark, or whatever the system says (the default). Sets data-theme on <html>, which the
- * tokens read, and remembers the choice on this device. Call `applyStoredTheme()` before the
- * app mounts to avoid a flash of the wrong theme.
+ * Light, dark, or whatever the system says (the default). Sets data-theme on <html> — "light",
+ * "dark" or "system" — which the tokens read, and remembers the choice on this device. Call
+ * `applyStoredTheme()` before the app mounts: it opts the page in (without it the tokens stay
+ * light, which is what a page with no dark design needs) and avoids a flash of the wrong theme.
  */
 export function useTheme() {
   function setTheme(choice: ThemeChoice) {
