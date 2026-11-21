@@ -30,11 +30,33 @@ of components, one look.
 
 ## Components
 
-`TxBrandLockup` · `TxButton` · `TxIconButton` · `TxBadge` · `TxAlert` · `TxField` · `TxTextInput` · `TxTextarea` ·
-`TxSelect` · `TxCombobox` (with `picker` mode) · `TxDateField` · `TxCheckbox` ·
-`TxSegmentedControl` · `TxTabs` · `TxDialog` · `TxTable` (plain / framed / paper) ·
-`TxPageHeader` · `TxDocumentPaper` · `TxAppShell`, plus `parseDisplayDate`, `formatDisplayDate`
-and `matchesAll`.
+**Foundations and actions:** `TxBrandLockup` · `TxButton` · `TxIconButton` · `TxBadge` · `TxAlert` ·
+`TxAvatar`.
+
+**Inputs:** `TxField` · `TxTextInput` (clearable, counter) · `TxTextarea` · `TxSelect` (groups,
+descriptions) · `TxCombobox` · `TxMultiSelect` · `TxDateField` (typed first: mask, weekday,
+month/year view, named dates) · `TxDateRangeField` (named periods) · `TxCheckbox` ·
+`TxSegmentedControl`.
+
+**Structure:** `TxAppShell` (with a phone bottom bar) · `TxSidebar` / `TxSidebarGroup` /
+`TxSidebarItem` · `TxBottomNav` / `TxBottomNavItem` · `TxPageHeader` · `TxTabs` · `TxDialog` ·
+`TxSheet` · `TxPopover` · `TxCommandPalette` (⌘K).
+
+**Data and feedback:** `TxTable` (plain / framed / paper) · `TxDataTable` (resize, pin, hide,
+density, column filters, CSV for Excel, groups — remembered per person) · `TxDocumentPaper` ·
+`TxSkeleton` · `TxToaster` with `toast()`.
+
+**Utilities:** `parseDisplayDate`, `formatDisplayDate`, `maskDateInput`, `describeDate`,
+`rangePresets`, `matchesAll`, `useTheme` / `applyStoredTheme`, `sortRows` / `filterRows` /
+`toCsv`.
+
+**Motion:** `tx-row` (table rows that glide on filter and sort), plus the small `tx-fade`,
+`tx-pop`, `tx-chip` transitions. Everything stops under *reduce motion*.
+
+**Themes:** light by default. A dark theme flips the ladders; it is **opt-in** — a page gets it
+only with `data-theme="dark"` or `data-theme="system"` on `<html>` (`applyStoredTheme()` sets the
+remembered choice, by default `"system"`). A consumer that sets neither stays light whatever the
+device says.
 
 ## Use it
 
@@ -56,8 +78,8 @@ In the consumer:
 
 ```jsonc
 // package.json
-"@textone-com/tokens": "^0.1.0",
-"@textone-com/vue": "^0.1.0"
+"@textone-com/tokens": "^0.3.1",
+"@textone-com/vue": "^0.3.1"
 ```
 
 ```css
@@ -68,8 +90,10 @@ In the consumer:
 ```
 
 ```ts
-// vite.config.ts of a Vue app: one copy of Vue for the app and the components
-resolve: { dedupe: ["vue", "reka-ui", "@internationalized/date"] }
+// vite.config.ts of a Vue app: one copy of Vue for the app and the components, and the package
+// served as source — never pre-bundled, or module state (toast()'s list) can split in two
+resolve: { dedupe: ["vue", "reka-ui", "@internationalized/date"] },
+optimizeDeps: { exclude: ["@textone-com/vue"] },
 ```
 
 While working on the design system and an app at once, point the app at the checkout instead
@@ -87,7 +111,9 @@ corepack pnpm install
 corepack pnpm stories     # http://localhost:4340 — Histoire, the component workshop
 corepack pnpm docs        # http://localhost:4330 — the Astro brand page
 corepack pnpm typecheck   # vue-tsc over the components
-corepack pnpm test        # vitest: dates, fields, buttons, radios
+corepack pnpm test        # vitest: 78 behaviour tests (fields, dates, tables, sidebar, overlays)
+corepack pnpm --filter @textone-com/histoire visual         # visual regression (needs Docker)
+corepack pnpm --filter @textone-com/histoire visual:update  # accept an intended change
 ```
 
 The packages ship source (`.vue`, `.ts`, `.css`); the consumer's Vite compiles them, so there is
@@ -113,11 +139,26 @@ variant with controls for its props, variants for its states, and a `<docs lang=
 when to use it, its props, slots, events and accessibility — shown in the **Docs** tab. A new
 component is not done until its story is.
 
+**Visual regression.** Every variant, light and dark, is photographed by Linux Chromium (the
+Playwright image) and compared with the references in `apps/histoire/visual/__screenshots__`.
+Locally the browser runs in Docker and the tests on your machine, so the pixels match CI, which
+runs the same image on every push. A change that moves a component shows up as a diff; when it
+is meant, accept it with `visual:update` and commit the new references.
+
 Histoire 1.0 (beta) needs Vite 7, so `apps/histoire` pins its own Vite while the rest of the
 workspace runs Vite 8. Every push to `main` rebuilds and deploys it to GitHub Pages
 (`.github/workflows/pages.yml`). Stories use made-up names and figures only: the site is public.
 
+## Versions
+
+| Version | What came |
+|---|---|
+| 0.1.0 (2026-11-20) | Tokens, the first Vue components, the Astro reference page |
+| 0.2.0 (2026-11-20) | One design with the public site, from the brand manual: Fraunces + Plus Jakarta Sans, purple and cream, no greys |
+| 0.3.0 (2026-11-21) | The staff app's kit: sidebar and phone navigation, sheets and popovers, typed dates and periods, multi-select, data tables people shape, skeletons, toasts, command palette, dark theme, depth tokens; 78 tests and visual regression in CI |
+| 0.3.1 (2026-11-21) | The dark theme is opt-in: 0.3.0 followed the device everywhere and turned the light-only public site half dark |
+
 ## Next
 
-- Visual regression of `apps/docs` (Playwright screenshots) so a token change is reviewed as an
-  image, not only as a diff.
+- `TxDataTable` virtualisation when a table passes a few thousand rows (the catalog has 325).
+- Story-level accessibility checks (axe) beside the visual ones.
