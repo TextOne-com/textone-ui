@@ -18,7 +18,7 @@
   <img alt="version" src="https://img.shields.io/badge/version-0.4.0-5e377e" />
   <img alt="Vue 3" src="https://img.shields.io/badge/Vue-3.5-42b883" />
   <img alt="Reka UI" src="https://img.shields.io/badge/Reka%20UI-2.11-2c0e56" />
-  <img alt="tests" src="https://img.shields.io/badge/tests-78%20passing-1f6b4f" />
+  <img alt="tests" src="https://img.shields.io/badge/tests-83%20passing-1f6b4f" />
 </p>
 
 ---
@@ -130,7 +130,7 @@ corepack pnpm install
 corepack pnpm stories     # 📚 http://localhost:4340 — Histoire, the component workshop
 corepack pnpm docs        # 🪧 http://localhost:4330 — the Astro brand page
 corepack pnpm typecheck   # 🔍 vue-tsc over the components
-corepack pnpm test        # 🧪 78 behaviour tests (fields, dates, tables, sidebar, overlays)
+corepack pnpm test        # 🧪 83 behaviour tests (fields, dates, tables, sidebar, overlays)
 corepack pnpm --filter @textone-com/histoire visual         # 📸 visual regression (Docker)
 corepack pnpm --filter @textone-com/histoire visual:update  # ✅ accept an intended change
 ```
