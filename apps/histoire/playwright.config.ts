@@ -34,6 +34,9 @@ export default defineConfig({
   webServer: {
     command: "npx vite preview --outDir dist --port 4341 --strictPort --host",
     url: "http://localhost:4341/__sandbox.html",
+    // The browser in Docker reaches the preview as host.docker.internal, which Vite refuses
+    // unless it is allowed.
+    env: { __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS: "host.docker.internal" },
     reuseExistingServer: !process.env.CI,
     timeout: 60_000,
   },

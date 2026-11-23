@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import type { Size } from "../internal/types";
 
-/** An icon-only button. `label` is required: it is the button's accessible name. */
+/**
+ * An icon-only button. `label` is required: it is the button's accessible name.
+ * `positive` and `negative` are a decision's pair (a green check, a red ×): round, bordered and
+ * tinted in their tone, filled on hover.
+ */
 withDefaults(
   defineProps<{
     label: string;
-    variant?: "subtle" | "default" | "filled" | "danger";
+    variant?: "subtle" | "default" | "filled" | "danger" | "positive" | "negative";
     size?: Size;
     disabled?: boolean;
     type?: "button" | "submit";

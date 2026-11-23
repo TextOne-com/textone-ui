@@ -18,6 +18,7 @@ export { default as TxField } from "./components/TxField.vue";
 export { default as TxIconButton } from "./components/TxIconButton.vue";
 export { default as TxMultiSelect } from "./components/TxMultiSelect.vue";
 export { default as TxPageHeader } from "./components/TxPageHeader.vue";
+export { default as TxPasswordInput } from "./components/TxPasswordInput.vue";
 export { default as TxPopover } from "./components/TxPopover.vue";
 export { default as TxSegmentedControl } from "./components/TxSegmentedControl.vue";
 export { default as TxSelect } from "./components/TxSelect.vue";

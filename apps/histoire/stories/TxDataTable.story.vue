@@ -97,6 +97,9 @@ A table that **each person arranges for their own work**, and that remembers it.
 - **Pin:** from the column's ⋮ menu or from **Columnas** (Columns). Pinned columns stay on the
   left and cast a shadow when the rest scrolls underneath. **On a phone, pinned columns never take
   more than 45 %**; with `wrapNarrow` the text wraps to two lines instead of being cut.
+- **Fixed to the right** (`stickyEnd`): a row's actions (Aprobar / Rechazar) stay on the right
+  edge, after every other column, with a shadow while columns still scroll under them. Set by
+  the page, not by the person: it is not offered for pinning.
 - **Hide / show** columns and **density** (compact or comfortable) in **Columnas**;
   **Restablecer** (Reset) returns to the defaults.
 - **Sort:** click the header — numbers largest first, words A→Z; a third click removes the sort.
@@ -136,7 +139,7 @@ filters are `v-model:sort` and `v-model:filters`: the app decides whether they g
 ```
 
 **Column** (`DataColumn<Row>`): `id`, `header`, `value(row)` (for sorting, filtering and
-exporting; money as decimal text), `align`, `width`, `minWidth`, `pinned`, `sortable`,
+exporting; money as decimal text), `align`, `width`, `minWidth`, `pinned`, `stickyEnd`, `sortable`,
 `compare(a, b)` (pass a decimal comparator for money), `filter`, `options`,
 `parse(text)` (what was typed in a range → a comparable value), `format(value)` (how it reads in
 chips and options), `hideable`, `focus` (lilac stripe), `wrapNarrow`, `exportValue(row)`.

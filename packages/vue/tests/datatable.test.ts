@@ -76,6 +76,34 @@ function renderTable() {
   return { sort };
 }
 
+test("a column fixed to the right edge stays last, even when pinned left", () => {
+  const withActions: DataColumn<Row>[] = [
+    { id: "actions", header: "Decisión", value: () => null, stickyEnd: true },
+    ...columns,
+  ];
+  const layout = { ...defaultLayout(withActions), pinned: ["actions", "amount"] };
+  expect(orderColumns(withActions, layout).map((c) => c.id)).toEqual([
+    "amount",
+    "name",
+    "status",
+    "goal",
+    "actions",
+  ]);
+});
+
+test("a right-edge column sticks with right: 0 and offers no pin", () => {
+  const withActions: DataColumn<Row>[] = [
+    ...columns,
+    { id: "actions", header: "Decisión", value: () => null, stickyEnd: true, sortable: false },
+  ];
+  const { container } = render(() => h(TxDataTable<Row>, { rows, columns: withActions, rowKey: (r: Row) => r.id }));
+  const header = within(container.querySelector("thead") as HTMLElement).getByText("Decisión").closest("th");
+  expect(header).toHaveAttribute("data-stuck");
+  expect(header).toHaveAttribute("data-first-end");
+  expect(header?.style.right).toBe("0px");
+  expect(screen.queryByRole("button", { name: "Fijar Decisión" })).not.toBeInTheDocument();
+});
+
 test("a header sorts: figures high to low first, then low to high, then off", async () => {
   const { sort } = renderTable();
   const button = screen.getByRole("button", { name: "Saldo" });

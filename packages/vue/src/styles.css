@@ -252,6 +252,82 @@
   padding-right: 34px;
 }
 
+/* ── Password ────────────────────────────────────────────────────────────── */
+
+.tx-password__toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease;
+}
+.tx-password__toggle--xs {
+  width: 22px;
+  height: 22px;
+}
+.tx-password__toggle:hover,
+.tx-password__toggle[aria-pressed="true"] {
+  background: var(--hover);
+  color: var(--accent);
+}
+.tx-password__toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 0;
+}
+.tx-password__toggle svg,
+.tx-password__caps-text svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+/* A finger needs a bigger target than a pointer; the text keeps clear of it. */
+@media (pointer: coarse) {
+  .tx-password__toggle,
+  .tx-password__toggle--xs {
+    width: 36px;
+    height: 36px;
+  }
+  .tx-input-wrap:has(.tx-password__toggle) .tx-input {
+    padding-right: 44px;
+  }
+}
+/* The live region is always there, so a screen reader hears the warning appear; empty, it
+   gives back the field's gap and takes no room. */
+.tx-password__caps:empty {
+  margin-top: -2px;
+}
+.tx-password__caps-text {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--warning-700);
+}
+.tx-password__caps-text svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+}
+/* Edge and old IE draw their own reveal button inside a password input: one is enough. */
+.tx-input::-ms-reveal,
+.tx-input::-ms-clear {
+  display: none;
+}
+
 /* ── Select & combobox ─────────────────────────────────────────────────────── */
 
 .tx-select__trigger {
@@ -1294,10 +1370,46 @@
   background: var(--danger-50);
   color: var(--danger-700);
 }
+/* A decision's pair: approve and reject. Tinted at rest, filled on hover; the icon takes the
+   surface's colour when filled, so it reads in both themes. */
+.tx-icon-button--positive,
+.tx-icon-button--negative {
+  border-width: 1.5px;
+  transition:
+    background-color var(--duration-fast),
+    color var(--duration-fast),
+    border-color var(--duration-fast);
+}
+.tx-icon-button--positive {
+  border-color: var(--success-700);
+  background: var(--success-50);
+  color: var(--success-700);
+}
+.tx-icon-button--positive:hover:not(:disabled) {
+  background: var(--success-700);
+  color: var(--surface);
+}
+.tx-icon-button--negative {
+  border-color: var(--danger-700);
+  background: var(--danger-50);
+  color: var(--danger-700);
+}
+.tx-icon-button--negative:hover:not(:disabled) {
+  background: var(--danger-700);
+  color: var(--surface);
+}
+.tx-icon-button--positive svg,
+.tx-icon-button--negative svg {
+  stroke-width: 2.5;
+}
 .tx-icon-button:disabled {
   color: var(--ink-placeholder);
   background: transparent;
   cursor: not-allowed;
+}
+.tx-icon-button--positive:disabled,
+.tx-icon-button--negative:disabled {
+  border-color: var(--rule);
 }
 
 /* ── Badge ─────────────────────────────────────────────────────────────────── */
@@ -1809,6 +1921,15 @@
   font-size: calc(var(--tx-lockup-size) * 0.55);
   font-weight: 500;
   color: var(--brand-300);
+}
+/* Reversed, on purple: every part white or nearly, in both themes. */
+.tx-lockup--inverse,
+.tx-lockup--inverse .tx-lockup__name {
+  color: var(--on-feature);
+}
+.tx-lockup--inverse .tx-lockup__dotcom {
+  color: var(--on-feature-secondary);
+  border-top-color: var(--on-feature-secondary);
 }
 .tx-lockup__suffix {
   margin-left: calc(var(--tx-lockup-size) * 0.5);
@@ -3123,6 +3244,16 @@
   box-shadow:
     inset -1px 0 0 var(--rule-strong),
     10px 0 14px -10px rgba(44, 14, 86, 0.25);
+}
+/* Fixed to the right edge (the row's actions): a rule on its left, and a shadow while columns
+   still scroll under it. */
+.tx-dt__table [data-first-end] {
+  box-shadow: inset 1px 0 0 var(--rule);
+}
+.tx-dt__wrap[data-more-right] .tx-dt__table [data-first-end] {
+  box-shadow:
+    inset 1px 0 0 var(--rule-strong),
+    -10px 0 14px -10px rgba(44, 14, 86, 0.25);
 }
 .tx-dt__table tbody tr:hover td:first-child {
   box-shadow: inset 3px 0 0 var(--accent);

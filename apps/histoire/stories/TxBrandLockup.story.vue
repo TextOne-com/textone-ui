@@ -28,23 +28,13 @@ const state = reactive({ size: 18, iconOnly: false, product: "Inventario y carte
         <div style="background: var(--cream-100); padding: 20px 24px; border-radius: var(--radius-sm)">
           <TxBrandLockup :size="18" />
         </div>
-        <div class="on-purple" style="background: var(--brand-700); padding: 20px 24px; border-radius: var(--radius-sm); color: #fff">
-          <TxBrandLockup :size="18" />
+        <div style="background: var(--feature); padding: 20px 24px; border-radius: var(--radius-sm)">
+          <TxBrandLockup :size="18" inverse />
         </div>
       </div>
     </Variant>
   </Story>
 </template>
-
-<style scoped>
-.on-purple :deep(.tx-lockup__name) {
-  color: #fff;
-}
-.on-purple :deep(.tx-lockup__dotcom) {
-  color: var(--brand-100);
-  border-color: var(--brand-100);
-}
-</style>
 
 <docs lang="md">
 # TxBrandLockup
@@ -68,6 +58,7 @@ SVG with `currentColor`, so it works on white, cream or purple without boxes.
 | `iconOnly` | `boolean` | `false` | Icon only (avatars, square spaces) |
 | `as` | `string \| Component` | `"span"` | `"a"`, `RouterLink`… |
 | `label` | `string` | `"Text One.com"` | Accessible name; the drawing is hidden from screen readers |
+| `inverse` | `boolean` | `false` | White, for the brand's purple (`--feature`): a login panel, a hero |
 
 **Default slot:** whatever goes after the lockup.
 

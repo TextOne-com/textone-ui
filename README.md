@@ -13,10 +13,10 @@
 
 <p align="center">
   <a href="https://github.com/TextOne-com/textone-ui/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/TextOne-com/textone-ui/actions/workflows/ci.yml/badge.svg" /></a>
-  <img alt="version" src="https://img.shields.io/badge/version-0.4.0-5e377e" />
+  <img alt="version" src="https://img.shields.io/badge/version-0.5.0-5e377e" />
   <img alt="Vue 3" src="https://img.shields.io/badge/Vue-3.5-42b883" />
   <img alt="Reka UI" src="https://img.shields.io/badge/Reka%20UI-2.11-2c0e56" />
-  <img alt="tests" src="https://img.shields.io/badge/tests-83%20passing-1f6b4f" />
+  <img alt="tests" src="https://img.shields.io/badge/tests-97%20passing-1f6b4f" />
 </p>
 
 ---
@@ -61,7 +61,7 @@ rebuilt on every push to `main`.
 | | Group | Components |
 |---|---|---|
 | 🖌️ | **Foundations and actions** | `TxBrandLockup` · `TxButton` · `TxIconButton` · `TxBadge` · `TxAlert` · `TxAvatar` |
-| ✍️ | **Inputs** | `TxField` · `TxTextInput` (clearable, counter) · `TxTextarea` · `TxSelect` (groups, descriptions) · `TxCombobox` · `TxMultiSelect` · `TxDateField` (mask, weekday, month/year view, named dates) · `TxDateRangeField` (named periods) · `TxCheckbox` · `TxSegmentedControl` |
+| ✍️ | **Inputs** | `TxField` · `TxTextInput` (clearable, counter) · `TxPasswordInput` (show, Caps Lock) · `TxTextarea` · `TxSelect` (groups, descriptions) · `TxCombobox` · `TxMultiSelect` · `TxDateField` (mask, weekday, month/year view, named dates) · `TxDateRangeField` (named periods) · `TxCheckbox` · `TxSegmentedControl` |
 | 🧭 | **Structure** | `TxAppShell` (with a phone bottom bar) · `TxSidebar` · `TxBottomNav` · `TxPageHeader` · `TxTabs` · `TxDialog` · `TxSheet` · `TxPopover` · `TxCommandPalette` (⌘K) |
 | 📊 | **Data and feedback** | `TxTable` · `TxDataTable` (resize, pin, hide, density, column filters, CSV for Excel, groups — remembered per person; cards on a phone; saved views) · `TxDocumentPaper` · `TxSkeleton` · `TxToaster` + `toast()` |
 | 🛠️ | **Utilities** | `parseDisplayDate` · `formatDisplayDate` · `maskDateInput` · `describeDate` · `rangePresets` · `matchesAll` · `useTheme` · `sortRows` · `filterRows` · `toCsv` |
@@ -93,8 +93,8 @@ echo "//npm.pkg.github.com/:_authToken=$(gh auth token)" >> ~/.npmrc
 
 ```jsonc
 // package.json
-"@textone-com/tokens": "^0.4.0",
-"@textone-com/vue": "^0.4.0"
+"@textone-com/tokens": "^0.5.0",
+"@textone-com/vue": "^0.5.0"
 ```
 
 **3. 🎨 Import the styles**
@@ -128,7 +128,7 @@ corepack pnpm install
 corepack pnpm stories     # 📚 http://localhost:4340 — Histoire, the component workshop
 corepack pnpm docs        # 🪧 http://localhost:4330 — the Astro brand page
 corepack pnpm typecheck   # 🔍 vue-tsc over the components
-corepack pnpm test        # 🧪 83 behaviour tests (fields, dates, tables, sidebar, overlays)
+corepack pnpm test        # 🧪 97 behaviour tests (fields, passwords, dates, tables, sidebar, overlays)
 corepack pnpm --filter @textone-com/histoire visual         # 📸 visual regression (Docker)
 corepack pnpm --filter @textone-com/histoire visual:update  # ✅ accept an intended change
 ```
@@ -174,6 +174,7 @@ the tests before publishing. A published version cannot be replaced: fix forward
 | 🚀 0.3.0 | 2026-11-21 | The staff app's kit: sidebar and phone navigation, sheets and popovers, typed dates and periods, multi-select, data tables people shape, skeletons, toasts, command palette, dark theme, depth tokens; 78 tests and visual regression in CI |
 | 🩹 0.3.1 | 2026-11-21 | The dark theme is opt-in: 0.3.0 followed the device everywhere and turned the light-only public site half dark |
 | ✨ 0.4.0 | 2026-11-21 | `TxDataTable`: a `card` slot shows one card per row below 640 px, with a "Filtros" panel for order and filters; saved views ("Vistas") under `viewsKey`; 83 tests |
+| 🔐 0.5.0 | 2026-11-23 | For signing in: `TxPasswordInput` (show button, Caps Lock warning, 36 px target on touch); `TxBrandLockup` `inverse` for the purple panel and `role="img"` when it is not a link; `TxIconButton` `positive` / `negative` (a decision's ✓ and ✗); `TxDataTable` columns with `stickyEnd` (actions fixed to the right); 97 tests |
 
 ## 🔭 Next
 

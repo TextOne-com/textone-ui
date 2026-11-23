@@ -1,5 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/vue";
 import { h, ref } from "vue";
+import TxIconButton from "../src/components/TxIconButton.vue";
+import TxBrandLockup from "../src/components/TxBrandLockup.vue";
 import TxButton from "../src/components/TxButton.vue";
 import TxDateField from "../src/components/TxDateField.vue";
 import TxSegmentedControl from "../src/components/TxSegmentedControl.vue";
@@ -63,4 +65,26 @@ test("segmented control is a radio group", async () => {
   });
   await fireEvent.click(screen.getByRole("radio", { name: "Todas" }));
   expect(model.value).toBe("b");
+});
+
+test("the reversed lockup is marked for the purple background and keeps its name", () => {
+  render(() => h(TxBrandLockup, { inverse: true }));
+  const lockup = screen.getByLabelText("Text One.com");
+  expect(lockup).toHaveClass("tx-lockup--inverse");
+  // A plain span may not carry a name: as a picture, it can.
+  expect(lockup).toHaveAttribute("role", "img");
+});
+
+test("a lockup that is a link keeps the link's role", () => {
+  render(() => h(TxBrandLockup, { as: "a", href: "/" }));
+  expect(screen.getByRole("link", { name: "Text One.com" })).not.toHaveAttribute("role");
+});
+
+test("a decision's pair: named by its label, marked by its tone", () => {
+  render(() => [
+    h(TxIconButton, { label: "Aprobar", variant: "positive" }),
+    h(TxIconButton, { label: "Rechazar", variant: "negative" }),
+  ]);
+  expect(screen.getByRole("button", { name: "Aprobar" })).toHaveClass("tx-icon-button--positive");
+  expect(screen.getByRole("button", { name: "Rechazar" })).toHaveClass("tx-icon-button--negative");
 });
