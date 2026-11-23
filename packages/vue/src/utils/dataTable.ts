@@ -13,6 +13,11 @@ export type DataColumn<Row> = {
   minWidth?: number;
   /** Pinned to the left when the person has not chosen otherwise. */
   pinned?: boolean;
+  /**
+   * Fixed to the right edge, after every other column, whatever the person pins: the row's
+   * actions, reachable without scrolling. Not offered for pinning left.
+   */
+  stickyEnd?: boolean;
   sortable?: boolean;
   /** Orders two present values (nulls always go last). Pass a decimal-string comparator for money. */
   compare?: (a: NonNullable<CellValue>, b: NonNullable<CellValue>) => number;
@@ -112,12 +117,16 @@ export function filterRows<Row>(rows: Row[], columns: DataColumn<Row>[], filters
   );
 }
 
-/** Pinned columns first (in their own order), then the rest; hidden ones left out. */
+/** Pinned columns first (in their own order), then the rest, then those fixed to the right
+ * edge; hidden ones left out. */
 export function orderColumns<Row>(columns: DataColumn<Row>[], layout: TableLayout): DataColumn<Row>[] {
   const visible = columns.filter((c) => !layout.hidden.includes(c.id));
+  const end = visible.filter((c) => c.stickyEnd);
+  const rest = visible.filter((c) => !c.stickyEnd);
   return [
-    ...visible.filter((c) => layout.pinned.includes(c.id)),
-    ...visible.filter((c) => !layout.pinned.includes(c.id)),
+    ...rest.filter((c) => layout.pinned.includes(c.id)),
+    ...rest.filter((c) => !layout.pinned.includes(c.id)),
+    ...end,
   ];
 }
 

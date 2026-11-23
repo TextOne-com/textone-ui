@@ -16,6 +16,8 @@ const props = withDefaults(
     as?: string | Component;
     /** Accessible name; the drawing itself is hidden from assistive technology. */
     label?: string;
+    /** White on the brand's purple (a feature panel, the login): the manual's reversed lockup. */
+    inverse?: boolean;
   }>(),
   { size: 18, as: "span", label: "Text One.com" },
 );
@@ -23,7 +25,14 @@ const style = computed(() => ({ "--tx-lockup-size": `${props.size}px` }));
 </script>
 
 <template>
-  <component :is="as" class="tx-lockup" :style="style" :aria-label="label">
+  <component
+    :is="as"
+    class="tx-lockup"
+    :class="{ 'tx-lockup--inverse': inverse }"
+    :style="style"
+    :role="as === 'span' && !$slots.default ? 'img' : undefined"
+    :aria-label="label"
+  >
     <svg
       class="tx-lockup__icon"
       viewBox="0 0 868 1032"

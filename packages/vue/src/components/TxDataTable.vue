@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="Row">
-import { computed, onBeforeUnmount, onMounted, ref, useSlots, watch } from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, useSlots, watch } from "vue";
 import DataTableFilter from "../internal/DataTableFilter.vue";
 import {
   type CellValue,
@@ -174,6 +174,21 @@ const stuck = computed(() => {
 const stuckIds = computed(() => new Map(stuck.value.map((s) => [s.id, s.left])));
 const lastStuck = computed(() => stuck.value.at(-1)?.id);
 
+/** Columns fixed to the right edge (`stickyEnd`), with their offset from it. */
+const stuckEnd = computed(() => {
+  const out = new Map<string, number>();
+  let right = 0;
+  for (const c of [...visible.value].reverse()) {
+    if (!c.stickyEnd) break;
+    out.set(c.id, right);
+    right += widthOf(c);
+  }
+  return out;
+});
+const firstStuckEnd = computed(() => visible.value.find((c) => stuckEnd.value.has(c.id))?.id);
+/** Columns still to scroll into view under the right-hand fixed ones: their edge casts a shadow. */
+const moreRight = ref(false);
+
 function widthOf(c: DataColumn<Row>): number {
   const w = layout.value.sizes[c.id] ?? c.width ?? 140;
   // A pinned column on a phone gives up width rather than the screen.
@@ -183,6 +198,8 @@ function widthOf(c: DataColumn<Row>): number {
 const tableWidth = computed(() => visible.value.reduce((n, c) => n + widthOf(c), 0));
 
 function cellStyle(c: DataColumn<Row>) {
+  const right = stuckEnd.value.get(c.id);
+  if (right !== undefined) return { right: `${right}px` };
   const left = stuckIds.value.get(c.id);
   return left === undefined ? undefined : { left: `${left}px` };
 }
@@ -373,12 +390,17 @@ function exportCsv() {
 let observer: ResizeObserver | undefined;
 let frame = 0;
 function onScroll() {
-  scrolled.value = (wrap.value?.scrollLeft ?? 0) > 0;
+  const el = wrap.value;
+  scrolled.value = (el?.scrollLeft ?? 0) > 0;
+  moreRight.value = !!el && el.scrollLeft + el.clientWidth < el.scrollWidth - 1;
 }
+// The table's width or the frame's changed: what is hidden to the right may have too.
+watch([tableWidth, wrapWidth], () => nextTick(onScroll), { flush: "post" });
 // The whole component is measured, not the table's frame: as cards, there is no table.
 onMounted(() => {
   if (!root.value) return;
   wrapWidth.value = root.value.clientWidth;
+  void nextTick(onScroll);
   if (typeof ResizeObserver === "function") {
     // Measured on the next frame and only when it changed: the width decides the layout, and
     // setting it inside the observer's own callback would loop.
@@ -492,6 +514,7 @@ const valueOf = (c: DataColumn<Row>, row: Row): CellValue => c.value(row);
                 <span>{{ c.header }}</span>
               </label>
               <button
+                v-if="!c.stickyEnd"
                 type="button"
                 class="tx-dt__pin"
                 :aria-pressed="layout.pinned.includes(c.id)"
@@ -558,6 +581,7 @@ const valueOf = (c: DataColumn<Row>, row: Row): CellValue => c.value(row);
       class="tx-table-wrap tx-table-wrap--framed tx-dt__wrap"
       :style="maxHeight ? { maxHeight } : undefined"
       :data-scrolled="scrolled || undefined"
+      :data-more-right="moreRight || undefined"
       :role="label ? 'region' : undefined"
       :aria-label="label"
       :tabindex="label ? 0 : undefined"
@@ -573,7 +597,8 @@ const valueOf = (c: DataColumn<Row>, row: Row): CellValue => c.value(row);
               v-for="c in visible"
               :key="c.id"
               :data-align="c.align"
-              :data-stuck="stuckIds.has(c.id) || undefined"
+              :data-stuck="stuckIds.has(c.id) || stuckEnd.has(c.id) || undefined"
+              :data-first-end="firstStuckEnd === c.id || undefined"
               :data-last-stuck="lastStuck === c.id || undefined"
               :data-filtered="isActive(filters[c.id]) || undefined"
               :aria-sort="ariaSort(c)"
@@ -614,7 +639,7 @@ const valueOf = (c: DataColumn<Row>, row: Row): CellValue => c.value(row);
                       <DataTableFilter :column="c" :value="filterOf(c)" :options="c.filter === 'options' ? optionsOf(c) : []" @change="(v) => setFilter(c, v)" />
                     </template>
                     <hr class="tx-dt__rule" />
-                    <button type="button" class="tx-dt__item" @click="togglePin(c.id)">
+                    <button v-if="!c.stickyEnd" type="button" class="tx-dt__item" @click="togglePin(c.id)">
                       {{ layout.pinned.includes(c.id) ? "Soltar columna" : "Fijar a la izquierda" }}
                     </button>
                     <button v-if="c.hideable !== false" type="button" class="tx-dt__item" @click="toggleHidden(c.id)">
@@ -668,7 +693,8 @@ const valueOf = (c: DataColumn<Row>, row: Row): CellValue => c.value(row);
                 :data-align="c.align"
                 :data-focus="c.focus || undefined"
                 :data-wrap="c.wrap || (narrow && c.wrapNarrow) || undefined"
-                :data-stuck="stuckIds.has(c.id) || undefined"
+                :data-stuck="stuckIds.has(c.id) || stuckEnd.has(c.id) || undefined"
+              :data-first-end="firstStuckEnd === c.id || undefined"
                 :data-last-stuck="lastStuck === c.id || undefined"
                 :style="cellStyle(c)"
               >
@@ -694,7 +720,8 @@ const valueOf = (c: DataColumn<Row>, row: Row): CellValue => c.value(row);
               :key="c.id"
               :data-align="c.align"
               :data-focus="c.focus || undefined"
-              :data-stuck="stuckIds.has(c.id) || undefined"
+              :data-stuck="stuckIds.has(c.id) || stuckEnd.has(c.id) || undefined"
+              :data-first-end="firstStuckEnd === c.id || undefined"
               :data-last-stuck="lastStuck === c.id || undefined"
               :style="cellStyle(c)"
             >
